@@ -1,0 +1,55 @@
+{
+    "name": "Task",
+    "fields": [
+        {
+            "fieldName": "repeatTime",
+            "fieldType": "RepeatTime",
+            "fieldValues": "NONE,DAILY,WEEKLY,MONTHLY,YEARLY",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "repeatUntil",
+            "fieldType": "RepeatUntil",
+            "fieldValues": "NO_END_DATE,SET_END_DATE,SET_NUMBER_OF_TIMES",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "reminder",
+            "otherEntityRelationshipName": "task",
+            "relationshipName": "reminder",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "schedule",
+            "otherEntityRelationshipName": "task",
+            "relationshipName": "schedule",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "planning",
+            "otherEntityRelationshipName": "task",
+            "relationshipName": "planning",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190709070947",
+    "entityTableName": "task",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

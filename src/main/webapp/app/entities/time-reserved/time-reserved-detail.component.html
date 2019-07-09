@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="timeReserved">
+            <h2><span jhiTranslate="iCounselingApp.timeReserved.detail.title">Time Reserved</span> {{timeReserved.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="iCounselingApp.timeReserved.date">Date</span></dt>
+                <dd>
+                    <span>{{timeReserved.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.timeReserved.description">Description</span></dt>
+                <dd>
+                    <span>{{timeReserved.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.timeReserved.time">Time</span></dt>
+                <dd>
+                    <span>{{timeReserved.time}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.timeReserved.counselor">Counselor</span></dt>
+                <dd>
+                    <div *ngIf="timeReserved.counselorId">
+                        <a [routerLink]="['/counselor', timeReserved.counselorId, 'view']">{{timeReserved.counselorId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/time-reserved', timeReserved.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

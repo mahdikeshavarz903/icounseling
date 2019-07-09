@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity CounselingCase.
+    -->
+    <changeSet id="20190709070942-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="visitor_id"
+                                 baseTableName="counseling_case"
+                                 constraintName="fk_counseling_case_visitor_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="visitor"/>
+
+        <addForeignKeyConstraint baseColumnNames="counselor_id"
+                                 baseTableName="counseling_case"
+                                 constraintName="fk_counseling_case_counselor_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="counselor"/>
+
+    </changeSet>
+</databaseChangeLog>

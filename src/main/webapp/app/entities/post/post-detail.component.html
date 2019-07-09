@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="post">
+            <h2><span jhiTranslate="iCounselingApp.post.detail.title">Post</span> {{post.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="iCounselingApp.post.image">Image</span></dt>
+                <dd>
+                    <div *ngIf="post.image">
+                        <a (click)="openFile(post.imageContentType, post.image)" jhiTranslate="entity.action.open">open</a>
+                        {{post.imageContentType}}, {{byteSize(post.image)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.post.documentFormat">Document Format</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'iCounselingApp.DocumentFormat.' + post.documentFormat}}">{{post.documentFormat}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.post.schedule">Schedule</span></dt>
+                <dd>
+                    <div *ngIf="post.scheduleId">
+                        <a [routerLink]="['/schedule', post.scheduleId, 'view']">{{post.scheduleId}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.post.counselor">Counselor</span></dt>
+                <dd>
+                    <div *ngIf="post.counselorId">
+                        <a [routerLink]="['/counselor', post.counselorId, 'view']">{{post.counselorId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/post', post.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

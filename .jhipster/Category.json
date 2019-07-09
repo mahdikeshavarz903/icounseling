@@ -1,0 +1,42 @@
+{
+    "name": "Category",
+    "fields": [
+        {
+            "fieldName": "images",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        },
+        {
+            "fieldName": "categoryType",
+            "fieldType": "CategoryType",
+            "fieldValues": "ROMANCE,ARTS_PHOTOGRAPHY,BIOGRAPHIES_MEMOIRS,BUSINESS_INVESTING,CHILDREN_BOOKS,COOKBOOKS_FOOD,HISTORY,LOTERATURE_FICTION,MYSTERY_THRILLER_SUSPENSE,SCIENCE_FICTION_FANTASY,TEEN_YOUNG_ADULT_BOOKS",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "document",
+            "otherEntityRelationshipName": "gategory",
+            "relationshipName": "document"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "library",
+            "otherEntityRelationshipName": "category",
+            "relationshipName": "library",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190709071000",
+    "entityTableName": "category",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

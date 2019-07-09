@@ -1,0 +1,22 @@
+{
+    "name": "Reseume",
+    "fields": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "education",
+            "otherEntityRelationshipName": "reseume",
+            "relationshipName": "education",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190709070944",
+    "entityTableName": "reseume",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

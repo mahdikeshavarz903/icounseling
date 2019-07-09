@@ -35,6 +35,9 @@
     "otherModules": [],
     "enableTranslation": true,
     "nativeLanguage": "fa",
-    "languages": ["fa", "en"]
+    "languages": ["fa", "en"],
+    "appsFolders": ["iCounseling"],
+    "directoryPath": "../",
+    "monitoring": "no"
   }
 }

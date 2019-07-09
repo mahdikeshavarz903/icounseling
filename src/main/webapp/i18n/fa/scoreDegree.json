@@ -1,0 +1,9 @@
+{
+  "iCounselingApp": {
+    "ScoreDegree": {
+      "null": "",
+      "PROFESSIONAL": "PROFESSIONAL",
+      "GENERAL": "GENERAL"
+    }
+  }
+}

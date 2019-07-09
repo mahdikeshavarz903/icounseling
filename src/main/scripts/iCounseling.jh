@@ -1,0 +1,195 @@
+entity CounselingCase{
+	status CounselingCaseStatus required
+}
+
+enum CounselingCaseStatus{
+	OPENED,
+	CLOSED
+}
+
+entity Counselor{
+	consultantType ConsultantType required
+}
+
+enum EducationDegree{
+	ASSOCIATE_DEGREE, BACHELOR_DEGREE, 
+    DOCOTRAL_DEGREE, MASTER_DEGREE
+}
+
+enum ConsultantType{
+	PSYCHOLOGY, LEGAL, FINANCIAL, EDUCATIONAL,
+    MEDICAL, INDUSTY, COMPUTER, MUSIC, ART,
+    AGRICULTURE, ANIMAL_HUSBANDRY, SPORTS,
+	RELIGIOUS, REGISTRATION_OF_DOCUMENTS
+}
+
+entity Reseume{
+
+}
+
+entity Education{
+	type EducationDegree required
+}
+
+entity Planning{	
+}
+
+entity Task{
+	repeatTime RepeatTime required,
+    repeatUntil RepeatUntil required
+}
+
+enum RepeatTime{
+	NONE, DAILY, WEEKLY, MONTHLY, YEARLY
+}
+
+enum RepeatUntil{
+	NO_END_DATE, SET_END_DATE, SET_NUMBER_OF_TIMES
+}
+
+entity Reminder{
+	date LocalDate required,
+    time LocalDate required
+}
+
+entity TimeReserved{
+	date LocalDate required,
+    description String required,
+    time LocalDate required
+}
+
+entity Visitor{
+
+}
+
+entity Job {
+jobTitle String,
+minSalary Long,
+maxSalary Long
+}
+
+entity JobHistory {
+startDate Instant,
+endDate Instant
+}
+
+enum JobCategory{
+	GOVERNMENT_COMPANY,
+	PRIVATE_COMPANY,
+	FREE,
+	UNEMPLOYED
+}
+
+entity Schedule{
+	title String required,
+	dateAndTime ZonedDateTime required,
+    description String required
+}
+
+entity Document{
+	title String required,
+    description Blob required,
+    price Float required,
+    publishedDate LocalDate,
+    paymentType PaymentType,
+    documentFormat DocumentFormat,
+    imagesGallery Blob required,
+    tag String required
+}
+
+enum PaymentType{
+	FREE, PAID
+}
+
+entity Post{
+	image Blob required,
+    documentFormat DocumentFormat required
+}
+
+enum DocumentFormat{
+	PDF, DOCX, DOC, XLSX, PPT
+}
+
+entity Score{
+	total Float required,
+    image Blob required,
+    degree ScoreDegree required
+}
+
+enum ScoreDegree{
+	PROFESSIONAL, GENERAL
+}
+
+entity Rate{
+	index Integer required,
+    title String required
+}
+
+entity Comment{
+	
+}
+
+entity Library{
+	name String required,
+    creationTime LocalDate required
+}
+
+entity Category{
+	images Blob,
+    categoryType CategoryType required
+}
+
+enum CategoryType{
+	ROMANCE,
+    ARTS_PHOTOGRAPHY, 
+    BIOGRAPHIES_MEMOIRS, 
+    BUSINESS_INVESTING,
+    CHILDREN_BOOKS,
+    COOKBOOKS_FOOD,
+    HISTORY,
+    LOTERATURE_FICTION,
+    MYSTERY_THRILLER_SUSPENSE,
+    SCIENCE_FICTION_FANTASY,
+    TEEN_YOUNG_ADULT_BOOKS
+}
+
+entity Transaction{
+	totalAmount Float required,
+    status Boolean required
+}
+
+relationship OneToMany{
+	Counselor{post} to Post{counselor}
+    Visitor{transaction} to Transaction{visitor}
+    Library{category} to Category{library}
+    Category{document} to Document{gategory(categoryType) }
+    Post{comment} to Comment{post}
+    Counselor{document} to Document{counselor}
+    Planning{task} to Task{planning}
+    Counselor{timeReserved} to TimeReserved{counselor}
+    Counselor{planning} to Planning{counselor}
+    Counselor{counselingCase} to CounselingCase{counselor}
+    Education{reseume} to Reseume{education}
+    Visitor{job} to Job{visitor}
+}
+
+relationship OneToOne{
+    JobHistory{job} to Job
+	CounselingCase{visitor} to Visitor{counselingCase}
+	Task{reminder} to Reminder{task}
+    Task{schedule} to Schedule{task}
+    Post{schedule} to Schedule{post}
+    Comment{schedule} to Schedule{comment}
+    Counselor{education} to Education{counselor}
+    Counselor{score} to Score{counselor}
+    Visitor{score} to Score{visitor}
+    Visitor{education} to Education{visitor}
+    Document{rate(index) } to Rate{document}
+    Comment{rate} to Rate{comment}
+    Document{comment} to Comment{document}
+    Library{visitor} to Visitor{library}
+}
+
+dto * with mapstruct
+service all with serviceImpl
+paginate * with pagination 

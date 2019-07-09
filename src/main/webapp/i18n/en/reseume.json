@@ -1,0 +1,22 @@
+{
+  "iCounselingApp": {
+    "reseume": {
+      "home": {
+        "title": "Reseumes",
+        "createLabel": "Create a new Reseume",
+        "createOrEditLabel": "Create or edit a Reseume",
+        "notFound": "No Reseume found"
+      },
+      "created": "A new Reseume is created with identifier {{ param }}",
+      "updated": "A Reseume is updated with identifier {{ param }}",
+      "deleted": "A Reseume is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Reseume {{ id }}?"
+      },
+      "detail": {
+        "title": "Reseume"
+      },
+      "education": "Education"
+    }
+  }
+}

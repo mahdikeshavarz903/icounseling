@@ -1,0 +1,45 @@
+{
+    "name": "Comment",
+    "fields": [],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "schedule",
+            "otherEntityRelationshipName": "comment",
+            "relationshipName": "schedule",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "rate",
+            "otherEntityRelationshipName": "comment",
+            "relationshipName": "rate",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "document",
+            "otherEntityRelationshipName": "comment",
+            "relationshipName": "document",
+            "ownerSide": false
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "post",
+            "otherEntityRelationshipName": "comment",
+            "relationshipName": "post",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190709070958",
+    "entityTableName": "comment",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

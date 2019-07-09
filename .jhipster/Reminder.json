@@ -1,0 +1,37 @@
+{
+    "name": "Reminder",
+    "fields": [
+        {
+            "fieldName": "date",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "time",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "task",
+            "otherEntityRelationshipName": "reminder",
+            "relationshipName": "task",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20190709070948",
+    "entityTableName": "reminder",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

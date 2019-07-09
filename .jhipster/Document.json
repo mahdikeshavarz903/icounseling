@@ -1,0 +1,97 @@
+{
+    "name": "Document",
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Float",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "publishedDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "paymentType",
+            "fieldType": "PaymentType",
+            "fieldValues": "FREE,PAID"
+        },
+        {
+            "fieldName": "documentFormat",
+            "fieldType": "DocumentFormat",
+            "fieldValues": "PDF,DOCX,DOC,XLSX,PPT"
+        },
+        {
+            "fieldName": "imagesGallery",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "tag",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "rate",
+            "otherEntityRelationshipName": "document",
+            "relationshipName": "rate",
+            "otherEntityField": "index",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "comment",
+            "otherEntityRelationshipName": "document",
+            "relationshipName": "comment",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "category",
+            "otherEntityRelationshipName": "document",
+            "relationshipName": "gategory",
+            "otherEntityField": "categoryType"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "counselor",
+            "otherEntityRelationshipName": "document",
+            "relationshipName": "counselor",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190709070954",
+    "entityTableName": "document",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

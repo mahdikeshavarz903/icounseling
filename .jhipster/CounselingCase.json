@@ -1,0 +1,39 @@
+{
+    "name": "CounselingCase",
+    "fields": [
+        {
+            "fieldName": "status",
+            "fieldType": "CounselingCaseStatus",
+            "fieldValues": "OPENED,CLOSED",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "visitor",
+            "otherEntityRelationshipName": "counselingCase",
+            "relationshipName": "visitor",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "counselor",
+            "otherEntityRelationshipName": "counselingCase",
+            "relationshipName": "counselor",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190709070942",
+    "entityTableName": "counseling_case",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

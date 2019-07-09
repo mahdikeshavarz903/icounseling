@@ -1,0 +1,12 @@
+{
+  "iCounselingApp": {
+    "DocumentFormat": {
+      "null": "",
+      "PDF": "PDF",
+      "DOCX": "DOCX",
+      "DOC": "DOC",
+      "XLSX": "XLSX",
+      "PPT": "PPT"
+    }
+  }
+}

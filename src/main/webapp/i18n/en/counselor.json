@@ -1,0 +1,29 @@
+{
+  "iCounselingApp": {
+    "counselor": {
+      "home": {
+        "title": "Counselors",
+        "createLabel": "Create a new Counselor",
+        "createOrEditLabel": "Create or edit a Counselor",
+        "notFound": "No Counselor found"
+      },
+      "created": "A new Counselor is created with identifier {{ param }}",
+      "updated": "A Counselor is updated with identifier {{ param }}",
+      "deleted": "A Counselor is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Counselor {{ id }}?"
+      },
+      "detail": {
+        "title": "Counselor"
+      },
+      "consultantType": "Consultant Type",
+      "education": "Education",
+      "score": "Score",
+      "post": "Post",
+      "document": "Document",
+      "timeReserved": "Time Reserved",
+      "planning": "Planning",
+      "counselingCase": "Counseling Case"
+    }
+  }
+}

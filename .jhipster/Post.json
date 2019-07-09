@@ -1,0 +1,53 @@
+{
+    "name": "Post",
+    "fields": [
+        {
+            "fieldName": "image",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "documentFormat",
+            "fieldType": "DocumentFormat",
+            "fieldValues": "PDF,DOCX,DOC,XLSX,PPT",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "schedule",
+            "otherEntityRelationshipName": "post",
+            "relationshipName": "schedule",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "comment",
+            "otherEntityRelationshipName": "post",
+            "relationshipName": "comment"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "counselor",
+            "otherEntityRelationshipName": "post",
+            "relationshipName": "counselor",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190709070955",
+    "entityTableName": "post",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

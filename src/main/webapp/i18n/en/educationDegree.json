@@ -1,0 +1,11 @@
+{
+  "iCounselingApp": {
+    "EducationDegree": {
+      "null": "",
+      "ASSOCIATE_DEGREE": "ASSOCIATE_DEGREE",
+      "BACHELOR_DEGREE": "BACHELOR_DEGREE",
+      "DOCOTRAL_DEGREE": "DOCOTRAL_DEGREE",
+      "MASTER_DEGREE": "MASTER_DEGREE"
+    }
+  }
+}

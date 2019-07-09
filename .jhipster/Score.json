@@ -1,0 +1,53 @@
+{
+    "name": "Score",
+    "fields": [
+        {
+            "fieldName": "total",
+            "fieldType": "Float",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "image",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "degree",
+            "fieldType": "ScoreDegree",
+            "fieldValues": "PROFESSIONAL,GENERAL",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "counselor",
+            "otherEntityRelationshipName": "score",
+            "relationshipName": "counselor",
+            "ownerSide": false
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "visitor",
+            "otherEntityRelationshipName": "score",
+            "relationshipName": "visitor",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20190709070956",
+    "entityTableName": "score",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
