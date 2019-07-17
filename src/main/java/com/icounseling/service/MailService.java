@@ -1,7 +1,7 @@
 package com.icounseling.service;
 
 import com.icounseling.domain.User;
-
+import org.apache.commons.lang3.StringUtils;
 import io.github.jhipster.config.JHipsterProperties;
 
 import java.nio.charset.StandardCharsets;
@@ -100,5 +100,17 @@ public class MailService {
     public void sendPasswordResetMail(User user) {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
+    }
+
+    @Async
+    public void sendSocialRegistrationValidationEmail(User user, String provider) {
+        log.debug("Sending social registration validation email to '{}'", user.getEmail());
+        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(USER, user);
+        context.setVariable("provider", StringUtils.capitalize(provider));
+        String content = templateEngine.process("socialRegistrationValidationEmail", context);
+        String subject = messageSource.getMessage("email.social.registration.title", null, locale);
+        sendEmail(user.getEmail(), subject, content, false, true);
     }
 }
