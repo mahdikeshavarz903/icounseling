@@ -6,7 +6,7 @@
     <groupId>com.icounseling</groupId>
     <artifactId>i-counseling</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>I Counseling</name>
 
     <repositories>
