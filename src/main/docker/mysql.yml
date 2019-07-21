@@ -6,7 +6,7 @@ services:
     #     - ~/volumes/jhipster/iCounseling/mysql/:/var/lib/mysql/
     environment:
       - MYSQL_USER=icounseling
-      - MYSQL_PASSWORD=1245783690
+      - MYSQL_ROOT_PASSWORD=mah@1377
       - MYSQL_DATABASE=icounseling
     ports:
       - 3306:3306
