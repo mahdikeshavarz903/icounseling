@@ -8,6 +8,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,16 +27,17 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 @Transactional
 public class DomainUserDetailsServiceIT {
 
-    private static final String USER_ONE_LOGIN = "test-user-one";
+    private static final String USER_ONE_LOGIN = "09307301161";
     private static final String USER_ONE_EMAIL = "test-user-one@localhost";
-    private static final String USER_TWO_LOGIN = "test-user-two";
+    private static final String USER_TWO_LOGIN = "09307301162";
     private static final String USER_TWO_EMAIL = "test-user-two@localhost";
-    private static final String USER_THREE_LOGIN = "test-user-three";
+    private static final String USER_THREE_LOGIN = "09307301163";
     private static final String USER_THREE_EMAIL = "test-user-three@localhost";
 
     @Autowired
     private UserRepository userRepository;
 
+    @Qualifier("userDetailsService")
     @Autowired
     private UserDetailsService domainUserDetailsService;
 

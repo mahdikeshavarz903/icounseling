@@ -9,10 +9,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -35,7 +32,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @NotNull
     @Pattern(regexp = Constants.LOGIN_REGEX)
-    @Size(min = 1, max = 50)
+    @Digits(integer=11, fraction=2)
+    @Size(min = 11, max = 16)
     @Column(length = 50, unique = true, nullable = false)
     private String login;
 
@@ -107,7 +105,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     // Lowercase the login before saving it in database
     public void setLogin(String login) {
-        this.login = StringUtils.lowerCase(login, Locale.ENGLISH);
+        this.login = login;
     }
 
     public String getPassword() {

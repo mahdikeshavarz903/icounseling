@@ -22,7 +22,7 @@ management:
         include: ['configprops', 'env', 'health', 'info', 'jhimetrics', 'logfile', 'loggers', 'prometheus', 'threaddump']
   endpoint:
     health:
-      show-details: when-authorized
+#      show-details: when-authorized
       roles: 'ROLE_ADMIN'
     jhimetrics:
       enabled: true
@@ -58,6 +58,7 @@ management:
 spring:
   application:
     name: iCounseling
+    url: http://localhost:8080
   profiles:
     # The commented value for `active` can be replaced with valid Spring profiles to load.
     # Otherwise, it will be filled in by maven when building the JAR file
@@ -85,6 +86,10 @@ spring:
   mvc:
     favicon:
       enabled: false
+  social:
+    facebook:
+      app-id: 414603305809590
+      app-secret: 3af0532e3968b6d47254238d81509583
   task:
     execution:
       thread-name-prefix: i-counseling-task-

@@ -35,7 +35,7 @@ import static org.mockito.Mockito.when;
 @Transactional
 public class UserServiceIT {
 
-    private static final String DEFAULT_LOGIN = "johndoe";
+    private static final String DEFAULT_LOGIN = "09307301161";
 
     private static final String DEFAULT_EMAIL = "johndoe@localhost";
 
@@ -187,8 +187,8 @@ public class UserServiceIT {
     @Test
     @Transactional
     public void assertThatAnonymousUserIsNotGet() {
-        user.setLogin(Constants.ANONYMOUS_USER);
-        if (!userRepository.findOneByLogin(Constants.ANONYMOUS_USER).isPresent()) {
+        user.setLogin("09307301161");
+        if (!userRepository.findOneByLogin("09307301161").isPresent()) {
             userRepository.saveAndFlush(user);
         }
         final PageRequest pageable = PageRequest.of(0, (int) userRepository.count());

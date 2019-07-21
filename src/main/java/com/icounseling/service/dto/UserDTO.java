@@ -22,7 +22,8 @@ public class UserDTO {
 
     @NotBlank
     @Pattern(regexp = Constants.LOGIN_REGEX)
-    @Size(min = 1, max = 50)
+    @Digits(integer=11, fraction=2)
+    @Size(min = 11, max = 16)
     private String login;
 
     @Size(max = 50)

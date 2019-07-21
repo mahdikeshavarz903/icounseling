@@ -1,5 +1,6 @@
 package com.icounseling.web.rest.vm;
 
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -9,7 +10,8 @@ import javax.validation.constraints.Size;
 public class LoginVM {
 
     @NotNull
-    @Size(min = 1, max = 50)
+    @Digits(integer=11, fraction=2)
+    @Size(min = 11, max = 16)
     private String username;
 
     @NotNull
