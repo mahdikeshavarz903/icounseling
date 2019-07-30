@@ -3,10 +3,12 @@ package com.icounseling.service.mapper;
 import com.icounseling.domain.Authority;
 import com.icounseling.domain.User;
 import com.icounseling.service.dto.UserDTO;
-
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -49,6 +51,16 @@ public class UserMapper {
             user.setImageUrl(userDTO.getImageUrl());
             user.setActivated(userDTO.isActivated());
             user.setLangKey(userDTO.getLangKey());
+            user.setAbout(userDTO.getAbout());
+            user.setAddressToken(userDTO.getAddressToken());
+            user.setAge(userDTO.getAge());
+            user.setCover(userDTO.getCover());
+            user.setBirthdayDate(userDTO.getBirthdayDate());
+            user.setGender(userDTO.getGender());
+            user.setHomePhoneNumber(userDTO.getHomePhoneNumber());
+            user.setNationalCode(userDTO.getNationalCode());
+            user.setNationality(userDTO.getNationality());
+            user.setZipCode(userDTO.getZipCode());
             Set<Authority> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
             user.setAuthorities(authorities);
             return user;
