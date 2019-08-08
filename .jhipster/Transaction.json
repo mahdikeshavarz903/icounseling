@@ -1,0 +1,37 @@
+{
+    "name": "Transaction",
+    "fields": [
+        {
+            "fieldName": "totalAmount",
+            "fieldType": "Float",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "visitor",
+            "otherEntityRelationshipName": "transaction",
+            "relationshipName": "visitor",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190709071001",
+    "entityTableName": "transaction",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

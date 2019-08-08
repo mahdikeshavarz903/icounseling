@@ -1,0 +1,21 @@
+{
+  "iCounselingApp": {
+    "ConsultantType": {
+      "null": "",
+      "PSYCHOLOGY": "PSYCHOLOGY",
+      "LEGAL": "LEGAL",
+      "FINANCIAL": "FINANCIAL",
+      "EDUCATIONAL": "EDUCATIONAL",
+      "MEDICAL": "MEDICAL",
+      "INDUSTY": "INDUSTY",
+      "COMPUTER": "COMPUTER",
+      "MUSIC": "MUSIC",
+      "ART": "ART",
+      "AGRICULTURE": "AGRICULTURE",
+      "ANIMAL_HUSBANDRY": "ANIMAL_HUSBANDRY",
+      "SPORTS": "SPORTS",
+      "RELIGIOUS": "RELIGIOUS",
+      "REGISTRATION_OF_DOCUMENTS": "REGISTRATION_OF_DOCUMENTS"
+    }
+  }
+}

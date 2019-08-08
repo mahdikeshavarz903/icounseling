@@ -1,0 +1,12 @@
+{
+  "iCounselingApp": {
+    "RepeatTime": {
+      "null": "",
+      "NONE": "NONE",
+      "DAILY": "DAILY",
+      "WEEKLY": "WEEKLY",
+      "MONTHLY": "MONTHLY",
+      "YEARLY": "YEARLY"
+    }
+  }
+}

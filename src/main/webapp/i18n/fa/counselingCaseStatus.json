@@ -1,0 +1,9 @@
+{
+  "iCounselingApp": {
+    "CounselingCaseStatus": {
+      "null": "",
+      "OPENED": "OPENED",
+      "CLOSED": "CLOSED"
+    }
+  }
+}

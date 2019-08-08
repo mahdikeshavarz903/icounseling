@@ -1,0 +1,85 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="document">
+            <h2><span jhiTranslate="iCounselingApp.document.detail.title">Document</span> {{document.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="iCounselingApp.document.title">Title</span></dt>
+                <dd>
+                    <span>{{document.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.document.description">Description</span></dt>
+                <dd>
+                    <div *ngIf="document.description">
+                        <a (click)="openFile(document.descriptionContentType, document.description)" jhiTranslate="entity.action.open">open</a>
+                        {{document.descriptionContentType}}, {{byteSize(document.description)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.document.price">Price</span></dt>
+                <dd>
+                    <span>{{document.price}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.document.publishedDate">Published Date</span></dt>
+                <dd>
+                    <span>{{document.publishedDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.document.paymentType">Payment Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'iCounselingApp.PaymentType.' + document.paymentType}}">{{document.paymentType}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.document.documentFormat">Document Format</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'iCounselingApp.DocumentFormat.' + document.documentFormat}}">{{document.documentFormat}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.document.imagesGallery">Images Gallery</span></dt>
+                <dd>
+                    <div *ngIf="document.imagesGallery">
+                        <a (click)="openFile(document.imagesGalleryContentType, document.imagesGallery)" jhiTranslate="entity.action.open">open</a>
+                        {{document.imagesGalleryContentType}}, {{byteSize(document.imagesGallery)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.document.tag">Tag</span></dt>
+                <dd>
+                    <span>{{document.tag}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.document.rate">Rate</span></dt>
+                <dd>
+                    <div *ngIf="document.rateId">
+                        <a [routerLink]="['/rate', document.rateId, 'view']">{{document.rateIndex}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.document.comment">Comment</span></dt>
+                <dd>
+                    <div *ngIf="document.commentId">
+                        <a [routerLink]="['/comment', document.commentId, 'view']">{{document.commentId}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.document.gategory">Gategory</span></dt>
+                <dd>
+                    <div *ngIf="document.gategoryId">
+                        <a [routerLink]="['/category', document.gategoryId, 'view']">{{document.gategoryCategoryType}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.document.counselor">Counselor</span></dt>
+                <dd>
+                    <div *ngIf="document.counselorId">
+                        <a [routerLink]="['/counselor', document.counselorId, 'view']">{{document.counselorId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/document', document.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+{
+  "iCounselingApp": {
+    "PaymentType": {
+      "null": "",
+      "FREE": "FREE",
+      "PAID": "PAID"
+    }
+  }
+}

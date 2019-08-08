@@ -1,0 +1,77 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="iCounselingApp.counselingCase.home.title">Counseling Cases</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-counseling-case" [routerLink]="['/counseling-case/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="iCounselingApp.counselingCase.home.createLabel">
+            Create new Counseling Case
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="counselingCases?.length === 0">
+        <span jhiTranslate="iCounselingApp.counselingCase.home.notFound">No counselingCases found</span>
+    </div>
+    <div class="table-responsive" *ngIf="counselingCases?.length > 0">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="status"><span jhiTranslate="iCounselingApp.counselingCase.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="visitorId"><span jhiTranslate="iCounselingApp.counselingCase.visitor">Visitor</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="counselorId"><span jhiTranslate="iCounselingApp.counselingCase.counselor">Counselor</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let counselingCase of counselingCases ;trackBy: trackId">
+                <td><a [routerLink]="['/counseling-case', counselingCase.id, 'view' ]">{{counselingCase.id}}</a></td>
+                <td jhiTranslate="{{'iCounselingApp.CounselingCaseStatus.' + counselingCase.status}}">{{counselingCase.status}}</td>
+                <td>
+                    <div *ngIf="counselingCase.visitorId">
+                        <a [routerLink]="['../visitor', counselingCase.visitorId , 'view' ]" >{{counselingCase.visitorId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="counselingCase.counselorId">
+                        <a [routerLink]="['../counselor', counselingCase.counselorId , 'view' ]" >{{counselingCase.counselorId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/counseling-case', counselingCase.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/counseling-case', counselingCase.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'counseling-case', { outlets: { popup: counselingCase.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div [hidden]="counselingCases?.length === 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

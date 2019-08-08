@@ -1,0 +1,10 @@
+{
+  "iCounselingApp": {
+    "RepeatUntil": {
+      "null": "",
+      "NO_END_DATE": "NO_END_DATE",
+      "SET_END_DATE": "SET_END_DATE",
+      "SET_NUMBER_OF_TIMES": "SET_NUMBER_OF_TIMES"
+    }
+  }
+}

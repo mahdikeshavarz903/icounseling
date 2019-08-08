@@ -1,0 +1,44 @@
+{
+    "name": "Rate",
+    "fields": [
+        {
+            "fieldName": "index",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "title",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "document",
+            "otherEntityRelationshipName": "rate",
+            "relationshipName": "document",
+            "ownerSide": false
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "comment",
+            "otherEntityRelationshipName": "rate",
+            "relationshipName": "comment",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20190709070957",
+    "entityTableName": "rate",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

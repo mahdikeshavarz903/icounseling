@@ -1,0 +1,11 @@
+id;image;image_content_type;document_format
+1;../data/blob/hipster.png;image/png;DOC
+2;../data/blob/hipster.png;image/png;XLSX
+3;../data/blob/hipster.png;image/png;PDF
+4;../data/blob/hipster.png;image/png;DOCX
+5;../data/blob/hipster.png;image/png;PPT
+6;../data/blob/hipster.png;image/png;DOCX
+7;../data/blob/hipster.png;image/png;PPT
+8;../data/blob/hipster.png;image/png;XLSX
+9;../data/blob/hipster.png;image/png;PDF
+10;../data/blob/hipster.png;image/png;DOC

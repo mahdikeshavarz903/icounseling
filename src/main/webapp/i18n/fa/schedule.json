@@ -1,0 +1,27 @@
+{
+  "iCounselingApp": {
+    "schedule": {
+      "home": {
+        "title": "Schedules",
+        "createLabel": "Create a new Schedule",
+        "createOrEditLabel": "Create or edit a Schedule",
+        "notFound": "No Schedule found"
+      },
+      "created": "A new Schedule is created with identifier {{ param }}",
+      "updated": "A Schedule is updated with identifier {{ param }}",
+      "deleted": "A Schedule is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Schedule {{ id }}?"
+      },
+      "detail": {
+        "title": "Schedule"
+      },
+      "title": "Title",
+      "dateAndTime": "Date And Time",
+      "description": "Description",
+      "task": "Task",
+      "post": "Post",
+      "comment": "Comment"
+    }
+  }
+}

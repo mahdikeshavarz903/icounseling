@@ -1,0 +1,28 @@
+{
+    "name": "Planning",
+    "fields": [],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "task",
+            "otherEntityRelationshipName": "planning",
+            "relationshipName": "task"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "counselor",
+            "otherEntityRelationshipName": "planning",
+            "relationshipName": "counselor",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190709070946",
+    "entityTableName": "planning",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

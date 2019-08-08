@@ -1,0 +1,24 @@
+{
+  "iCounselingApp": {
+    "counselingCase": {
+      "home": {
+        "title": "Counseling Cases",
+        "createLabel": "Create a new Counseling Case",
+        "createOrEditLabel": "Create or edit a Counseling Case",
+        "notFound": "No Counseling Case found"
+      },
+      "created": "A new Counseling Case is created with identifier {{ param }}",
+      "updated": "A Counseling Case is updated with identifier {{ param }}",
+      "deleted": "A Counseling Case is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Counseling Case {{ id }}?"
+      },
+      "detail": {
+        "title": "Counseling Case"
+      },
+      "status": "Status",
+      "visitor": "Visitor",
+      "counselor": "Counselor"
+    }
+  }
+}

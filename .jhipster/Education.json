@@ -1,0 +1,44 @@
+{
+    "name": "Education",
+    "fields": [
+        {
+            "fieldName": "type",
+            "fieldType": "EducationDegree",
+            "fieldValues": "ASSOCIATE_DEGREE,BACHELOR_DEGREE,DOCOTRAL_DEGREE,MASTER_DEGREE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "reseume",
+            "otherEntityRelationshipName": "education",
+            "relationshipName": "reseume"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "counselor",
+            "otherEntityRelationshipName": "education",
+            "relationshipName": "counselor",
+            "ownerSide": false
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "visitor",
+            "otherEntityRelationshipName": "education",
+            "relationshipName": "visitor",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20190709070945",
+    "entityTableName": "education",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

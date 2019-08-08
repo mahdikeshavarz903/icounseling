@@ -1,0 +1,75 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-task-heading" jhiTranslate="iCounselingApp.task.home.createOrEditLabel">Create or edit a Task</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="iCounselingApp.task.repeatTime" for="field_repeatTime">Repeat Time</label>
+                    <select class="form-control" name="repeatTime" formControlName="repeatTime" id="field_repeatTime">
+                        <option value="NONE">{{'iCounselingApp.RepeatTime.NONE' | translate}}</option>
+                        <option value="DAILY">{{'iCounselingApp.RepeatTime.DAILY' | translate}}</option>
+                        <option value="WEEKLY">{{'iCounselingApp.RepeatTime.WEEKLY' | translate}}</option>
+                        <option value="MONTHLY">{{'iCounselingApp.RepeatTime.MONTHLY' | translate}}</option>
+                        <option value="YEARLY">{{'iCounselingApp.RepeatTime.YEARLY' | translate}}</option>
+                    </select>
+                    <div *ngIf="editForm.get('repeatTime').invalid && (editForm.get('repeatTime').dirty || editForm.get('repeatTime').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('repeatTime').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="iCounselingApp.task.repeatUntil" for="field_repeatUntil">Repeat Until</label>
+                    <select class="form-control" name="repeatUntil" formControlName="repeatUntil" id="field_repeatUntil">
+                        <option value="NO_END_DATE">{{'iCounselingApp.RepeatUntil.NO_END_DATE' | translate}}</option>
+                        <option value="SET_END_DATE">{{'iCounselingApp.RepeatUntil.SET_END_DATE' | translate}}</option>
+                        <option value="SET_NUMBER_OF_TIMES">{{'iCounselingApp.RepeatUntil.SET_NUMBER_OF_TIMES' | translate}}</option>
+                    </select>
+                    <div *ngIf="editForm.get('repeatUntil').invalid && (editForm.get('repeatUntil').dirty || editForm.get('repeatUntil').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('repeatUntil').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="iCounselingApp.task.reminder" for="field_reminder">Reminder</label>
+                    <select class="form-control" id="field_reminder" name="reminder" formControlName="reminderId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="reminderOption.id" *ngFor="let reminderOption of reminders; trackBy: trackReminderById">{{reminderOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="iCounselingApp.task.schedule" for="field_schedule">Schedule</label>
+                    <select class="form-control" id="field_schedule" name="schedule" formControlName="scheduleId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="scheduleOption.id" *ngFor="let scheduleOption of schedules; trackBy: trackScheduleById">{{scheduleOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="iCounselingApp.task.planning" for="field_planning">Planning</label>
+                    <select class="form-control" id="field_planning" name="planning" formControlName="planningId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="planningOption.id" *ngFor="let planningOption of plannings; trackBy: trackPlanningById">{{planningOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

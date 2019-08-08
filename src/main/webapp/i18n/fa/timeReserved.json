@@ -1,0 +1,25 @@
+{
+  "iCounselingApp": {
+    "timeReserved": {
+      "home": {
+        "title": "Time Reserveds",
+        "createLabel": "Create a new Time Reserved",
+        "createOrEditLabel": "Create or edit a Time Reserved",
+        "notFound": "No Time Reserved found"
+      },
+      "created": "A new Time Reserved is created with identifier {{ param }}",
+      "updated": "A Time Reserved is updated with identifier {{ param }}",
+      "deleted": "A Time Reserved is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Time Reserved {{ id }}?"
+      },
+      "detail": {
+        "title": "Time Reserved"
+      },
+      "date": "Date",
+      "description": "Description",
+      "time": "Time",
+      "counselor": "Counselor"
+    }
+  }
+}

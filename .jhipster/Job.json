@@ -1,0 +1,35 @@
+{
+    "name": "Job",
+    "fields": [
+        {
+            "fieldName": "jobTitle",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "minSalary",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "maxSalary",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "visitor",
+            "otherEntityRelationshipName": "job",
+            "relationshipName": "visitor",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190709070951",
+    "entityTableName": "job",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
