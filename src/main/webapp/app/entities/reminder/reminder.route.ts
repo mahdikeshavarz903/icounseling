@@ -18,7 +18,7 @@ export class ReminderResolve implements Resolve<IReminder> {
   constructor(private service: ReminderService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IReminder> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Reminder>) => response.ok),

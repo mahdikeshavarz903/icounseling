@@ -4,7 +4,7 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-reseume" [routerLink]="['/reseume/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="iCounselingApp.reseume.home.createLabel">
-            Create new Reseume
+            Create a new Reseume
             </span>
         </button>
     </h2>
@@ -27,7 +27,7 @@
                 <td><a [routerLink]="['/reseume', reseume.id, 'view' ]">{{reseume.id}}</a></td>
                 <td>
                     <div *ngIf="reseume.educationId">
-                        <a [routerLink]="['../education', reseume.educationId , 'view' ]" >{{reseume.educationId}}</a>
+                        <a [routerLink]="['/education', reseume.educationId , 'view' ]" >{{reseume.educationId}}</a>
                     </div>
                 </td>
                 <td class="text-right">
@@ -45,7 +45,7 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', 'reseume', { outlets: { popup: reseume.id + '/delete'} }]"
+                                [routerLink]="['/reseume', { outlets: { popup: reseume.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

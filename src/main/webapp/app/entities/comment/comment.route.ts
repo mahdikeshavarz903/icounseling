@@ -18,7 +18,7 @@ export class CommentResolve implements Resolve<IComment> {
   constructor(private service: CommentService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IComment> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Comment>) => response.ok),

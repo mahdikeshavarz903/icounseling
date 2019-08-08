@@ -76,7 +76,7 @@ export class DocumentUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: IRate[]) => {
-          if (!!this.editForm.get('rateId').value) {
+          if (!this.editForm.get('rateId').value) {
             this.rates = res;
           } else {
             this.rateService
@@ -101,7 +101,7 @@ export class DocumentUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: IComment[]) => {
-          if (!!this.editForm.get('commentId').value) {
+          if (!this.editForm.get('commentId').value) {
             this.comments = res;
           } else {
             this.commentService

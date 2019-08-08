@@ -33,13 +33,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.icounseling.domain.enumeration.ScoreDegree;
 /**
- * Integration tests for the {@Link ScoreResource} REST controller.
+ * Integration tests for the {@link ScoreResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class ScoreResourceIT {
 
     private static final Float DEFAULT_TOTAL = 1F;
     private static final Float UPDATED_TOTAL = 2F;
+    private static final Float SMALLER_TOTAL = 1F - 1F;
 
     private static final byte[] DEFAULT_IMAGE = TestUtil.createByteArray(1, "0");
     private static final byte[] UPDATED_IMAGE = TestUtil.createByteArray(1, "1");

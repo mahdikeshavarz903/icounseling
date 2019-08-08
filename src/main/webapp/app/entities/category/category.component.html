@@ -4,7 +4,7 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-category" [routerLink]="['/category/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="iCounselingApp.category.home.createLabel">
-            Create new Category
+            Create a new Category
             </span>
         </button>
     </h2>
@@ -34,7 +34,7 @@
                 <td jhiTranslate="{{'iCounselingApp.CategoryType.' + category.categoryType}}">{{category.categoryType}}</td>
                 <td>
                     <div *ngIf="category.libraryId">
-                        <a [routerLink]="['../library', category.libraryId , 'view' ]" >{{category.libraryId}}</a>
+                        <a [routerLink]="['/library', category.libraryId , 'view' ]" >{{category.libraryId}}</a>
                     </div>
                 </td>
                 <td class="text-right">
@@ -52,7 +52,7 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', 'category', { outlets: { popup: category.id + '/delete'} }]"
+                                [routerLink]="['/category', { outlets: { popup: category.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

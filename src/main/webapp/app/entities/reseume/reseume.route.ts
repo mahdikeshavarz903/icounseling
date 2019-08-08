@@ -18,7 +18,7 @@ export class ReseumeResolve implements Resolve<IReseume> {
   constructor(private service: ReseumeService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IReseume> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Reseume>) => response.ok),

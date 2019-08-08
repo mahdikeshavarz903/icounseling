@@ -18,7 +18,7 @@ export class VisitorResolve implements Resolve<IVisitor> {
   constructor(private service: VisitorService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IVisitor> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Visitor>) => response.ok),

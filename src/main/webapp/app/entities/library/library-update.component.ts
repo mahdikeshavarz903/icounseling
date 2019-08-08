@@ -49,7 +49,7 @@ export class LibraryUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: IVisitor[]) => {
-          if (!!this.editForm.get('visitorId').value) {
+          if (!this.editForm.get('visitorId').value) {
             this.visitors = res;
           } else {
             this.visitorService

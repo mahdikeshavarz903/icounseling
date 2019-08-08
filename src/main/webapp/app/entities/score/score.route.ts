@@ -18,7 +18,7 @@ export class ScoreResolve implements Resolve<IScore> {
   constructor(private service: ScoreService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IScore> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Score>) => response.ok),

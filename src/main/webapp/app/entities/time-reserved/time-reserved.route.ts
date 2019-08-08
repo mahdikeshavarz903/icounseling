@@ -18,7 +18,7 @@ export class TimeReservedResolve implements Resolve<ITimeReserved> {
   constructor(private service: TimeReservedService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITimeReserved> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<TimeReserved>) => response.ok),

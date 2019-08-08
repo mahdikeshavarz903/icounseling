@@ -55,7 +55,7 @@ export class PostUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: ISchedule[]) => {
-          if (!!this.editForm.get('scheduleId').value) {
+          if (!this.editForm.get('scheduleId').value) {
             this.schedules = res;
           } else {
             this.scheduleService

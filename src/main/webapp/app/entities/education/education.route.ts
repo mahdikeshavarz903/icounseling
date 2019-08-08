@@ -18,7 +18,7 @@ export class EducationResolve implements Resolve<IEducation> {
   constructor(private service: EducationService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IEducation> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Education>) => response.ok),

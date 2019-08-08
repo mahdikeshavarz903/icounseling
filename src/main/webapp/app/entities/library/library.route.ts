@@ -18,7 +18,7 @@ export class LibraryResolve implements Resolve<ILibrary> {
   constructor(private service: LibraryService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ILibrary> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Library>) => response.ok),

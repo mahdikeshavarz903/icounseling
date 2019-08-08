@@ -44,7 +44,7 @@
     -->
     <changeSet id="20190709070948-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/data/reminder.csv"
+                  file="config/liquibase/fake-data/reminder.csv"
                   separator=";"
                   tableName="reminder">
             <column name="id" type="numeric"/>

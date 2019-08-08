@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.icounseling.domain.enumeration.RepeatTime;
 import com.icounseling.domain.enumeration.RepeatUntil;
 /**
- * Integration tests for the {@Link TaskResource} REST controller.
+ * Integration tests for the {@link TaskResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class TaskResourceIT {

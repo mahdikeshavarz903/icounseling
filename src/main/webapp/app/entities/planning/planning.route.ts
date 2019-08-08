@@ -18,7 +18,7 @@ export class PlanningResolve implements Resolve<IPlanning> {
   constructor(private service: PlanningService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IPlanning> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Planning>) => response.ok),

@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.icounseling.domain.enumeration.CategoryType;
 /**
- * Integration tests for the {@Link CategoryResource} REST controller.
+ * Integration tests for the {@link CategoryResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class CategoryResourceIT {

@@ -32,7 +32,7 @@ const ENTITY_STATES = [...reminderRoute, ...reminderPopupRoute];
 export class ICounselingReminderModule {
   constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
     this.languageHelper.language.subscribe((languageKey: string) => {
-      if (languageKey !== undefined) {
+      if (languageKey) {
         this.languageService.changeLanguage(languageKey);
       }
     });

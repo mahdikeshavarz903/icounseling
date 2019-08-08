@@ -4,7 +4,7 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-reminder" [routerLink]="['/reminder/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="iCounselingApp.reminder.home.createLabel">
-            Create new Reminder
+            Create a new Reminder
             </span>
         </button>
     </h2>
@@ -43,7 +43,7 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', 'reminder', { outlets: { popup: reminder.id + '/delete'} }]"
+                                [routerLink]="['/reminder', { outlets: { popup: reminder.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

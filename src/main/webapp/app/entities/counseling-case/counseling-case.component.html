@@ -4,7 +4,7 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-counseling-case" [routerLink]="['/counseling-case/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="iCounselingApp.counselingCase.home.createLabel">
-            Create new Counseling Case
+            Create a new Counseling Case
             </span>
         </button>
     </h2>
@@ -30,12 +30,12 @@
                 <td jhiTranslate="{{'iCounselingApp.CounselingCaseStatus.' + counselingCase.status}}">{{counselingCase.status}}</td>
                 <td>
                     <div *ngIf="counselingCase.visitorId">
-                        <a [routerLink]="['../visitor', counselingCase.visitorId , 'view' ]" >{{counselingCase.visitorId}}</a>
+                        <a [routerLink]="['/visitor', counselingCase.visitorId , 'view' ]" >{{counselingCase.visitorId}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="counselingCase.counselorId">
-                        <a [routerLink]="['../counselor', counselingCase.counselorId , 'view' ]" >{{counselingCase.counselorId}}</a>
+                        <a [routerLink]="['/counselor', counselingCase.counselorId , 'view' ]" >{{counselingCase.counselorId}}</a>
                     </div>
                 </td>
                 <td class="text-right">
@@ -53,7 +53,7 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', 'counseling-case', { outlets: { popup: counselingCase.id + '/delete'} }]"
+                                [routerLink]="['/counseling-case', { outlets: { popup: counselingCase.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

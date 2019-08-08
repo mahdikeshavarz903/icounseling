@@ -18,7 +18,7 @@ export class JobHistoryResolve implements Resolve<IJobHistory> {
   constructor(private service: JobHistoryService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IJobHistory> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<JobHistory>) => response.ok),

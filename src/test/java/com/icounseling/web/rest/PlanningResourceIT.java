@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link PlanningResource} REST controller.
+ * Integration tests for the {@link PlanningResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class PlanningResourceIT {

@@ -33,19 +33,21 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link TimeReservedResource} REST controller.
+ * Integration tests for the {@link TimeReservedResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class TimeReservedResourceIT {
 
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate SMALLER_DATE = LocalDate.ofEpochDay(-1L);
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
     private static final LocalDate DEFAULT_TIME = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_TIME = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate SMALLER_TIME = LocalDate.ofEpochDay(-1L);
 
     @Autowired
     private TimeReservedRepository timeReservedRepository;

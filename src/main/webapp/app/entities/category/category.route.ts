@@ -18,7 +18,7 @@ export class CategoryResolve implements Resolve<ICategory> {
   constructor(private service: CategoryService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICategory> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Category>) => response.ok),

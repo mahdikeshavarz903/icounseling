@@ -4,7 +4,7 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-job-history" [routerLink]="['/job-history/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="iCounselingApp.jobHistory.home.createLabel">
-            Create new Job History
+            Create a new Job History
             </span>
         </button>
     </h2>
@@ -31,7 +31,7 @@
                 <td>{{jobHistory.endDate | date:'medium'}}</td>
                 <td>
                     <div *ngIf="jobHistory.jobId">
-                        <a [routerLink]="['../job', jobHistory.jobId , 'view' ]" >{{jobHistory.jobId}}</a>
+                        <a [routerLink]="['/job', jobHistory.jobId , 'view' ]" >{{jobHistory.jobId}}</a>
                     </div>
                 </td>
                 <td class="text-right">
@@ -49,7 +49,7 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', 'job-history', { outlets: { popup: jobHistory.id + '/delete'} }]"
+                                [routerLink]="['/job-history', { outlets: { popup: jobHistory.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

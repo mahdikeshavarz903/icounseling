@@ -33,16 +33,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link ReminderResource} REST controller.
+ * Integration tests for the {@link ReminderResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class ReminderResourceIT {
 
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate SMALLER_DATE = LocalDate.ofEpochDay(-1L);
 
     private static final LocalDate DEFAULT_TIME = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_TIME = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate SMALLER_TIME = LocalDate.ofEpochDay(-1L);
 
     @Autowired
     private ReminderRepository reminderRepository;

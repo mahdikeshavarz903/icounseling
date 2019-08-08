@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.icounseling.domain.enumeration.PaymentType;
 import com.icounseling.domain.enumeration.DocumentFormat;
 /**
- * Integration tests for the {@Link DocumentResource} REST controller.
+ * Integration tests for the {@link DocumentResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class DocumentResourceIT {
@@ -51,9 +51,11 @@ public class DocumentResourceIT {
 
     private static final Float DEFAULT_PRICE = 1F;
     private static final Float UPDATED_PRICE = 2F;
+    private static final Float SMALLER_PRICE = 1F - 1F;
 
     private static final LocalDate DEFAULT_PUBLISHED_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_PUBLISHED_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate SMALLER_PUBLISHED_DATE = LocalDate.ofEpochDay(-1L);
 
     private static final PaymentType DEFAULT_PAYMENT_TYPE = PaymentType.FREE;
     private static final PaymentType UPDATED_PAYMENT_TYPE = PaymentType.PAID;

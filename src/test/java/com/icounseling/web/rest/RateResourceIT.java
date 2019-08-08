@@ -31,13 +31,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link RateResource} REST controller.
+ * Integration tests for the {@link RateResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class RateResourceIT {
 
     private static final Integer DEFAULT_INDEX = 1;
     private static final Integer UPDATED_INDEX = 2;
+    private static final Integer SMALLER_INDEX = 1 - 1;
 
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_TITLE = "BBBBBBBBBB";

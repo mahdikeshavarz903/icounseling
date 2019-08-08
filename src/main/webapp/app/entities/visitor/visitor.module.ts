@@ -32,7 +32,7 @@ const ENTITY_STATES = [...visitorRoute, ...visitorPopupRoute];
 export class ICounselingVisitorModule {
   constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
     this.languageHelper.language.subscribe((languageKey: string) => {
-      if (languageKey !== undefined) {
+      if (languageKey) {
         this.languageService.changeLanguage(languageKey);
       }
     });

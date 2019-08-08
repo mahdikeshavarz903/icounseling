@@ -18,7 +18,7 @@ export class RateResolve implements Resolve<IRate> {
   constructor(private service: RateService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IRate> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Rate>) => response.ok),

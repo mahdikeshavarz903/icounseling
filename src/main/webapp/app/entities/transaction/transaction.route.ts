@@ -18,7 +18,7 @@ export class TransactionResolve implements Resolve<ITransaction> {
   constructor(private service: TransactionService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITransaction> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Transaction>) => response.ok),

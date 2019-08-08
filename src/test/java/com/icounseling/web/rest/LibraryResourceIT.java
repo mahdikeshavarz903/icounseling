@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link LibraryResource} REST controller.
+ * Integration tests for the {@link LibraryResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class LibraryResourceIT {
@@ -43,6 +43,7 @@ public class LibraryResourceIT {
 
     private static final LocalDate DEFAULT_CREATION_TIME = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_CREATION_TIME = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate SMALLER_CREATION_TIME = LocalDate.ofEpochDay(-1L);
 
     @Autowired
     private LibraryRepository libraryRepository;

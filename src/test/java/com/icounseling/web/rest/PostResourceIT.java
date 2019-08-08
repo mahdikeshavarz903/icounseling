@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.icounseling.domain.enumeration.DocumentFormat;
 /**
- * Integration tests for the {@Link PostResource} REST controller.
+ * Integration tests for the {@link PostResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class PostResourceIT {

@@ -6,83 +6,83 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
         path: 'counseling-case',
-        loadChildren: './counseling-case/counseling-case.module#ICounselingCounselingCaseModule'
+        loadChildren: () => import('./counseling-case/counseling-case.module').then(m => m.ICounselingCounselingCaseModule)
       },
       {
         path: 'reseume',
-        loadChildren: './reseume/reseume.module#ICounselingReseumeModule'
+        loadChildren: () => import('./reseume/reseume.module').then(m => m.ICounselingReseumeModule)
       },
       {
         path: 'education',
-        loadChildren: './education/education.module#ICounselingEducationModule'
+        loadChildren: () => import('./education/education.module').then(m => m.ICounselingEducationModule)
       },
       {
         path: 'planning',
-        loadChildren: './planning/planning.module#ICounselingPlanningModule'
+        loadChildren: () => import('./planning/planning.module').then(m => m.ICounselingPlanningModule)
       },
       {
         path: 'task',
-        loadChildren: './task/task.module#ICounselingTaskModule'
+        loadChildren: () => import('./task/task.module').then(m => m.ICounselingTaskModule)
       },
       {
         path: 'reminder',
-        loadChildren: './reminder/reminder.module#ICounselingReminderModule'
+        loadChildren: () => import('./reminder/reminder.module').then(m => m.ICounselingReminderModule)
       },
       {
         path: 'time-reserved',
-        loadChildren: './time-reserved/time-reserved.module#ICounselingTimeReservedModule'
+        loadChildren: () => import('./time-reserved/time-reserved.module').then(m => m.ICounselingTimeReservedModule)
       },
       {
         path: 'job',
-        loadChildren: './job/job.module#ICounselingJobModule'
+        loadChildren: () => import('./job/job.module').then(m => m.ICounselingJobModule)
       },
       {
         path: 'job-history',
-        loadChildren: './job-history/job-history.module#ICounselingJobHistoryModule'
+        loadChildren: () => import('./job-history/job-history.module').then(m => m.ICounselingJobHistoryModule)
       },
       {
         path: 'schedule',
-        loadChildren: './schedule/schedule.module#ICounselingScheduleModule'
+        loadChildren: () => import('./schedule/schedule.module').then(m => m.ICounselingScheduleModule)
       },
       {
         path: 'document',
-        loadChildren: './document/document.module#ICounselingDocumentModule'
+        loadChildren: () => import('./document/document.module').then(m => m.ICounselingDocumentModule)
       },
       {
         path: 'post',
-        loadChildren: './post/post.module#ICounselingPostModule'
+        loadChildren: () => import('./post/post.module').then(m => m.ICounselingPostModule)
       },
       {
         path: 'score',
-        loadChildren: './score/score.module#ICounselingScoreModule'
+        loadChildren: () => import('./score/score.module').then(m => m.ICounselingScoreModule)
       },
       {
         path: 'rate',
-        loadChildren: './rate/rate.module#ICounselingRateModule'
+        loadChildren: () => import('./rate/rate.module').then(m => m.ICounselingRateModule)
       },
       {
         path: 'comment',
-        loadChildren: './comment/comment.module#ICounselingCommentModule'
+        loadChildren: () => import('./comment/comment.module').then(m => m.ICounselingCommentModule)
       },
       {
         path: 'library',
-        loadChildren: './library/library.module#ICounselingLibraryModule'
+        loadChildren: () => import('./library/library.module').then(m => m.ICounselingLibraryModule)
       },
       {
         path: 'category',
-        loadChildren: './category/category.module#ICounselingCategoryModule'
+        loadChildren: () => import('./category/category.module').then(m => m.ICounselingCategoryModule)
       },
       {
         path: 'transaction',
-        loadChildren: './transaction/transaction.module#ICounselingTransactionModule'
+        loadChildren: () => import('./transaction/transaction.module').then(m => m.ICounselingTransactionModule)
       },
       {
         path: 'counselor',
-        loadChildren: './counselor/counselor.module#ICounselingCounselorModule'
+        loadChildren: () => import('./counselor/counselor.module').then(m => m.ICounselingCounselorModule)
       },
       {
         path: 'visitor',
-        loadChildren: './visitor/visitor.module#ICounselingVisitorModule'
+        loadChildren: () => import('./visitor/visitor.module').then(m => m.ICounselingVisitorModule)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

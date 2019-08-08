@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.icounseling.domain.enumeration.EducationDegree;
 /**
- * Integration tests for the {@Link EducationResource} REST controller.
+ * Integration tests for the {@link EducationResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class EducationResourceIT {

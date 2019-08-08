@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link ReseumeResource} REST controller.
+ * Integration tests for the {@link ReseumeResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class ReseumeResourceIT {

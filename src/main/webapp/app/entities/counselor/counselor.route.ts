@@ -18,7 +18,7 @@ export class CounselorResolve implements Resolve<ICounselor> {
   constructor(private service: CounselorService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICounselor> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Counselor>) => response.ok),

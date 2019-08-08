@@ -18,7 +18,7 @@ export class ScheduleResolve implements Resolve<ISchedule> {
   constructor(private service: ScheduleService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ISchedule> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Schedule>) => response.ok),

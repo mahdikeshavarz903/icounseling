@@ -44,7 +44,7 @@
     -->
     <changeSet id="20190709070958-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/data/comment.csv"
+                  file="config/liquibase/fake-data/comment.csv"
                   separator=";"
                   tableName="comment">
             <column name="id" type="numeric"/>

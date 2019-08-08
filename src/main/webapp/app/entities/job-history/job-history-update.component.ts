@@ -49,7 +49,7 @@ export class JobHistoryUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: IJob[]) => {
-          if (!!this.editForm.get('jobId').value) {
+          if (!this.editForm.get('jobId').value) {
             this.jobs = res;
           } else {
             this.jobService

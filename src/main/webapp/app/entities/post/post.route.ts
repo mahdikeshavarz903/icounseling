@@ -18,7 +18,7 @@ export class PostResolve implements Resolve<IPost> {
   constructor(private service: PostService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IPost> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Post>) => response.ok),

@@ -5,7 +5,7 @@
         "title": "Visitors",
         "createLabel": "Create a new Visitor",
         "createOrEditLabel": "Create or edit a Visitor",
-        "notFound": "No Visitor found"
+        "notFound": "No Visitors found"
       },
       "created": "A new Visitor is created with identifier {{ param }}",
       "updated": "A Visitor is updated with identifier {{ param }}",

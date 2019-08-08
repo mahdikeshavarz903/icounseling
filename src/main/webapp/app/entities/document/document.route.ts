@@ -18,7 +18,7 @@ export class DocumentResolve implements Resolve<IDocument> {
   constructor(private service: DocumentService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IDocument> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Document>) => response.ok),

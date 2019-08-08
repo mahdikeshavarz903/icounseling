@@ -62,7 +62,7 @@ export class CommentUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: ISchedule[]) => {
-          if (!!this.editForm.get('scheduleId').value) {
+          if (!this.editForm.get('scheduleId').value) {
             this.schedules = res;
           } else {
             this.scheduleService
@@ -87,7 +87,7 @@ export class CommentUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: IRate[]) => {
-          if (!!this.editForm.get('rateId').value) {
+          if (!this.editForm.get('rateId').value) {
             this.rates = res;
           } else {
             this.rateService

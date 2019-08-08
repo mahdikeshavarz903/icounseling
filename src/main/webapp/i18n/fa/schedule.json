@@ -5,7 +5,7 @@
         "title": "Schedules",
         "createLabel": "Create a new Schedule",
         "createOrEditLabel": "Create or edit a Schedule",
-        "notFound": "No Schedule found"
+        "notFound": "No Schedules found"
       },
       "created": "A new Schedule is created with identifier {{ param }}",
       "updated": "A Schedule is updated with identifier {{ param }}",

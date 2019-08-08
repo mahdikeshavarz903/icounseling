@@ -5,7 +5,7 @@
         "title": "Reseumes",
         "createLabel": "Create a new Reseume",
         "createOrEditLabel": "Create or edit a Reseume",
-        "notFound": "No Reseume found"
+        "notFound": "No Reseumes found"
       },
       "created": "A new Reseume is created with identifier {{ param }}",
       "updated": "A Reseume is updated with identifier {{ param }}",

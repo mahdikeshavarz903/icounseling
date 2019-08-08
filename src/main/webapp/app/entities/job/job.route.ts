@@ -18,7 +18,7 @@ export class JobResolve implements Resolve<IJob> {
   constructor(private service: JobService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IJob> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Job>) => response.ok),

@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.icounseling.domain.enumeration.ConsultantType;
 /**
- * Integration tests for the {@Link CounselorResource} REST controller.
+ * Integration tests for the {@link CounselorResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class CounselorResourceIT {

@@ -5,7 +5,7 @@
         "title": "Plannings",
         "createLabel": "Create a new Planning",
         "createOrEditLabel": "Create or edit a Planning",
-        "notFound": "No Planning found"
+        "notFound": "No Plannings found"
       },
       "created": "A new Planning is created with identifier {{ param }}",
       "updated": "A Planning is updated with identifier {{ param }}",
