@@ -1,13 +1,17 @@
 package com.icounseling.web.rest;
 
 import com.icounseling.ICounselingApp;
+import com.icounseling.domain.CounselingCase;
 import com.icounseling.domain.Counselor;
+import com.icounseling.domain.Visitor;
+import com.icounseling.domain.enumeration.ConsultantType;
+import com.icounseling.domain.enumeration.CounselingCaseStatus;
+import com.icounseling.repository.CounselingCaseRepository;
 import com.icounseling.repository.CounselorRepository;
 import com.icounseling.service.CounselorService;
 import com.icounseling.service.dto.CounselorDTO;
 import com.icounseling.service.mapper.CounselorMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -29,8 +33,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.icounseling.domain.enumeration.ConsultantType;
 /**
  * Integration tests for the {@Link CounselorResource} REST controller.
  */
@@ -39,12 +41,19 @@ public class CounselorResourceIT {
 
     private static final ConsultantType DEFAULT_CONSULTANT_TYPE = ConsultantType.PSYCHOLOGY;
     private static final ConsultantType UPDATED_CONSULTANT_TYPE = ConsultantType.LEGAL;
+    private static final CounselingCaseStatus COUNSELING_CASE_STATUS_OPEN = CounselingCaseStatus.OPENED;
+    private static final CounselingCaseStatus COUNSELING_CASE_STATUS_CLOSED = CounselingCaseStatus.CLOSED;
 
     @Autowired
     private CounselorRepository counselorRepository;
 
     @Autowired
     private CounselorMapper counselorMapper;
+
+    @Autowired
+    private CounselingCaseRepository counselingCaseRepository;
+
+    private CounselingCase counselingCase;
 
     @Autowired
     private CounselorService counselorService;
@@ -91,6 +100,17 @@ public class CounselorResourceIT {
             .consultantType(DEFAULT_CONSULTANT_TYPE);
         return counselor;
     }
+
+    public static CounselingCase createCounselingCaseEntity(EntityManager em) {
+        CounselingCase counselingCase = new CounselingCase();
+        counselingCase.setCounselor(createEntity(em));
+        counselingCase.setStatus(CounselingCaseStatus.OPENED);
+
+        Visitor visitor = new Visitor();
+        counselingCase.setVisitor(visitor);
+
+        return counselingCase;
+    }
     /**
      * Create an updated entity for this test.
      *
@@ -105,6 +125,7 @@ public class CounselorResourceIT {
 
     @BeforeEach
     public void initTest() {
+        counselingCase = createCounselingCaseEntity(em);
         counselor = createEntity(em);
     }
 
@@ -179,6 +200,42 @@ public class CounselorResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(counselor.getId().intValue())))
             .andExpect(jsonPath("$.[*].consultantType").value(hasItem(DEFAULT_CONSULTANT_TYPE.toString())));
+    }
+
+    @Test
+    @Transactional
+    public void getAllCasesForOneCounselor() throws Exception {
+        counselingCaseRepository.saveAndFlush(counselingCase);
+
+        CounselingCase counselingCase2 = createCounselingCaseEntity(em);
+        CounselingCase counselingCase3 = createCounselingCaseEntity(em);
+
+        Counselor counselor = createEntity(em);
+        Visitor visitor2 = new Visitor();
+        Visitor visitor3 = new Visitor();
+
+//        counselor.setId(1L);
+//        visitor2.setId(4L);
+//        visitor3.setId(5L);
+
+        counselingCase2.setCounselor(counselor);
+        counselingCase2.setVisitor(visitor2);
+        counselingCase2.setStatus(CounselingCaseStatus.OPENED);
+
+        counselingCase3.setCounselor(counselor);
+        counselingCase3.setVisitor(visitor3);
+        counselingCase3.setStatus(CounselingCaseStatus.CLOSED);
+
+        counselingCaseRepository.save(counselingCase2);
+        counselingCaseRepository.save(counselingCase3);
+
+        restCounselorMockMvc.perform((get("/api/counselors/{id}/counseling-case?sort=id,desc", counselor.getId().intValue())))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(visitor2.getId().intValue())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(COUNSELING_CASE_STATUS_OPEN.toString())));
+//            .andExpect(jsonPath("$.[*].visitor").value(counselingCase.getVisitor().getId().intValue()))
+//            .andExpect(jsonPath("$.[*].counselor").value(counselingCase.getCounselor().getId().intValue()));
     }
     
     @Test

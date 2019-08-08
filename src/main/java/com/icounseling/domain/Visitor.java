@@ -1,10 +1,10 @@
 package com.icounseling.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,6 +30,10 @@ public class Visitor implements Serializable {
     @OneToOne
     @JoinColumn(unique = true)
     private Education education;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User user;
 
     @OneToMany(mappedBy = "visitor")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -80,6 +84,19 @@ public class Visitor implements Serializable {
 
     public void setEducation(Education education) {
         this.education = education;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Visitor user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Transaction> getTransactions() {

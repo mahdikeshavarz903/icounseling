@@ -1,8 +1,10 @@
 package com.icounseling.service.dto;
-import javax.validation.constraints.*;
+
+import com.icounseling.domain.enumeration.ConsultantType;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
-import com.icounseling.domain.enumeration.ConsultantType;
 
 /**
  * A DTO for the {@link com.icounseling.domain.Counselor} entity.
@@ -18,6 +20,8 @@ public class CounselorDTO implements Serializable {
     private Long educationId;
 
     private Long scoreId;
+
+    private Long userId;
 
     public Long getId() {
         return id;
@@ -51,6 +55,14 @@ public class CounselorDTO implements Serializable {
         this.scoreId = scoreId;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -79,6 +91,7 @@ public class CounselorDTO implements Serializable {
             ", consultantType='" + getConsultantType() + "'" +
             ", education=" + getEducationId() +
             ", score=" + getScoreId() +
+            ", user=" + getUserId() +
             "}";
     }
 }

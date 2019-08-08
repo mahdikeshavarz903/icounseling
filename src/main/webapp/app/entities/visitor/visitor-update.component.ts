@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiAlertService } from 'ng-jhipster';
-import { IVisitor, Visitor } from 'app/shared/model/visitor.model';
-import { VisitorService } from './visitor.service';
-import { IScore } from 'app/shared/model/score.model';
-import { ScoreService } from 'app/entities/score';
-import { IEducation } from 'app/shared/model/education.model';
-import { EducationService } from 'app/entities/education';
-import { ICounselingCase } from 'app/shared/model/counseling-case.model';
-import { CounselingCaseService } from 'app/entities/counseling-case';
-import { ILibrary } from 'app/shared/model/library.model';
-import { LibraryService } from 'app/entities/library';
+import {Component, OnInit} from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {FormBuilder} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {JhiAlertService} from 'ng-jhipster';
+import {IVisitor, Visitor} from 'app/shared/model/visitor.model';
+import {VisitorService} from './visitor.service';
+import {IScore} from 'app/shared/model/score.model';
+import {ScoreService} from 'app/entities/score';
+import {IEducation} from 'app/shared/model/education.model';
+import {EducationService} from 'app/entities/education';
+import {IUser, UserService} from 'app/core';
+import {ICounselingCase} from 'app/shared/model/counseling-case.model';
+import {CounselingCaseService} from 'app/entities/counseling-case';
+import {ILibrary} from 'app/shared/model/library.model';
+import {LibraryService} from 'app/entities/library';
 
 @Component({
   selector: 'jhi-visitor-update',
@@ -27,6 +28,8 @@ export class VisitorUpdateComponent implements OnInit {
 
   educations: IEducation[];
 
+  users: IUser[];
+
   counselingcases: ICounselingCase[];
 
   libraries: ILibrary[];
@@ -34,7 +37,8 @@ export class VisitorUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     scoreId: [],
-    educationId: []
+    educationId: [],
+    userId: []
   });
 
   constructor(
@@ -42,6 +46,7 @@ export class VisitorUpdateComponent implements OnInit {
     protected visitorService: VisitorService,
     protected scoreService: ScoreService,
     protected educationService: EducationService,
+    protected userService: UserService,
     protected counselingCaseService: CounselingCaseService,
     protected libraryService: LibraryService,
     protected activatedRoute: ActivatedRoute,
@@ -103,6 +108,13 @@ export class VisitorUpdateComponent implements OnInit {
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
+    this.userService
+      .query()
+      .pipe(
+        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IUser[]>) => response.body)
+      )
+      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
     this.counselingCaseService
       .query()
       .pipe(
@@ -123,7 +135,8 @@ export class VisitorUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: visitor.id,
       scoreId: visitor.scoreId,
-      educationId: visitor.educationId
+      educationId: visitor.educationId,
+      userId: visitor.userId
     });
   }
 
@@ -146,7 +159,8 @@ export class VisitorUpdateComponent implements OnInit {
       ...new Visitor(),
       id: this.editForm.get(['id']).value,
       scoreId: this.editForm.get(['scoreId']).value,
-      educationId: this.editForm.get(['educationId']).value
+      educationId: this.editForm.get(['educationId']).value,
+      userId: this.editForm.get(['userId']).value
     };
   }
 
@@ -171,6 +185,10 @@ export class VisitorUpdateComponent implements OnInit {
   }
 
   trackEducationById(index: number, item: IEducation) {
+    return item.id;
+  }
+
+  trackUserById(index: number, item: IUser) {
     return item.id;
   }
 

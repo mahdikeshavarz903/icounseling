@@ -1,15 +1,14 @@
 package com.icounseling.domain;
+
+import com.icounseling.domain.enumeration.ConsultantType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.icounseling.domain.enumeration.ConsultantType;
 
 /**
  * A Counselor.
@@ -37,6 +36,10 @@ public class Counselor implements Serializable {
     @OneToOne
     @JoinColumn(unique = true)
     private Score score;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User user;
 
     @OneToMany(mappedBy = "counselor")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -104,6 +107,19 @@ public class Counselor implements Serializable {
 
     public void setScore(Score score) {
         this.score = score;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Counselor user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Post> getPosts() {

@@ -1,12 +1,11 @@
 version: '2'
 services:
   icounseling-app:
-    image: mahdikeshavarz/icounseling:thirdimage
+    image: mahdikeshavarz/icounseling:fimage
     environment:
-      - _JAVA_OPTIONS=-Xmx512m -Xms256m
-      - 'SPRING_PROFILES_ACTIVE=prod,swagger'
+      - SPRING_PROFILES_ACTIVE=prod,swagger
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
-      - 'SPRING_DATASOURCE_URL=jdbc:mysql://icounseling.cdmk8sshibfx.eu-central-1.rds.amazonaws.com:3306/icounseling?useUnicode=true&characterEncoding=utf8&useSSL=false'
+      - SPRING_DATASOURCE_URL=jdbc:mysql://icounseling.cdmk8sshibfx.eu-central-1.rds.amazonaws.com:3306/icounseling?useUnicode=true&characterEncoding=utf8&useSSL=false
       - JHIPSTER_SLEEP=30
     ports:
       - '8080:8080'
@@ -14,6 +13,6 @@ services:
     image: 'mysql:8.0.16'
     environment:
       - MYSQL_USER=icounseling
-      - MYSQL_PASSWORD=1245783690
+      - MYSQL_PASSWORD=mah@1377
       - MYSQL_DATABASE=icounseling
     command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp

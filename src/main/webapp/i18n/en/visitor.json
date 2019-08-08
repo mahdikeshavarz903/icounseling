@@ -18,6 +18,7 @@
       },
       "score": "Score",
       "education": "Education",
+      "user": "User",
       "transaction": "Transaction",
       "job": "Job",
       "counselingCase": "Counseling Case",

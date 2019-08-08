@@ -19,6 +19,14 @@
             "ownerSide": true
         },
         {
+          "relationshipType": "one-to-one",
+          "otherEntityName": "user",
+          "otherEntityRelationshipName": "visitor",
+          "relationshipName": "user",
+          "otherEntityField": "id",
+          "ownerSide": true
+        },
+      {
             "relationshipType": "one-to-many",
             "otherEntityName": "transaction",
             "otherEntityRelationshipName": "visitor",
@@ -45,7 +53,7 @@
             "ownerSide": false
         }
     ],
-    "changelogDate": "20190709070950",
+  "changelogDate": "20190730111055",
     "entityTableName": "visitor",
     "dto": "mapstruct",
     "pagination": "pagination",

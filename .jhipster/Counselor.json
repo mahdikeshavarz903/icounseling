@@ -28,6 +28,14 @@
             "ownerSide": true
         },
         {
+          "relationshipType": "one-to-one",
+          "otherEntityName": "user",
+          "otherEntityRelationshipName": "counselor",
+          "relationshipName": "user",
+          "otherEntityField": "id",
+          "ownerSide": true
+        },
+      {
             "relationshipType": "one-to-many",
             "otherEntityName": "post",
             "otherEntityRelationshipName": "counselor",
@@ -58,7 +66,7 @@
             "relationshipName": "counselingCase"
         }
     ],
-    "changelogDate": "20190709070943",
+  "changelogDate": "20190730111048",
     "entityTableName": "counselor",
     "dto": "mapstruct",
     "pagination": "pagination",

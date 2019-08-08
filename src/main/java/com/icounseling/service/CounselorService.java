@@ -1,7 +1,7 @@
 package com.icounseling.service;
 
+import com.icounseling.service.dto.CounselingCaseDTO;
 import com.icounseling.service.dto.CounselorDTO;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -28,6 +28,8 @@ public interface CounselorService {
      */
     Page<CounselorDTO> findAll(Pageable pageable);
 
+
+    Page<CounselingCaseDTO> findAllCasesForOneCounselor(Long id, Pageable pageable);
 
     /**
      * Get the "id" counselor.

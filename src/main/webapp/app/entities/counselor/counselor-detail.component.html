@@ -21,6 +21,10 @@
                         <a [routerLink]="['/score', counselor.scoreId, 'view']">{{counselor.scoreId}}</a>
                     </div>
                 </dd>
+                <dt><span jhiTranslate="iCounselingApp.counselor.user">User</span></dt>
+                <dd>
+                    {{counselor.userId}}
+                </dd>
             </dl>
 
             <button type="submit"

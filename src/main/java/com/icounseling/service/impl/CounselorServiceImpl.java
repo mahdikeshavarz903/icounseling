@@ -1,13 +1,17 @@
 package com.icounseling.service.impl;
 
-import com.icounseling.service.CounselorService;
 import com.icounseling.domain.Counselor;
+import com.icounseling.repository.CounselingCaseRepository;
 import com.icounseling.repository.CounselorRepository;
+import com.icounseling.repository.VisitorRepository;
+import com.icounseling.service.CounselorService;
+import com.icounseling.service.dto.CounselingCaseDTO;
 import com.icounseling.service.dto.CounselorDTO;
+import com.icounseling.service.mapper.CounselingCaseMapper;
 import com.icounseling.service.mapper.CounselorMapper;
+import com.icounseling.service.mapper.VisitorMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,9 +32,18 @@ public class CounselorServiceImpl implements CounselorService {
 
     private final CounselorMapper counselorMapper;
 
-    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper) {
+    private final CounselingCaseRepository counselingCaseRepository;
+
+    private final VisitorMapper visitorMapper;
+
+    private final CounselingCaseMapper counselingCaseMapper;
+
+    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, VisitorMapper visitorMapper, CounselingCaseMapper counselingCaseMapper1) {
         this.counselorRepository = counselorRepository;
         this.counselorMapper = counselorMapper;
+        this.counselingCaseRepository = counselingCaseRepository;
+        this.visitorMapper = visitorMapper;
+        this.counselingCaseMapper = counselingCaseMapper1;
     }
 
     /**
@@ -61,6 +74,12 @@ public class CounselorServiceImpl implements CounselorService {
             .map(counselorMapper::toDto);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Page<CounselingCaseDTO> findAllCasesForOneCounselor(Long id, Pageable pageable) {
+        log.debug("Request to get all CounselingCases for one counselor");
+        return counselingCaseRepository.findCounselingCaseByCounselorId(id, pageable).map(counselingCaseMapper::toDto);
+    }
 
     /**
      * Get one counselor by id.

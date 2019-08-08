@@ -21,6 +21,9 @@
             <th jhiSortBy="consultantType"><span jhiTranslate="iCounselingApp.counselor.consultantType">Consultant Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="educationId"><span jhiTranslate="iCounselingApp.counselor.education">Education</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="scoreId"><span jhiTranslate="iCounselingApp.counselor.score">Score</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="userId"><span jhiTranslate="iCounselingApp.counselor.user">User</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </th>
             <th></th>
             </tr>
             </thead>
@@ -37,6 +40,9 @@
                     <div *ngIf="counselor.scoreId">
                         <a [routerLink]="['../score', counselor.scoreId , 'view' ]" >{{counselor.scoreId}}</a>
                     </div>
+                </td>
+                <td>
+                    {{counselor.userId}}
                 </td>
                 <td class="text-right">
                     <div class="btn-group">

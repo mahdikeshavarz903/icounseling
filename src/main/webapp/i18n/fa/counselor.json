@@ -19,6 +19,7 @@
       "consultantType": "Consultant Type",
       "education": "Education",
       "score": "Score",
+      "user": "User",
       "post": "Post",
       "document": "Document",
       "timeReserved": "Time Reserved",

@@ -1,14 +1,13 @@
 package com.icounseling.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.icounseling.domain.enumeration.CounselingCaseStatus;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-
-import com.icounseling.domain.enumeration.CounselingCaseStatus;
 
 /**
  * A CounselingCase.
@@ -29,11 +28,11 @@ public class CounselingCase implements Serializable {
     @Column(name = "status", nullable = false)
     private CounselingCaseStatus status;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(unique = true)
     private Visitor visitor;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JsonIgnoreProperties("counselingCases")
     private Counselor counselor;
 

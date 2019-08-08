@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity Visitor.
     -->
-    <changeSet id="20190709070950-2" author="jhipster">
+    <changeSet id="20190730111055-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="score_id"
                                  baseTableName="visitor"
@@ -19,6 +19,12 @@
                                  constraintName="fk_visitor_education_id"
                                  referencedColumnNames="id"
                                  referencedTableName="education"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="visitor"
+                                 constraintName="fk_visitor_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
 
     </changeSet>
 </databaseChangeLog>

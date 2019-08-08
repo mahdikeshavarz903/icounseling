@@ -1,22 +1,24 @@
 package com.icounseling.service.mapper;
 
-import com.icounseling.domain.*;
+import com.icounseling.domain.Visitor;
 import com.icounseling.service.dto.VisitorDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity {@link Visitor} and its DTO {@link VisitorDTO}.
  */
-@Mapper(componentModel = "spring", uses = {ScoreMapper.class, EducationMapper.class})
+@Mapper(componentModel = "spring", uses = {ScoreMapper.class, EducationMapper.class, UserMapper.class})
 public interface VisitorMapper extends EntityMapper<VisitorDTO, Visitor> {
 
     @Mapping(source = "score.id", target = "scoreId")
     @Mapping(source = "education.id", target = "educationId")
+    @Mapping(source = "user.id", target = "userId")
     VisitorDTO toDto(Visitor visitor);
 
     @Mapping(source = "scoreId", target = "score")
     @Mapping(source = "educationId", target = "education")
+    @Mapping(source = "userId", target = "user")
     @Mapping(target = "transactions", ignore = true)
     @Mapping(target = "removeTransaction", ignore = true)
     @Mapping(target = "jobs", ignore = true)

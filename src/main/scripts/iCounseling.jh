@@ -188,6 +188,8 @@ relationship OneToOne{
     Comment{rate} to Rate{comment}
     Document{comment} to Comment{document}
     Library{visitor} to Visitor{library}
+    Visitor{user} to User{visitor}
+    Counselor{user} to User{counselor}
 }
 
 dto * with mapstruct

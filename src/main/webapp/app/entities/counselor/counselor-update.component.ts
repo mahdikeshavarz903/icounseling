@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiAlertService } from 'ng-jhipster';
-import { ICounselor, Counselor } from 'app/shared/model/counselor.model';
-import { CounselorService } from './counselor.service';
-import { IEducation } from 'app/shared/model/education.model';
-import { EducationService } from 'app/entities/education';
-import { IScore } from 'app/shared/model/score.model';
-import { ScoreService } from 'app/entities/score';
+import {Component, OnInit} from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {JhiAlertService} from 'ng-jhipster';
+import {Counselor, ICounselor} from 'app/shared/model/counselor.model';
+import {CounselorService} from './counselor.service';
+import {IEducation} from 'app/shared/model/education.model';
+import {EducationService} from 'app/entities/education';
+import {IScore} from 'app/shared/model/score.model';
+import {ScoreService} from 'app/entities/score';
+import {IUser, UserService} from 'app/core';
 
 @Component({
   selector: 'jhi-counselor-update',
@@ -23,11 +24,14 @@ export class CounselorUpdateComponent implements OnInit {
 
   scores: IScore[];
 
+  users: IUser[];
+
   editForm = this.fb.group({
     id: [],
     consultantType: [null, [Validators.required]],
     educationId: [],
-    scoreId: []
+    scoreId: [],
+    userId: []
   });
 
   constructor(
@@ -35,6 +39,7 @@ export class CounselorUpdateComponent implements OnInit {
     protected counselorService: CounselorService,
     protected educationService: EducationService,
     protected scoreService: ScoreService,
+    protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -94,6 +99,13 @@ export class CounselorUpdateComponent implements OnInit {
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
+    this.userService
+      .query()
+      .pipe(
+        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IUser[]>) => response.body)
+      )
+      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(counselor: ICounselor) {
@@ -101,7 +113,8 @@ export class CounselorUpdateComponent implements OnInit {
       id: counselor.id,
       consultantType: counselor.consultantType,
       educationId: counselor.educationId,
-      scoreId: counselor.scoreId
+      scoreId: counselor.scoreId,
+      userId: counselor.userId
     });
   }
 
@@ -125,7 +138,8 @@ export class CounselorUpdateComponent implements OnInit {
       id: this.editForm.get(['id']).value,
       consultantType: this.editForm.get(['consultantType']).value,
       educationId: this.editForm.get(['educationId']).value,
-      scoreId: this.editForm.get(['scoreId']).value
+      scoreId: this.editForm.get(['scoreId']).value,
+      userId: this.editForm.get(['userId']).value
     };
   }
 
@@ -150,6 +164,10 @@ export class CounselorUpdateComponent implements OnInit {
   }
 
   trackScoreById(index: number, item: IScore) {
+    return item.id;
+  }
+
+  trackUserById(index: number, item: IUser) {
     return item.id;
   }
 }
