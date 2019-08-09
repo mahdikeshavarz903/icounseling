@@ -1,24 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiPaginationUtil, JhiResolvePagingParams } from 'ng-jhipster';
-import { UserRouteAccessService } from 'app/core';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Reseume } from 'app/shared/model/reseume.model';
-import { ReseumeService } from './reseume.service';
-import { ReseumeComponent } from './reseume.component';
-import { ReseumeDetailComponent } from './reseume-detail.component';
-import { ReseumeUpdateComponent } from './reseume-update.component';
-import { ReseumeDeletePopupComponent } from './reseume-delete-dialog.component';
-import { IReseume } from 'app/shared/model/reseume.model';
+import {Injectable} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
+import {JhiResolvePagingParams} from 'ng-jhipster';
+import {UserRouteAccessService} from 'app/core';
+import {Observable, of} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {IReseume, Reseume} from 'app/shared/model/reseume.model';
+import {ReseumeService} from './reseume.service';
+import {ReseumeComponent} from './reseume.component';
+import {ReseumeDetailComponent} from './reseume-detail.component';
+import {ReseumeUpdateComponent} from './reseume-update.component';
+import {ReseumeDeletePopupComponent} from './reseume-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class ReseumeResolve implements Resolve<IReseume> {
   constructor(private service: ReseumeService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IReseume> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Reseume>) => response.ok),

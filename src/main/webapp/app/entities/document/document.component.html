@@ -4,7 +4,7 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-document" [routerLink]="['/document/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="iCounselingApp.document.home.createLabel">
-            Create new Document
+            Create a new Document
             </span>
         </button>
     </h2>
@@ -52,22 +52,22 @@
                 <td>{{document.tag}}</td>
                 <td>
                     <div *ngIf="document.rateId">
-                        <a [routerLink]="['../rate', document.rateId , 'view' ]" >{{document.rateIndex}}</a>
+                        <a [routerLink]="['/rate', document.rateId , 'view' ]">{{document.rateIndex}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="document.commentId">
-                        <a [routerLink]="['../comment', document.commentId , 'view' ]" >{{document.commentId}}</a>
+                        <a [routerLink]="['/comment', document.commentId , 'view' ]">{{document.commentId}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="document.gategoryId">
-                        <a [routerLink]="['../category', document.gategoryId , 'view' ]" >{{document.gategoryCategoryType}}</a>
+                        <a [routerLink]="['/category', document.gategoryId , 'view' ]">{{document.gategoryCategoryType}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="document.counselorId">
-                        <a [routerLink]="['../counselor', document.counselorId , 'view' ]" >{{document.counselorId}}</a>
+                        <a [routerLink]="['/counselor', document.counselorId , 'view' ]">{{document.counselorId}}</a>
                     </div>
                 </td>
                 <td class="text-right">
@@ -85,7 +85,7 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', 'document', { outlets: { popup: document.id + '/delete'} }]"
+                                [routerLink]="['/document', { outlets: { popup: document.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

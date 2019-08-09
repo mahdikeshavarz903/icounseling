@@ -4,7 +4,7 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-counselor" [routerLink]="['/counselor/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="iCounselingApp.counselor.home.createLabel">
-            Create new Counselor
+            Create a new Counselor
             </span>
         </button>
     </h2>
@@ -33,12 +33,12 @@
                 <td jhiTranslate="{{'iCounselingApp.ConsultantType.' + counselor.consultantType}}">{{counselor.consultantType}}</td>
                 <td>
                     <div *ngIf="counselor.educationId">
-                        <a [routerLink]="['../education', counselor.educationId , 'view' ]" >{{counselor.educationId}}</a>
+                        <a [routerLink]="['/education', counselor.educationId , 'view' ]">{{counselor.educationId}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="counselor.scoreId">
-                        <a [routerLink]="['../score', counselor.scoreId , 'view' ]" >{{counselor.scoreId}}</a>
+                        <a [routerLink]="['/score', counselor.scoreId , 'view' ]">{{counselor.scoreId}}</a>
                     </div>
                 </td>
                 <td>
@@ -59,7 +59,7 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', 'counselor', { outlets: { popup: counselor.id + '/delete'} }]"
+                                [routerLink]="['/counselor', { outlets: { popup: counselor.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

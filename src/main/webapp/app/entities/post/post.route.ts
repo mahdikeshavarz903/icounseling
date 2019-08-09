@@ -1,24 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiPaginationUtil, JhiResolvePagingParams } from 'ng-jhipster';
-import { UserRouteAccessService } from 'app/core';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Post } from 'app/shared/model/post.model';
-import { PostService } from './post.service';
-import { PostComponent } from './post.component';
-import { PostDetailComponent } from './post-detail.component';
-import { PostUpdateComponent } from './post-update.component';
-import { PostDeletePopupComponent } from './post-delete-dialog.component';
-import { IPost } from 'app/shared/model/post.model';
+import {Injectable} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
+import {JhiResolvePagingParams} from 'ng-jhipster';
+import {UserRouteAccessService} from 'app/core';
+import {Observable, of} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {IPost, Post} from 'app/shared/model/post.model';
+import {PostService} from './post.service';
+import {PostComponent} from './post.component';
+import {PostDetailComponent} from './post-detail.component';
+import {PostUpdateComponent} from './post-update.component';
+import {PostDeletePopupComponent} from './post-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class PostResolve implements Resolve<IPost> {
   constructor(private service: PostService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IPost> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Post>) => response.ok),

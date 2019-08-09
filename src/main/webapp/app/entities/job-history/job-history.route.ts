@@ -1,24 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiPaginationUtil, JhiResolvePagingParams } from 'ng-jhipster';
-import { UserRouteAccessService } from 'app/core';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JobHistory } from 'app/shared/model/job-history.model';
-import { JobHistoryService } from './job-history.service';
-import { JobHistoryComponent } from './job-history.component';
-import { JobHistoryDetailComponent } from './job-history-detail.component';
-import { JobHistoryUpdateComponent } from './job-history-update.component';
-import { JobHistoryDeletePopupComponent } from './job-history-delete-dialog.component';
-import { IJobHistory } from 'app/shared/model/job-history.model';
+import {Injectable} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
+import {JhiResolvePagingParams} from 'ng-jhipster';
+import {UserRouteAccessService} from 'app/core';
+import {Observable, of} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {IJobHistory, JobHistory} from 'app/shared/model/job-history.model';
+import {JobHistoryService} from './job-history.service';
+import {JobHistoryComponent} from './job-history.component';
+import {JobHistoryDetailComponent} from './job-history-detail.component';
+import {JobHistoryUpdateComponent} from './job-history-update.component';
+import {JobHistoryDeletePopupComponent} from './job-history-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class JobHistoryResolve implements Resolve<IJobHistory> {
   constructor(private service: JobHistoryService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IJobHistory> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<JobHistory>) => response.ok),

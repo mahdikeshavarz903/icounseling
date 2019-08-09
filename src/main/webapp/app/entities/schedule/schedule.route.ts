@@ -1,24 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiPaginationUtil, JhiResolvePagingParams } from 'ng-jhipster';
-import { UserRouteAccessService } from 'app/core';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Schedule } from 'app/shared/model/schedule.model';
-import { ScheduleService } from './schedule.service';
-import { ScheduleComponent } from './schedule.component';
-import { ScheduleDetailComponent } from './schedule-detail.component';
-import { ScheduleUpdateComponent } from './schedule-update.component';
-import { ScheduleDeletePopupComponent } from './schedule-delete-dialog.component';
-import { ISchedule } from 'app/shared/model/schedule.model';
+import {Injectable} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
+import {JhiResolvePagingParams} from 'ng-jhipster';
+import {UserRouteAccessService} from 'app/core';
+import {Observable, of} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {ISchedule, Schedule} from 'app/shared/model/schedule.model';
+import {ScheduleService} from './schedule.service';
+import {ScheduleComponent} from './schedule.component';
+import {ScheduleDetailComponent} from './schedule-detail.component';
+import {ScheduleUpdateComponent} from './schedule-update.component';
+import {ScheduleDeletePopupComponent} from './schedule-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class ScheduleResolve implements Resolve<ISchedule> {
   constructor(private service: ScheduleService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ISchedule> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Schedule>) => response.ok),

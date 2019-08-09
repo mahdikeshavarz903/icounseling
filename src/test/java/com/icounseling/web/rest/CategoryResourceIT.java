@@ -2,12 +2,12 @@ package com.icounseling.web.rest;
 
 import com.icounseling.ICounselingApp;
 import com.icounseling.domain.Category;
+import com.icounseling.domain.enumeration.CategoryType;
 import com.icounseling.repository.CategoryRepository;
 import com.icounseling.service.CategoryService;
 import com.icounseling.service.dto.CategoryDTO;
 import com.icounseling.service.mapper.CategoryMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -30,10 +30,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.icounseling.domain.enumeration.CategoryType;
 /**
- * Integration tests for the {@Link CategoryResource} REST controller.
+ * Integration tests for the {@link CategoryResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class CategoryResourceIT {

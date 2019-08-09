@@ -1,9 +1,8 @@
 package com.icounseling.web.rest;
 
 import com.icounseling.service.ReminderService;
-import com.icounseling.web.rest.errors.BadRequestAlertException;
 import com.icounseling.service.dto.ReminderDTO;
-
+import com.icounseling.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -14,18 +13,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing {@link com.icounseling.domain.Reminder}.
@@ -90,14 +86,14 @@ public class ReminderResource {
     /**
      * {@code GET  /reminders} : get all the reminders.
      *
+
      * @param pageable the pagination information.
-     * @param queryParams a {@link MultiValueMap} query parameters.
-     * @param uriBuilder a {@link UriComponentsBuilder} URI builder.
+
      * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of reminders in body.
      */
     @GetMapping("/reminders")
-    public ResponseEntity<List<ReminderDTO>> getAllReminders(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder, @RequestParam(required = false) String filter) {
+    public ResponseEntity<List<ReminderDTO>> getAllReminders(Pageable pageable, @RequestParam(required = false) String filter) {
         if ("task-is-null".equals(filter)) {
             log.debug("REST request to get all Reminders where task is null");
             return new ResponseEntity<>(reminderService.findAllWhereTaskIsNull(),
@@ -105,7 +101,7 @@ public class ReminderResource {
         }
         log.debug("REST request to get a page of Reminders");
         Page<ReminderDTO> page = reminderService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 

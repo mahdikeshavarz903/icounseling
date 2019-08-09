@@ -5,7 +5,7 @@
         "title": "Posts",
         "createLabel": "Create a new Post",
         "createOrEditLabel": "Create or edit a Post",
-        "notFound": "No Post found"
+        "notFound": "No Posts found"
       },
       "created": "A new Post is created with identifier {{ param }}",
       "updated": "A Post is updated with identifier {{ param }}",

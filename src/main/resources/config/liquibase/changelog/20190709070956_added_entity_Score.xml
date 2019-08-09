@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
     <property name="autoIncrement" value="true"/>
 
@@ -51,9 +49,9 @@
     -->
     <changeSet id="20190709070956-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/data/score.csv"
-                  separator=";"
-                  tableName="score">
+            file="config/liquibase/fake-data/score.csv"
+            separator=";"
+            tableName="score">
             <column name="id" type="numeric"/>
             <column name="total" type="numeric"/>
             <column name="image" type="blob"/>

@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiAlertService } from 'ng-jhipster';
-import { ICounselingCase, CounselingCase } from 'app/shared/model/counseling-case.model';
-import { CounselingCaseService } from './counseling-case.service';
-import { IVisitor } from 'app/shared/model/visitor.model';
-import { VisitorService } from 'app/entities/visitor';
-import { ICounselor } from 'app/shared/model/counselor.model';
-import { CounselorService } from 'app/entities/counselor';
+import {Component, OnInit} from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {JhiAlertService} from 'ng-jhipster';
+import {CounselingCase, ICounselingCase} from 'app/shared/model/counseling-case.model';
+import {CounselingCaseService} from './counseling-case.service';
+import {IVisitor} from 'app/shared/model/visitor.model';
+import {VisitorService} from 'app/entities/visitor';
+import {ICounselor} from 'app/shared/model/counselor.model';
+import {CounselorService} from 'app/entities/counselor';
 
 @Component({
   selector: 'jhi-counseling-case-update',
@@ -52,7 +52,7 @@ export class CounselingCaseUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: IVisitor[]) => {
-          if (!!this.editForm.get('visitorId').value) {
+          if (!this.editForm.get('visitorId').value) {
             this.visitors = res;
           } else {
             this.visitorService

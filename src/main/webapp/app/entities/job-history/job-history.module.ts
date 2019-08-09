@@ -1,17 +1,17 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
-import { JhiLanguageHelper } from 'app/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
+import {JhiLanguageService} from 'ng-jhipster';
+import {JhiLanguageHelper} from 'app/core';
 
-import { ICounselingSharedModule } from 'app/shared';
+import {ICounselingSharedModule} from 'app/shared';
 import {
   JobHistoryComponent,
-  JobHistoryDetailComponent,
-  JobHistoryUpdateComponent,
-  JobHistoryDeletePopupComponent,
   JobHistoryDeleteDialogComponent,
+  JobHistoryDeletePopupComponent,
+  JobHistoryDetailComponent,
+  jobHistoryPopupRoute,
   jobHistoryRoute,
-  jobHistoryPopupRoute
+  JobHistoryUpdateComponent
 } from './';
 
 const ENTITY_STATES = [...jobHistoryRoute, ...jobHistoryPopupRoute];
@@ -32,7 +32,7 @@ const ENTITY_STATES = [...jobHistoryRoute, ...jobHistoryPopupRoute];
 export class ICounselingJobHistoryModule {
   constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
     this.languageHelper.language.subscribe((languageKey: string) => {
-      if (languageKey !== undefined) {
+      if (languageKey) {
         this.languageService.changeLanguage(languageKey);
       }
     });

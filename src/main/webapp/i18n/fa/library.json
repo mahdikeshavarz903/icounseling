@@ -5,7 +5,7 @@
         "title": "Libraries",
         "createLabel": "Create a new Library",
         "createOrEditLabel": "Create or edit a Library",
-        "notFound": "No Library found"
+        "notFound": "No Libraries found"
       },
       "created": "A new Library is created with identifier {{ param }}",
       "updated": "A Library is updated with identifier {{ param }}",

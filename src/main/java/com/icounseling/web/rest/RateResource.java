@@ -1,9 +1,8 @@
 package com.icounseling.web.rest;
 
 import com.icounseling.service.RateService;
-import com.icounseling.web.rest.errors.BadRequestAlertException;
 import com.icounseling.service.dto.RateDTO;
-
+import com.icounseling.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -14,18 +13,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing {@link com.icounseling.domain.Rate}.
@@ -90,14 +86,14 @@ public class RateResource {
     /**
      * {@code GET  /rates} : get all the rates.
      *
+
      * @param pageable the pagination information.
-     * @param queryParams a {@link MultiValueMap} query parameters.
-     * @param uriBuilder a {@link UriComponentsBuilder} URI builder.
+
      * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of rates in body.
      */
     @GetMapping("/rates")
-    public ResponseEntity<List<RateDTO>> getAllRates(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder, @RequestParam(required = false) String filter) {
+    public ResponseEntity<List<RateDTO>> getAllRates(Pageable pageable, @RequestParam(required = false) String filter) {
         if ("document-is-null".equals(filter)) {
             log.debug("REST request to get all Rates where document is null");
             return new ResponseEntity<>(rateService.findAllWhereDocumentIsNull(),
@@ -110,7 +106,7 @@ public class RateResource {
         }
         log.debug("REST request to get a page of Rates");
         Page<RateDTO> page = rateService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 

@@ -1,17 +1,17 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
-import { JhiLanguageHelper } from 'app/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
+import {JhiLanguageService} from 'ng-jhipster';
+import {JhiLanguageHelper} from 'app/core';
 
-import { ICounselingSharedModule } from 'app/shared';
+import {ICounselingSharedModule} from 'app/shared';
 import {
   VisitorComponent,
-  VisitorDetailComponent,
-  VisitorUpdateComponent,
-  VisitorDeletePopupComponent,
   VisitorDeleteDialogComponent,
+  VisitorDeletePopupComponent,
+  VisitorDetailComponent,
+  visitorPopupRoute,
   visitorRoute,
-  visitorPopupRoute
+  VisitorUpdateComponent
 } from './';
 
 const ENTITY_STATES = [...visitorRoute, ...visitorPopupRoute];
@@ -32,7 +32,7 @@ const ENTITY_STATES = [...visitorRoute, ...visitorPopupRoute];
 export class ICounselingVisitorModule {
   constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
     this.languageHelper.language.subscribe((languageKey: string) => {
-      if (languageKey !== undefined) {
+      if (languageKey) {
         this.languageService.changeLanguage(languageKey);
       }
     });

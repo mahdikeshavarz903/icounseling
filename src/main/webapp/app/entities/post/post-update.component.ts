@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
-import { IPost, Post } from 'app/shared/model/post.model';
-import { PostService } from './post.service';
-import { ISchedule } from 'app/shared/model/schedule.model';
-import { ScheduleService } from 'app/entities/schedule';
-import { ICounselor } from 'app/shared/model/counselor.model';
-import { CounselorService } from 'app/entities/counselor';
+import {Component, OnInit} from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {JhiAlertService, JhiDataUtils} from 'ng-jhipster';
+import {IPost, Post} from 'app/shared/model/post.model';
+import {PostService} from './post.service';
+import {ISchedule} from 'app/shared/model/schedule.model';
+import {ScheduleService} from 'app/entities/schedule';
+import {ICounselor} from 'app/shared/model/counselor.model';
+import {CounselorService} from 'app/entities/counselor';
 
 @Component({
   selector: 'jhi-post-update',
@@ -55,7 +55,7 @@ export class PostUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: ISchedule[]) => {
-          if (!!this.editForm.get('scheduleId').value) {
+          if (!this.editForm.get('scheduleId').value) {
             this.schedules = res;
           } else {
             this.scheduleService

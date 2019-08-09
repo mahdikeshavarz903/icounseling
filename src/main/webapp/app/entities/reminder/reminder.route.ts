@@ -1,24 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiPaginationUtil, JhiResolvePagingParams } from 'ng-jhipster';
-import { UserRouteAccessService } from 'app/core';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Reminder } from 'app/shared/model/reminder.model';
-import { ReminderService } from './reminder.service';
-import { ReminderComponent } from './reminder.component';
-import { ReminderDetailComponent } from './reminder-detail.component';
-import { ReminderUpdateComponent } from './reminder-update.component';
-import { ReminderDeletePopupComponent } from './reminder-delete-dialog.component';
-import { IReminder } from 'app/shared/model/reminder.model';
+import {Injectable} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
+import {JhiResolvePagingParams} from 'ng-jhipster';
+import {UserRouteAccessService} from 'app/core';
+import {Observable, of} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {IReminder, Reminder} from 'app/shared/model/reminder.model';
+import {ReminderService} from './reminder.service';
+import {ReminderComponent} from './reminder.component';
+import {ReminderDetailComponent} from './reminder-detail.component';
+import {ReminderUpdateComponent} from './reminder-update.component';
+import {ReminderDeletePopupComponent} from './reminder-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class ReminderResolve implements Resolve<IReminder> {
   constructor(private service: ReminderService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IReminder> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Reminder>) => response.ok),

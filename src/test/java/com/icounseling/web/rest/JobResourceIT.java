@@ -7,7 +7,6 @@ import com.icounseling.service.JobService;
 import com.icounseling.service.dto.JobDTO;
 import com.icounseling.service.mapper.JobMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -31,7 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link JobResource} REST controller.
+ * Integration tests for the {@link JobResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class JobResourceIT {
@@ -41,9 +40,11 @@ public class JobResourceIT {
 
     private static final Long DEFAULT_MIN_SALARY = 1L;
     private static final Long UPDATED_MIN_SALARY = 2L;
+    private static final Long SMALLER_MIN_SALARY = 1L - 1L;
 
     private static final Long DEFAULT_MAX_SALARY = 1L;
     private static final Long UPDATED_MAX_SALARY = 2L;
+    private static final Long SMALLER_MAX_SALARY = 1L - 1L;
 
     @Autowired
     private JobRepository jobRepository;

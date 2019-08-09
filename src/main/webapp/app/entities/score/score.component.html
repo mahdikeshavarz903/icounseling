@@ -4,7 +4,7 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-score" [routerLink]="['/score/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="iCounselingApp.score.home.createLabel">
-            Create new Score
+            Create a new Score
             </span>
         </button>
     </h2>
@@ -48,7 +48,7 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', 'score', { outlets: { popup: score.id + '/delete'} }]"
+                                [routerLink]="['/score', { outlets: { popup: score.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

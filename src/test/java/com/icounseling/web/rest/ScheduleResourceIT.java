@@ -7,7 +7,6 @@ import com.icounseling.service.ScheduleService;
 import com.icounseling.service.dto.ScheduleDTO;
 import com.icounseling.service.mapper.ScheduleMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -23,20 +22,20 @@ import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 
-import static com.icounseling.web.rest.TestUtil.sameInstant;
 import static com.icounseling.web.rest.TestUtil.createFormattingConversionService;
+import static com.icounseling.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link ScheduleResource} REST controller.
+ * Integration tests for the {@link ScheduleResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class ScheduleResourceIT {
@@ -46,6 +45,7 @@ public class ScheduleResourceIT {
 
     private static final ZonedDateTime DEFAULT_DATE_AND_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_DATE_AND_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    private static final ZonedDateTime SMALLER_DATE_AND_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";

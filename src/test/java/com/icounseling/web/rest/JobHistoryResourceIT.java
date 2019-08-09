@@ -7,7 +7,6 @@ import com.icounseling.service.JobHistoryService;
 import com.icounseling.service.dto.JobHistoryDTO;
 import com.icounseling.service.mapper.JobHistoryMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -33,16 +32,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link JobHistoryResource} REST controller.
+ * Integration tests for the {@link JobHistoryResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class JobHistoryResourceIT {
 
     private static final Instant DEFAULT_START_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_START_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant SMALLER_START_DATE = Instant.ofEpochMilli(-1L);
 
     private static final Instant DEFAULT_END_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_END_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant SMALLER_END_DATE = Instant.ofEpochMilli(-1L);
 
     @Autowired
     private JobHistoryRepository jobHistoryRepository;

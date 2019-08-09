@@ -7,7 +7,6 @@ import com.icounseling.service.CommentService;
 import com.icounseling.service.dto.CommentDTO;
 import com.icounseling.service.mapper.CommentMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -31,7 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link CommentResource} REST controller.
+ * Integration tests for the {@link CommentResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class CommentResourceIT {

@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiAlertService } from 'ng-jhipster';
-import { IComment, Comment } from 'app/shared/model/comment.model';
-import { CommentService } from './comment.service';
-import { ISchedule } from 'app/shared/model/schedule.model';
-import { ScheduleService } from 'app/entities/schedule';
-import { IRate } from 'app/shared/model/rate.model';
-import { RateService } from 'app/entities/rate';
-import { IDocument } from 'app/shared/model/document.model';
-import { DocumentService } from 'app/entities/document';
-import { IPost } from 'app/shared/model/post.model';
-import { PostService } from 'app/entities/post';
+import {Component, OnInit} from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {FormBuilder} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {JhiAlertService} from 'ng-jhipster';
+import {Comment, IComment} from 'app/shared/model/comment.model';
+import {CommentService} from './comment.service';
+import {ISchedule} from 'app/shared/model/schedule.model';
+import {ScheduleService} from 'app/entities/schedule';
+import {IRate} from 'app/shared/model/rate.model';
+import {RateService} from 'app/entities/rate';
+import {IDocument} from 'app/shared/model/document.model';
+import {DocumentService} from 'app/entities/document';
+import {IPost} from 'app/shared/model/post.model';
+import {PostService} from 'app/entities/post';
 
 @Component({
   selector: 'jhi-comment-update',
@@ -62,7 +62,7 @@ export class CommentUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: ISchedule[]) => {
-          if (!!this.editForm.get('scheduleId').value) {
+          if (!this.editForm.get('scheduleId').value) {
             this.schedules = res;
           } else {
             this.scheduleService
@@ -87,7 +87,7 @@ export class CommentUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: IRate[]) => {
-          if (!!this.editForm.get('rateId').value) {
+          if (!this.editForm.get('rateId').value) {
             this.rates = res;
           } else {
             this.rateService

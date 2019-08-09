@@ -2,12 +2,13 @@ package com.icounseling.web.rest;
 
 import com.icounseling.ICounselingApp;
 import com.icounseling.domain.Task;
+import com.icounseling.domain.enumeration.RepeatTime;
+import com.icounseling.domain.enumeration.RepeatUntil;
 import com.icounseling.repository.TaskRepository;
 import com.icounseling.service.TaskService;
 import com.icounseling.service.dto.TaskDTO;
 import com.icounseling.service.mapper.TaskMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -29,11 +30,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.icounseling.domain.enumeration.RepeatTime;
-import com.icounseling.domain.enumeration.RepeatUntil;
 /**
- * Integration tests for the {@Link TaskResource} REST controller.
+ * Integration tests for the {@link TaskResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class TaskResourceIT {

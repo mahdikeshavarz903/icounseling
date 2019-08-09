@@ -1,21 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import * as moment from 'moment';
-import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
-import { IDocument, Document } from 'app/shared/model/document.model';
-import { DocumentService } from './document.service';
-import { IRate } from 'app/shared/model/rate.model';
-import { RateService } from 'app/entities/rate';
-import { IComment } from 'app/shared/model/comment.model';
-import { CommentService } from 'app/entities/comment';
-import { ICategory } from 'app/shared/model/category.model';
-import { CategoryService } from 'app/entities/category';
-import { ICounselor } from 'app/shared/model/counselor.model';
-import { CounselorService } from 'app/entities/counselor';
+import {Component, OnInit} from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {JhiAlertService, JhiDataUtils} from 'ng-jhipster';
+import {Document, IDocument} from 'app/shared/model/document.model';
+import {DocumentService} from './document.service';
+import {IRate} from 'app/shared/model/rate.model';
+import {RateService} from 'app/entities/rate';
+import {IComment} from 'app/shared/model/comment.model';
+import {CommentService} from 'app/entities/comment';
+import {ICategory} from 'app/shared/model/category.model';
+import {CategoryService} from 'app/entities/category';
+import {ICounselor} from 'app/shared/model/counselor.model';
+import {CounselorService} from 'app/entities/counselor';
 
 @Component({
   selector: 'jhi-document-update',
@@ -76,7 +75,7 @@ export class DocumentUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: IRate[]) => {
-          if (!!this.editForm.get('rateId').value) {
+          if (!this.editForm.get('rateId').value) {
             this.rates = res;
           } else {
             this.rateService
@@ -101,7 +100,7 @@ export class DocumentUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: IComment[]) => {
-          if (!!this.editForm.get('commentId').value) {
+          if (!this.editForm.get('commentId').value) {
             this.comments = res;
           } else {
             this.commentService

@@ -45,9 +45,9 @@
     -->
     <changeSet id="20190730111048-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/data/counselor.csv"
-                  separator=";"
-                  tableName="counselor">
+            file="config/liquibase/fake-data/counselor.csv"
+            separator=";"
+            tableName="counselor">
             <column name="id" type="numeric"/>
             <column name="consultant_type" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->

@@ -5,7 +5,7 @@
         "title": "Counseling Cases",
         "createLabel": "Create a new Counseling Case",
         "createOrEditLabel": "Create or edit a Counseling Case",
-        "notFound": "No Counseling Case found"
+        "notFound": "No Counseling Cases found"
       },
       "created": "A new Counseling Case is created with identifier {{ param }}",
       "updated": "A Counseling Case is updated with identifier {{ param }}",

@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiAlertService } from 'ng-jhipster';
-import { ITask, Task } from 'app/shared/model/task.model';
-import { TaskService } from './task.service';
-import { IReminder } from 'app/shared/model/reminder.model';
-import { ReminderService } from 'app/entities/reminder';
-import { ISchedule } from 'app/shared/model/schedule.model';
-import { ScheduleService } from 'app/entities/schedule';
-import { IPlanning } from 'app/shared/model/planning.model';
-import { PlanningService } from 'app/entities/planning';
+import {Component, OnInit} from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {JhiAlertService} from 'ng-jhipster';
+import {ITask, Task} from 'app/shared/model/task.model';
+import {TaskService} from './task.service';
+import {IReminder} from 'app/shared/model/reminder.model';
+import {ReminderService} from 'app/entities/reminder';
+import {ISchedule} from 'app/shared/model/schedule.model';
+import {ScheduleService} from 'app/entities/schedule';
+import {IPlanning} from 'app/shared/model/planning.model';
+import {PlanningService} from 'app/entities/planning';
 
 @Component({
   selector: 'jhi-task-update',
@@ -59,7 +59,7 @@ export class TaskUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: IReminder[]) => {
-          if (!!this.editForm.get('reminderId').value) {
+          if (!this.editForm.get('reminderId').value) {
             this.reminders = res;
           } else {
             this.reminderService
@@ -84,7 +84,7 @@ export class TaskUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: ISchedule[]) => {
-          if (!!this.editForm.get('scheduleId').value) {
+          if (!this.editForm.get('scheduleId').value) {
             this.schedules = res;
           } else {
             this.scheduleService

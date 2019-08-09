@@ -5,7 +5,7 @@
         "title": "Educations",
         "createLabel": "Create a new Education",
         "createOrEditLabel": "Create or edit a Education",
-        "notFound": "No Education found"
+        "notFound": "No Educations found"
       },
       "created": "A new Education is created with identifier {{ param }}",
       "updated": "A Education is updated with identifier {{ param }}",

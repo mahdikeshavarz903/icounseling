@@ -1,24 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiPaginationUtil, JhiResolvePagingParams } from 'ng-jhipster';
-import { UserRouteAccessService } from 'app/core';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Planning } from 'app/shared/model/planning.model';
-import { PlanningService } from './planning.service';
-import { PlanningComponent } from './planning.component';
-import { PlanningDetailComponent } from './planning-detail.component';
-import { PlanningUpdateComponent } from './planning-update.component';
-import { PlanningDeletePopupComponent } from './planning-delete-dialog.component';
-import { IPlanning } from 'app/shared/model/planning.model';
+import {Injectable} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
+import {JhiResolvePagingParams} from 'ng-jhipster';
+import {UserRouteAccessService} from 'app/core';
+import {Observable, of} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {IPlanning, Planning} from 'app/shared/model/planning.model';
+import {PlanningService} from './planning.service';
+import {PlanningComponent} from './planning.component';
+import {PlanningDetailComponent} from './planning-detail.component';
+import {PlanningUpdateComponent} from './planning-update.component';
+import {PlanningDeletePopupComponent} from './planning-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class PlanningResolve implements Resolve<IPlanning> {
   constructor(private service: PlanningService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IPlanning> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Planning>) => response.ok),

@@ -1,11 +1,11 @@
-import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
-import { JhiEventManager } from 'ng-jhipster';
+import {AfterViewInit, Component, ElementRef, Renderer} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Router} from '@angular/router';
+import {JhiEventManager} from 'ng-jhipster';
 
-import { LoginService } from 'app/core/login/login.service';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
+import {LoginService} from 'app/core/login/login.service';
+import {StateStorageService} from 'app/core/auth/state-storage.service';
 
 @Component({
   selector: 'jhi-login-modal',
@@ -17,7 +17,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
   loginForm = this.fb.group({
     username: [''],
     password: [''],
-    rememberMe: [true]
+    rememberMe: [false]
   });
 
   constructor(

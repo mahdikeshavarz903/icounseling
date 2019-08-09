@@ -2,12 +2,12 @@ package com.icounseling.web.rest;
 
 import com.icounseling.ICounselingApp;
 import com.icounseling.domain.CounselingCase;
+import com.icounseling.domain.enumeration.CounselingCaseStatus;
 import com.icounseling.repository.CounselingCaseRepository;
 import com.icounseling.service.CounselingCaseService;
 import com.icounseling.service.dto.CounselingCaseDTO;
 import com.icounseling.service.mapper.CounselingCaseMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -29,10 +29,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.icounseling.domain.enumeration.CounselingCaseStatus;
 /**
- * Integration tests for the {@Link CounselingCaseResource} REST controller.
+ * Integration tests for the {@link CounselingCaseResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class CounselingCaseResourceIT {

@@ -1,24 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiPaginationUtil, JhiResolvePagingParams } from 'ng-jhipster';
-import { UserRouteAccessService } from 'app/core';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Visitor } from 'app/shared/model/visitor.model';
-import { VisitorService } from './visitor.service';
-import { VisitorComponent } from './visitor.component';
-import { VisitorDetailComponent } from './visitor-detail.component';
-import { VisitorUpdateComponent } from './visitor-update.component';
-import { VisitorDeletePopupComponent } from './visitor-delete-dialog.component';
-import { IVisitor } from 'app/shared/model/visitor.model';
+import {Injectable} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
+import {JhiResolvePagingParams} from 'ng-jhipster';
+import {UserRouteAccessService} from 'app/core';
+import {Observable, of} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {IVisitor, Visitor} from 'app/shared/model/visitor.model';
+import {VisitorService} from './visitor.service';
+import {VisitorComponent} from './visitor.component';
+import {VisitorDetailComponent} from './visitor-detail.component';
+import {VisitorUpdateComponent} from './visitor-update.component';
+import {VisitorDeletePopupComponent} from './visitor-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class VisitorResolve implements Resolve<IVisitor> {
   constructor(private service: VisitorService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IVisitor> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Visitor>) => response.ok),

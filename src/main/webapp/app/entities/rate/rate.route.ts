@@ -1,24 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiPaginationUtil, JhiResolvePagingParams } from 'ng-jhipster';
-import { UserRouteAccessService } from 'app/core';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Rate } from 'app/shared/model/rate.model';
-import { RateService } from './rate.service';
-import { RateComponent } from './rate.component';
-import { RateDetailComponent } from './rate-detail.component';
-import { RateUpdateComponent } from './rate-update.component';
-import { RateDeletePopupComponent } from './rate-delete-dialog.component';
-import { IRate } from 'app/shared/model/rate.model';
+import {Injectable} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
+import {JhiResolvePagingParams} from 'ng-jhipster';
+import {UserRouteAccessService} from 'app/core';
+import {Observable, of} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {IRate, Rate} from 'app/shared/model/rate.model';
+import {RateService} from './rate.service';
+import {RateComponent} from './rate.component';
+import {RateDetailComponent} from './rate-detail.component';
+import {RateUpdateComponent} from './rate-update.component';
+import {RateDeletePopupComponent} from './rate-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class RateResolve implements Resolve<IRate> {
   constructor(private service: RateService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IRate> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Rate>) => response.ok),

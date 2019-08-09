@@ -7,7 +7,6 @@ import com.icounseling.service.TransactionService;
 import com.icounseling.service.dto.TransactionDTO;
 import com.icounseling.service.mapper.TransactionMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -31,13 +30,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link TransactionResource} REST controller.
+ * Integration tests for the {@link TransactionResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class TransactionResourceIT {
 
     private static final Float DEFAULT_TOTAL_AMOUNT = 1F;
     private static final Float UPDATED_TOTAL_AMOUNT = 2F;
+    private static final Float SMALLER_TOTAL_AMOUNT = 1F - 1F;
 
     private static final Boolean DEFAULT_STATUS = false;
     private static final Boolean UPDATED_STATUS = true;

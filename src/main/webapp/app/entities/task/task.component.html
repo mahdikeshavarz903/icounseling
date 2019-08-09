@@ -4,7 +4,7 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-task" [routerLink]="['/task/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="iCounselingApp.task.home.createLabel">
-            Create new Task
+            Create a new Task
             </span>
         </button>
     </h2>
@@ -33,17 +33,17 @@
                 <td jhiTranslate="{{'iCounselingApp.RepeatUntil.' + task.repeatUntil}}">{{task.repeatUntil}}</td>
                 <td>
                     <div *ngIf="task.reminderId">
-                        <a [routerLink]="['../reminder', task.reminderId , 'view' ]" >{{task.reminderId}}</a>
+                        <a [routerLink]="['/reminder', task.reminderId , 'view' ]">{{task.reminderId}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="task.scheduleId">
-                        <a [routerLink]="['../schedule', task.scheduleId , 'view' ]" >{{task.scheduleId}}</a>
+                        <a [routerLink]="['/schedule', task.scheduleId , 'view' ]">{{task.scheduleId}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="task.planningId">
-                        <a [routerLink]="['../planning', task.planningId , 'view' ]" >{{task.planningId}}</a>
+                        <a [routerLink]="['/planning', task.planningId , 'view' ]">{{task.planningId}}</a>
                     </div>
                 </td>
                 <td class="text-right">
@@ -61,7 +61,7 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', 'task', { outlets: { popup: task.id + '/delete'} }]"
+                                [routerLink]="['/task', { outlets: { popup: task.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

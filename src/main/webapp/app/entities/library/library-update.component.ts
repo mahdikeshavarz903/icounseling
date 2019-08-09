@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import * as moment from 'moment';
-import { JhiAlertService } from 'ng-jhipster';
-import { ILibrary, Library } from 'app/shared/model/library.model';
-import { LibraryService } from './library.service';
-import { IVisitor } from 'app/shared/model/visitor.model';
-import { VisitorService } from 'app/entities/visitor';
+import {Component, OnInit} from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {JhiAlertService} from 'ng-jhipster';
+import {ILibrary, Library} from 'app/shared/model/library.model';
+import {LibraryService} from './library.service';
+import {IVisitor} from 'app/shared/model/visitor.model';
+import {VisitorService} from 'app/entities/visitor';
 
 @Component({
   selector: 'jhi-library-update',
@@ -49,7 +48,7 @@ export class LibraryUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: IVisitor[]) => {
-          if (!!this.editForm.get('visitorId').value) {
+          if (!this.editForm.get('visitorId').value) {
             this.visitors = res;
           } else {
             this.visitorService

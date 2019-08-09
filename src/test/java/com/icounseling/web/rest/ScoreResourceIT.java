@@ -2,12 +2,12 @@ package com.icounseling.web.rest;
 
 import com.icounseling.ICounselingApp;
 import com.icounseling.domain.Score;
+import com.icounseling.domain.enumeration.ScoreDegree;
 import com.icounseling.repository.ScoreRepository;
 import com.icounseling.service.ScoreService;
 import com.icounseling.service.dto.ScoreDTO;
 import com.icounseling.service.mapper.ScoreMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -30,16 +30,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.icounseling.domain.enumeration.ScoreDegree;
 /**
- * Integration tests for the {@Link ScoreResource} REST controller.
+ * Integration tests for the {@link ScoreResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class ScoreResourceIT {
 
     private static final Float DEFAULT_TOTAL = 1F;
     private static final Float UPDATED_TOTAL = 2F;
+    private static final Float SMALLER_TOTAL = 1F - 1F;
 
     private static final byte[] DEFAULT_IMAGE = TestUtil.createByteArray(1, "0");
     private static final byte[] UPDATED_IMAGE = TestUtil.createByteArray(1, "1");

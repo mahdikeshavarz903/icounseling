@@ -2,12 +2,12 @@ package com.icounseling.web.rest;
 
 import com.icounseling.ICounselingApp;
 import com.icounseling.domain.Education;
+import com.icounseling.domain.enumeration.EducationDegree;
 import com.icounseling.repository.EducationRepository;
 import com.icounseling.service.EducationService;
 import com.icounseling.service.dto.EducationDTO;
 import com.icounseling.service.mapper.EducationMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -29,10 +29,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.icounseling.domain.enumeration.EducationDegree;
 /**
- * Integration tests for the {@Link EducationResource} REST controller.
+ * Integration tests for the {@link EducationResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class EducationResourceIT {

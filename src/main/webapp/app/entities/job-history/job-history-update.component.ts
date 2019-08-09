@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {FormBuilder} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
 import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { JhiAlertService } from 'ng-jhipster';
-import { IJobHistory, JobHistory } from 'app/shared/model/job-history.model';
-import { JobHistoryService } from './job-history.service';
-import { IJob } from 'app/shared/model/job.model';
-import { JobService } from 'app/entities/job';
+import {DATE_TIME_FORMAT} from 'app/shared/constants/input.constants';
+import {JhiAlertService} from 'ng-jhipster';
+import {IJobHistory, JobHistory} from 'app/shared/model/job-history.model';
+import {JobHistoryService} from './job-history.service';
+import {IJob} from 'app/shared/model/job.model';
+import {JobService} from 'app/entities/job';
 
 @Component({
   selector: 'jhi-job-history-update',
@@ -49,7 +49,7 @@ export class JobHistoryUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: IJob[]) => {
-          if (!!this.editForm.get('jobId').value) {
+          if (!this.editForm.get('jobId').value) {
             this.jobs = res;
           } else {
             this.jobService

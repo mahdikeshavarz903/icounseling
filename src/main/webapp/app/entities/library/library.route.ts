@@ -1,24 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiPaginationUtil, JhiResolvePagingParams } from 'ng-jhipster';
-import { UserRouteAccessService } from 'app/core';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Library } from 'app/shared/model/library.model';
-import { LibraryService } from './library.service';
-import { LibraryComponent } from './library.component';
-import { LibraryDetailComponent } from './library-detail.component';
-import { LibraryUpdateComponent } from './library-update.component';
-import { LibraryDeletePopupComponent } from './library-delete-dialog.component';
-import { ILibrary } from 'app/shared/model/library.model';
+import {Injectable} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
+import {JhiResolvePagingParams} from 'ng-jhipster';
+import {UserRouteAccessService} from 'app/core';
+import {Observable, of} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {ILibrary, Library} from 'app/shared/model/library.model';
+import {LibraryService} from './library.service';
+import {LibraryComponent} from './library.component';
+import {LibraryDetailComponent} from './library-detail.component';
+import {LibraryUpdateComponent} from './library-update.component';
+import {LibraryDeletePopupComponent} from './library-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class LibraryResolve implements Resolve<ILibrary> {
   constructor(private service: LibraryService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ILibrary> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Library>) => response.ok),

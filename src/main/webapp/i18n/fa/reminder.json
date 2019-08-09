@@ -5,7 +5,7 @@
         "title": "Reminders",
         "createLabel": "Create a new Reminder",
         "createOrEditLabel": "Create or edit a Reminder",
-        "notFound": "No Reminder found"
+        "notFound": "No Reminders found"
       },
       "created": "A new Reminder is created with identifier {{ param }}",
       "updated": "A Reminder is updated with identifier {{ param }}",

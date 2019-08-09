@@ -5,7 +5,7 @@
         "title": "Transactions",
         "createLabel": "Create a new Transaction",
         "createOrEditLabel": "Create or edit a Transaction",
-        "notFound": "No Transaction found"
+        "notFound": "No Transactions found"
       },
       "created": "A new Transaction is created with identifier {{ param }}",
       "updated": "A Transaction is updated with identifier {{ param }}",

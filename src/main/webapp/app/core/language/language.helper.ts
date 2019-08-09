@@ -1,15 +1,15 @@
-import { Injectable, RendererFactory2, Renderer2 } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { Router, ActivatedRouteSnapshot } from '@angular/router';
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
+import {Title} from '@angular/platform-browser';
+import {ActivatedRouteSnapshot, Router} from '@angular/router';
+import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
+import {BehaviorSubject, Observable} from 'rxjs';
 
-import { LANGUAGES } from 'app/core/language/language.constants';
-import { FindLanguageFromKeyPipe } from 'app/shared/language/find-language-from-key.pipe';
+import {LANGUAGES} from 'app/core/language/language.constants';
+import {FindLanguageFromKeyPipe} from 'app/shared/language/find-language-from-key.pipe';
 
 @Injectable({ providedIn: 'root' })
 export class JhiLanguageHelper {
-  renderer: Renderer2 = null;
+  private renderer: Renderer2 = null;
   private _language: BehaviorSubject<string>;
 
   constructor(

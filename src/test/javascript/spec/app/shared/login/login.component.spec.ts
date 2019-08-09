@@ -1,15 +1,15 @@
-import { ComponentFixture, TestBed, async, inject, fakeAsync, tick } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
+import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
+import {FormBuilder} from '@angular/forms';
+import {Router} from '@angular/router';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {JhiEventManager} from 'ng-jhipster';
 
-import { LoginService } from 'app/core/login/login.service';
-import { JhiLoginModalComponent } from 'app/shared/login/login.component';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
-import { ICounselingTestModule } from '../../../test.module';
-import { MockLoginService } from '../../../helpers/mock-login.service';
-import { MockStateStorageService } from '../../../helpers/mock-state-storage.service';
+import {LoginService} from 'app/core/login/login.service';
+import {JhiLoginModalComponent} from 'app/shared/login/login.component';
+import {StateStorageService} from 'app/core/auth/state-storage.service';
+import {ICounselingTestModule} from '../../../test.module';
+import {MockLoginService} from '../../../helpers/mock-login.service';
+import {MockStateStorageService} from '../../../helpers/mock-state-storage.service';
 
 describe('Component Tests', () => {
   describe('LoginComponent', () => {
@@ -127,7 +127,7 @@ describe('Component Tests', () => {
       const expected = {
         username: '',
         password: '',
-        rememberMe: true
+        rememberMe: false
       };
 
       // WHEN
