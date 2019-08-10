@@ -1,78 +1,86 @@
 {
-    "name": "Counselor",
-    "fields": [
-        {
-            "fieldName": "consultantType",
-            "fieldType": "ConsultantType",
-            "fieldValues": "PSYCHOLOGY,LEGAL,FINANCIAL,EDUCATIONAL,MEDICAL,INDUSTY,COMPUTER,MUSIC,ART,AGRICULTURE,ANIMAL_HUSBANDRY,SPORTS,RELIGIOUS,REGISTRATION_OF_DOCUMENTS",
-            "fieldValidateRules": [
-                "required"
-            ]
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "education",
-            "otherEntityRelationshipName": "counselor",
-            "relationshipName": "education",
-            "otherEntityField": "id",
-            "ownerSide": true
-        },
-        {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "score",
-            "otherEntityRelationshipName": "counselor",
-            "relationshipName": "score",
-            "otherEntityField": "id",
-            "ownerSide": true
-        },
-        {
-          "relationshipType": "one-to-one",
-          "otherEntityName": "user",
-          "otherEntityRelationshipName": "counselor",
-          "relationshipName": "user",
-          "otherEntityField": "id",
-          "ownerSide": true
-        },
-      {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "post",
-            "otherEntityRelationshipName": "counselor",
-            "relationshipName": "post"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "document",
-            "otherEntityRelationshipName": "counselor",
-            "relationshipName": "document"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "timeReserved",
-            "otherEntityRelationshipName": "counselor",
-            "relationshipName": "timeReserved"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "planning",
-            "otherEntityRelationshipName": "counselor",
-            "relationshipName": "planning"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "counselingCase",
-            "otherEntityRelationshipName": "counselor",
-            "relationshipName": "counselingCase"
-        }
-    ],
+  "name": "Counselor",
+  "fields": [
+    {
+      "fieldName": "consultantType",
+      "fieldType": "ConsultantType",
+      "fieldValues": "PSYCHOLOGY,LEGAL,FINANCIAL,EDUCATIONAL,MEDICAL,INDUSTY,COMPUTER,MUSIC,ART,AGRICULTURE,ANIMAL_HUSBANDRY,SPORTS,RELIGIOUS,REGISTRATION_OF_DOCUMENTS",
+      "fieldValidateRules": [
+        "required"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "education",
+      "otherEntityRelationshipName": "counselor",
+      "relationshipName": "education",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "score",
+      "otherEntityRelationshipName": "counselor",
+      "relationshipName": "score",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "counselor",
+      "relationshipName": "user",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "counselor",
+      "relationshipName": "user",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "post",
+      "otherEntityRelationshipName": "counselor",
+      "relationshipName": "post"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "document",
+      "otherEntityRelationshipName": "counselor",
+      "relationshipName": "document"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "timeReserved",
+      "otherEntityRelationshipName": "counselor",
+      "relationshipName": "timeReserved"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "planning",
+      "otherEntityRelationshipName": "counselor",
+      "relationshipName": "planning"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "counselingCase",
+      "otherEntityRelationshipName": "counselor",
+      "relationshipName": "counselingCase"
+    }
+  ],
   "changelogDate": "20190730111048",
-    "entityTableName": "counselor",
-    "dto": "mapstruct",
-    "pagination": "pagination",
-    "service": "serviceImpl",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+  "entityTableName": "counselor",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "applications": "*"
 }

@@ -13,8 +13,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -85,16 +86,16 @@ public class CounselingCaseResource {
     /**
      * {@code GET  /counseling-cases} : get all the counselingCases.
      *
-
      * @param pageable the pagination information.
-
+     * @param queryParams a {@link MultiValueMap} query parameters.
+     * @param uriBuilder a {@link UriComponentsBuilder} URI builder.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of counselingCases in body.
      */
     @GetMapping("/counseling-cases")
-    public ResponseEntity<List<CounselingCaseDTO>> getAllCounselingCases(Pageable pageable) {
+    public ResponseEntity<List<CounselingCaseDTO>> getAllCounselingCases(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
         log.debug("REST request to get a page of CounselingCases");
         Page<CounselingCaseDTO> page = counselingCaseService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 

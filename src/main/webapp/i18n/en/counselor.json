@@ -5,7 +5,7 @@
         "title": "Counselors",
         "createLabel": "Create a new Counselor",
         "createOrEditLabel": "Create or edit a Counselor",
-        "notFound": "No Counselors found"
+        "notFound": "No Counselor found"
       },
       "created": "A new Counselor is created with identifier {{ param }}",
       "updated": "A Counselor is updated with identifier {{ param }}",

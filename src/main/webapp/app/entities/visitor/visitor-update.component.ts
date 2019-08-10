@@ -66,7 +66,7 @@ export class VisitorUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: IScore[]) => {
-          if (!this.editForm.get('scoreId').value) {
+          if (!!this.editForm.get('scoreId').value) {
             this.scores = res;
           } else {
             this.scoreService
@@ -91,7 +91,7 @@ export class VisitorUpdateComponent implements OnInit {
       )
       .subscribe(
         (res: IEducation[]) => {
-          if (!this.editForm.get('educationId').value) {
+          if (!!this.editForm.get('educationId').value) {
             this.educations = res;
           } else {
             this.educationService

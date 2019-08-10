@@ -1,5 +1,6 @@
 package com.icounseling.web.rest;
 
+import com.icounseling.security.AuthoritiesConstants;
 import com.icounseling.service.CounselorService;
 import com.icounseling.service.dto.CounselorDTO;
 import com.icounseling.web.rest.errors.BadRequestAlertException;
@@ -13,8 +14,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -85,16 +88,16 @@ public class CounselorResource {
     /**
      * {@code GET  /counselors} : get all the counselors.
      *
-
      * @param pageable the pagination information.
-
+     * @param queryParams a {@link MultiValueMap} query parameters.
+     * @param uriBuilder a {@link UriComponentsBuilder} URI builder.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of counselors in body.
      */
     @GetMapping("/counselors")
-    public ResponseEntity<List<CounselorDTO>> getAllCounselors(Pageable pageable) {
+    public ResponseEntity<List<CounselorDTO>> getAllCounselors(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
         log.debug("REST request to get a page of Counselors");
         Page<CounselorDTO> page = counselorService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
@@ -123,4 +126,22 @@ public class CounselorResource {
         counselorService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * {@code GET  /counselors/{id}/counseling-case} : Get all cases for one counselor.
+     *
+     * @param pageable    the pagination information.
+     * @param queryParams a {@link MultiValueMap} query parameters.
+     * @param uriBuilder  a {@link UriComponentsBuilder} URI builder.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of Object in body.
+     */
+    @GetMapping("/counselors/{id}/counseling-case")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
+    public ResponseEntity<List<Object>> getAllCasesForOneCounselor(Pageable pageable, @PathVariable Long id, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
+        log.debug("REST request to get a page of all cases for one Counselors");
+        Page<Object> page = counselorService.findAllCasesForOneCounselor(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
 }

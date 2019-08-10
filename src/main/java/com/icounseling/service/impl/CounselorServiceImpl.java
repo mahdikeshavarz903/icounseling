@@ -5,7 +5,6 @@ import com.icounseling.repository.CounselingCaseRepository;
 import com.icounseling.repository.CounselorRepository;
 import com.icounseling.repository.VisitorRepository;
 import com.icounseling.service.CounselorService;
-import com.icounseling.service.dto.CounselingCaseDTO;
 import com.icounseling.service.dto.CounselorDTO;
 import com.icounseling.service.mapper.CounselingCaseMapper;
 import com.icounseling.service.mapper.CounselorMapper;
@@ -76,9 +75,9 @@ public class CounselorServiceImpl implements CounselorService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<CounselingCaseDTO> findAllCasesForOneCounselor(Long id, Pageable pageable) {
+    public Page<Object> findAllCasesForOneCounselor(Long id, Pageable pageable) {
         log.debug("Request to get all CounselingCases for one counselor");
-        return counselingCaseRepository.findCounselingCaseByCounselorId(id, pageable).map(counselingCaseMapper::toDto);
+        return counselingCaseRepository.findVisitorByCounselorId(id, pageable);
     }
 
     /**

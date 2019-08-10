@@ -1,65 +1,73 @@
 {
-    "name": "Visitor",
-    "fields": [],
-    "relationships": [
-        {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "score",
-            "otherEntityRelationshipName": "visitor",
-            "relationshipName": "score",
-            "otherEntityField": "id",
-            "ownerSide": true
-        },
-        {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "education",
-            "otherEntityRelationshipName": "visitor",
-            "relationshipName": "education",
-            "otherEntityField": "id",
-            "ownerSide": true
-        },
-        {
-          "relationshipType": "one-to-one",
-          "otherEntityName": "user",
-          "otherEntityRelationshipName": "visitor",
-          "relationshipName": "user",
-          "otherEntityField": "id",
-          "ownerSide": true
-        },
-      {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "transaction",
-            "otherEntityRelationshipName": "visitor",
-            "relationshipName": "transaction"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "job",
-            "otherEntityRelationshipName": "visitor",
-            "relationshipName": "job"
-        },
-        {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "counselingCase",
-            "otherEntityRelationshipName": "visitor",
-            "relationshipName": "counselingCase",
-            "ownerSide": false
-        },
-        {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "library",
-            "otherEntityRelationshipName": "visitor",
-            "relationshipName": "library",
-            "ownerSide": false
-        }
-    ],
+  "name": "Visitor",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "score",
+      "otherEntityRelationshipName": "visitor",
+      "relationshipName": "score",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "education",
+      "otherEntityRelationshipName": "visitor",
+      "relationshipName": "education",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "visitor",
+      "relationshipName": "user",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "visitor",
+      "relationshipName": "user",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "transaction",
+      "otherEntityRelationshipName": "visitor",
+      "relationshipName": "transaction"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "job",
+      "otherEntityRelationshipName": "visitor",
+      "relationshipName": "job"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "counselingCase",
+      "otherEntityRelationshipName": "visitor",
+      "relationshipName": "counselingCase",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "library",
+      "otherEntityRelationshipName": "visitor",
+      "relationshipName": "library",
+      "ownerSide": false
+    }
+  ],
   "changelogDate": "20190730111055",
-    "entityTableName": "visitor",
-    "dto": "mapstruct",
-    "pagination": "pagination",
-    "service": "serviceImpl",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+  "entityTableName": "visitor",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "applications": "*"
 }

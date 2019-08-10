@@ -17,4 +17,3 @@ ENTRYPOINT ["./entrypoint.sh"]
 EXPOSE 8080
 
 COPY *.war /app.war
-
