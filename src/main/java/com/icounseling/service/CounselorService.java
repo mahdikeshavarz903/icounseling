@@ -38,6 +38,8 @@ public interface CounselorService {
      */
     Optional<CounselorDTO> findOne(Long id);
 
+
+    Optional<Object> findAllVisitorInformation(Long id);
     /**
      * Delete the "id" counselor.
      *

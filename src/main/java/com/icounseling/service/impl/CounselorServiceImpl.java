@@ -6,7 +6,6 @@ import com.icounseling.repository.CounselorRepository;
 import com.icounseling.repository.VisitorRepository;
 import com.icounseling.service.CounselorService;
 import com.icounseling.service.dto.CounselorDTO;
-import com.icounseling.service.mapper.CounselingCaseMapper;
 import com.icounseling.service.mapper.CounselorMapper;
 import com.icounseling.service.mapper.VisitorMapper;
 import org.slf4j.Logger;
@@ -33,16 +32,16 @@ public class CounselorServiceImpl implements CounselorService {
 
     private final CounselingCaseRepository counselingCaseRepository;
 
+    private final VisitorRepository visitorRepository;
+
     private final VisitorMapper visitorMapper;
 
-    private final CounselingCaseMapper counselingCaseMapper;
-
-    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, VisitorMapper visitorMapper, CounselingCaseMapper counselingCaseMapper1) {
+    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, VisitorRepository visitorRepository, VisitorMapper visitorMapper) {
         this.counselorRepository = counselorRepository;
         this.counselorMapper = counselorMapper;
         this.counselingCaseRepository = counselingCaseRepository;
+        this.visitorRepository = visitorRepository;
         this.visitorMapper = visitorMapper;
-        this.counselingCaseMapper = counselingCaseMapper1;
     }
 
     /**
@@ -92,6 +91,14 @@ public class CounselorServiceImpl implements CounselorService {
         log.debug("Request to get Counselor : {}", id);
         return counselorRepository.findById(id)
             .map(counselorMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Object> findAllVisitorInformation(Long id) {
+        log.debug("Request to get visitor information with ID : {}", id);
+        Optional<Object> visitor = visitorRepository.findUserByVisitorId(id);
+        return visitor;
     }
 
     /**

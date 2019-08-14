@@ -144,4 +144,11 @@ public class CounselorResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/counselors/visitors/{id}")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
+    public ResponseEntity<Object> getAllVisitorInformation(@PathVariable Long id) {
+        log.debug("REST request to get all information for one visitor");
+        Optional<Object> visitor = counselorService.findAllVisitorInformation(id);
+        return ResponseUtil.wrapOrNotFound(visitor);
+    }
 }
