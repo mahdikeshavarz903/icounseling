@@ -1,11 +1,15 @@
 package com.icounseling.service.impl;
 
 import com.icounseling.domain.Counselor;
+import com.icounseling.domain.Visitor;
 import com.icounseling.repository.CounselingCaseRepository;
 import com.icounseling.repository.CounselorRepository;
 import com.icounseling.repository.VisitorRepository;
 import com.icounseling.service.CounselorService;
+import com.icounseling.service.dto.CounselingCaseDTO;
 import com.icounseling.service.dto.CounselorDTO;
+import com.icounseling.service.dto.VisitorDTO;
+import com.icounseling.service.mapper.CounselingCaseMapper;
 import com.icounseling.service.mapper.CounselorMapper;
 import com.icounseling.service.mapper.VisitorMapper;
 import org.slf4j.Logger;
@@ -32,14 +36,17 @@ public class CounselorServiceImpl implements CounselorService {
 
     private final CounselingCaseRepository counselingCaseRepository;
 
+    private final CounselingCaseMapper counselingCaseMapper;
+
     private final VisitorRepository visitorRepository;
 
     private final VisitorMapper visitorMapper;
 
-    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, VisitorRepository visitorRepository, VisitorMapper visitorMapper) {
+    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, VisitorMapper visitorMapper) {
         this.counselorRepository = counselorRepository;
         this.counselorMapper = counselorMapper;
         this.counselingCaseRepository = counselingCaseRepository;
+        this.counselingCaseMapper = counselingCaseMapper;
         this.visitorRepository = visitorRepository;
         this.visitorMapper = visitorMapper;
     }
@@ -72,11 +79,18 @@ public class CounselorServiceImpl implements CounselorService {
             .map(counselorMapper::toDto);
     }
 
+    /**
+     * Get all CounselingCases for one counselor.
+     *
+     * @param pageable the pagination information.
+     * @param id       the id of the entity.
+     * @return the list of entities.
+     */
     @Override
     @Transactional(readOnly = true)
-    public Page<Object> findAllCasesForOneCounselor(Long id, Pageable pageable) {
+    public Page<CounselingCaseDTO> findAllCasesForOneCounselor(Long id, Pageable pageable) {
         log.debug("Request to get all CounselingCases for one counselor");
-        return counselingCaseRepository.findVisitorByCounselorId(id, pageable);
+        return counselingCaseRepository.findVisitorByCounselorId(id, pageable).map(counselingCaseMapper::toDto);
     }
 
     /**
@@ -93,12 +107,18 @@ public class CounselorServiceImpl implements CounselorService {
             .map(counselorMapper::toDto);
     }
 
+    /**
+     * Get visitor information with ID.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
     @Override
     @Transactional(readOnly = true)
-    public Optional<Object> findAllVisitorInformation(Long id) {
+    public Optional<VisitorDTO> findAllVisitorInformation(Long id) {
         log.debug("Request to get visitor information with ID : {}", id);
-        Optional<Object> visitor = visitorRepository.findUserByVisitorId(id);
-        return visitor;
+        Optional<Visitor> visitor = visitorRepository.findUserByVisitorId(id);
+        return visitor.map(visitorMapper::toDto);
     }
 
     /**

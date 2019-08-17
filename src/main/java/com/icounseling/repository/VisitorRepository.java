@@ -16,5 +16,5 @@ import java.util.Optional;
 public interface VisitorRepository extends JpaRepository<Visitor, Long> {
     //    @Query(value = "SELECT v,u FROM Visitor v inner join v.user u on v.user.id = u.id where v.id = :id")
     @Query(value = "SELECT v FROM Visitor v where v.id = :id")
-    Optional<Object> findUserByVisitorId(@Param("id") Long id);
+    Optional<Visitor> findUserByVisitorId(@Param("id") Long id);
 }

@@ -17,6 +17,6 @@ import org.springframework.stereotype.Repository;
 public interface CounselingCaseRepository extends JpaRepository<CounselingCase, Long> {
 
     //    @Query(value = "SELECT c,v FROM CounselingCase c inner join c.visitor v on c.counselor = v.id")
-    @Query(value = "SELECT c.visitor,c.status FROM CounselingCase c where c.counselor.id = :id")
-    Page<Object> findVisitorByCounselorId(@Param("id") Long id, Pageable pageable);
+    @Query(value = "SELECT c FROM CounselingCase c where c.counselor.id = :id")
+    Page<CounselingCase> findVisitorByCounselorId(@Param("id") Long id, Pageable pageable);
 }

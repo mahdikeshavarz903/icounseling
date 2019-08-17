@@ -11,7 +11,7 @@ services:
       - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
     ports:
       - 8080:8080
-#  icounseling-mysql:
-#    extends:
-#      file: mysql.yml
-#      service: icounseling-mysql
+  icounseling-mysql:
+    extends:
+      file: mysql.yml
+      service: icounseling-mysql

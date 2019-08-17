@@ -1,12 +1,14 @@
 version: '2'
 services:
   icounseling-app:
-    image: mahdikeshavarz/icounseling:fimage
+    image: mahdikeshavarz/icounseling:secondimage
     environment:
       - SPRING_PROFILES_ACTIVE=prod,swagger
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
       - SPRING_DATASOURCE_URL=jdbc:mysql://icounseling.cdmk8sshibfx.eu-central-1.rds.amazonaws.com:3306/icounseling?useUnicode=true&characterEncoding=utf8&useSSL=false
       - JHIPSTER_SLEEP=30
+      - SPRING_DATASOURCE_USERNAME=icounseling
+      - SPRING_DATASOURCE_PASSWORD=mah@1377
     ports:
       - '8080:8080'
   icounseling-mysql:

@@ -2,7 +2,9 @@ package com.icounseling.web.rest;
 
 import com.icounseling.security.AuthoritiesConstants;
 import com.icounseling.service.CounselorService;
+import com.icounseling.service.dto.CounselingCaseDTO;
 import com.icounseling.service.dto.CounselorDTO;
+import com.icounseling.service.dto.VisitorDTO;
 import com.icounseling.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -136,19 +138,28 @@ public class CounselorResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of Object in body.
      */
     @GetMapping("/counselors/{id}/counseling-case")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
-    public ResponseEntity<List<Object>> getAllCasesForOneCounselor(Pageable pageable, @PathVariable Long id, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<List<CounselingCaseDTO>> getAllCasesForOneCounselor(Pageable pageable, @PathVariable Long id, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
         log.debug("REST request to get a page of all cases for one Counselors");
-        Page<Object> page = counselorService.findAllCasesForOneCounselor(id, pageable);
+        Page<CounselingCaseDTO> page = counselorService.findAllCasesForOneCounselor(id, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    /**
+     * {@code GET  /counselors/visitors/{id}} : Get all information for one visitor.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the VisitorDTO object in body.
+     */
     @GetMapping("/counselors/visitors/{id}")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
-    public ResponseEntity<Object> getAllVisitorInformation(@PathVariable Long id) {
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<Optional<VisitorDTO>> getAllVisitorInformation(@PathVariable Long id) {
         log.debug("REST request to get all information for one visitor");
-        Optional<Object> visitor = counselorService.findAllVisitorInformation(id);
-        return ResponseUtil.wrapOrNotFound(visitor);
+        Optional<VisitorDTO> visitor = counselorService.findAllVisitorInformation(id);
+        return ResponseEntity.ok().body(visitor);
     }
+
+    //public ResponseEntity<TimeReservedDTO> getAllReservedTime(){
+    //   return null;
+    //}
 }
