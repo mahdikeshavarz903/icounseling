@@ -1,16 +1,10 @@
 package com.icounseling.web.rest;
 
 import com.icounseling.ICounselingApp;
-import com.icounseling.domain.CounselingCase;
-import com.icounseling.domain.Counselor;
-import com.icounseling.domain.User;
-import com.icounseling.domain.Visitor;
+import com.icounseling.domain.*;
 import com.icounseling.domain.enumeration.ConsultantType;
 import com.icounseling.domain.enumeration.CounselingCaseStatus;
-import com.icounseling.repository.CounselingCaseRepository;
-import com.icounseling.repository.CounselorRepository;
-import com.icounseling.repository.UserRepository;
-import com.icounseling.repository.VisitorRepository;
+import com.icounseling.repository.*;
 import com.icounseling.service.CounselorService;
 import com.icounseling.service.dto.CounselorDTO;
 import com.icounseling.service.mapper.CounselorMapper;
@@ -30,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.icounseling.web.rest.TestUtil.createFormattingConversionService;
@@ -71,6 +66,9 @@ public class CounselorResourceIT {
     private CounselorService counselorService;
 
     @Autowired
+    private TimeReservedRepository timeReservedRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -88,6 +86,8 @@ public class CounselorResourceIT {
     private MockMvc restCounselorMockMvc;
 
     private Counselor counselor;
+
+    private TimeReserved timerReserved;
 
     @BeforeEach
     public void setup() {
@@ -124,10 +124,19 @@ public class CounselorResourceIT {
         return counselingCase;
     }
 
-    public static Visitor createVisitorRepository(EntityManager em) {
+    public static Visitor createVisitorEntity(EntityManager em) {
         Visitor visitor = new Visitor();
         return visitor;
     }
+
+    public static TimeReserved createTimeReservedEntity(EntityManager em) {
+        TimeReserved timeReserved = new TimeReserved()
+            .date(LocalDate.ofEpochDay(0L))
+            .description("AAAAAAAAAA")
+            .time(LocalDate.ofEpochDay(0L));
+        return timeReserved;
+    }
+
     /**
      * Create an updated entity for this test.
      *
@@ -144,7 +153,8 @@ public class CounselorResourceIT {
     public void initTest() {
         counselingCase = createCounselingCaseEntity(em);
         counselor = createEntity(em);
-        visitor = createVisitorRepository(em);
+        visitor = createVisitorEntity(em);
+        timerReserved = createTimeReservedEntity(em);
     }
 
     @Test
@@ -295,6 +305,20 @@ public class CounselorResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
         //.andExpect(jsonPath("$.[*].id").value(hasItem(visitor.getId().intValue())));
 //            .andExpect(jsonPath("$.[*].consultantType").value(hasItem(DEFAULT_CONSULTANT_TYPE.toString())));
+    }
+
+    @Test
+    @Transactional
+    public void getAllReservedTimes() throws Exception {
+        timeReservedRepository.saveAndFlush(timerReserved);
+
+        counselorRepository.save(counselor);
+
+        timerReserved.setCounselor(counselor);
+
+        restCounselorMockMvc.perform(get("/api/counselors/{id}/reserved-times?sort=id,desc", counselor.getId().intValue()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }
 
     @Test

@@ -1,7 +1,7 @@
 version: '2'
 services:
   icounseling-app:
-    image: mahdikeshavarz/icounseling:fimage
+    image: mahdikeshavarz/icounseling:simage
     environment:
       - SPRING_PROFILES_ACTIVE=prod,swagger
       - SPRING_DATASOURCE_URL=jdbc:mysql://icounseling.cdmk8sshibfx.eu-central-1.rds.amazonaws.com:3306/icounseling?useUnicode=true&characterEncoding=utf8&useSSL=false

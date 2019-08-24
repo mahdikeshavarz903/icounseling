@@ -2,6 +2,7 @@ package com.icounseling.service;
 
 import com.icounseling.service.dto.CounselingCaseDTO;
 import com.icounseling.service.dto.CounselorDTO;
+import com.icounseling.service.dto.TimeReservedDTO;
 import com.icounseling.service.dto.VisitorDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,13 @@ public interface CounselorService {
     Page<CounselorDTO> findAll(Pageable pageable);
 
 
+    /**
+     * Get all cases for one counselors.
+     *
+     * @param pageable the pagination information.
+     * @param id       the counselor id
+     * @return the list of entities.
+     */
     Page<CounselingCaseDTO> findAllCasesForOneCounselor(Long id, Pageable pageable);
 
     /**
@@ -41,7 +49,23 @@ public interface CounselorService {
     Optional<CounselorDTO> findOne(Long id);
 
 
+    /**
+     * Get all visitor information.
+     *
+     * @param id the visitor id
+     * @return the entity.
+     */
     Optional<VisitorDTO> findAllVisitorInformation(Long id);
+
+    /**
+     * Get all reserved times for counselor.
+     *
+     * @param pageable the pagination information.
+     * @param id       the counselor id
+     * @return the list of entities.
+     */
+    Page<TimeReservedDTO> findAllReservedTime(Long id, Pageable pageable);
+
     /**
      * Delete the "id" counselor.
      *

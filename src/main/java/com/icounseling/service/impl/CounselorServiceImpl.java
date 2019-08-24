@@ -4,13 +4,16 @@ import com.icounseling.domain.Counselor;
 import com.icounseling.domain.Visitor;
 import com.icounseling.repository.CounselingCaseRepository;
 import com.icounseling.repository.CounselorRepository;
+import com.icounseling.repository.TimeReservedRepository;
 import com.icounseling.repository.VisitorRepository;
 import com.icounseling.service.CounselorService;
 import com.icounseling.service.dto.CounselingCaseDTO;
 import com.icounseling.service.dto.CounselorDTO;
+import com.icounseling.service.dto.TimeReservedDTO;
 import com.icounseling.service.dto.VisitorDTO;
 import com.icounseling.service.mapper.CounselingCaseMapper;
 import com.icounseling.service.mapper.CounselorMapper;
+import com.icounseling.service.mapper.TimeReservedMapper;
 import com.icounseling.service.mapper.VisitorMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,14 +43,20 @@ public class CounselorServiceImpl implements CounselorService {
 
     private final VisitorRepository visitorRepository;
 
+    private final TimeReservedRepository timeReservedRepository;
+
+    private final TimeReservedMapper timeReservedMapper;
+
     private final VisitorMapper visitorMapper;
 
-    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, VisitorMapper visitorMapper) {
+    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, TimeReservedRepository timeReservedRepository, TimeReservedMapper timeReservedMapper, VisitorMapper visitorMapper) {
         this.counselorRepository = counselorRepository;
         this.counselorMapper = counselorMapper;
         this.counselingCaseRepository = counselingCaseRepository;
         this.counselingCaseMapper = counselingCaseMapper;
         this.visitorRepository = visitorRepository;
+        this.timeReservedRepository = timeReservedRepository;
+        this.timeReservedMapper = timeReservedMapper;
         this.visitorMapper = visitorMapper;
     }
 
@@ -119,6 +128,22 @@ public class CounselorServiceImpl implements CounselorService {
         log.debug("Request to get visitor information with ID : {}", id);
         Optional<Visitor> visitor = visitorRepository.findUserByVisitorId(id);
         return visitor.map(visitorMapper::toDto);
+    }
+
+    /**
+     * Get visitor information with ID.
+     *
+     * @param id       counselor id.
+     * @param pageable the pagination information.
+     * @return the entity.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<TimeReservedDTO> findAllReservedTime(Long id, Pageable pageable) {
+        log.debug("Request to get all reserved time for counselor with ID : {}", id);
+        Page<TimeReservedDTO> timeReservedDTO = timeReservedRepository.findTimeReservedByCounselorId(id, pageable)
+            .map(timeReservedMapper::toDto);
+        return timeReservedDTO;
     }
 
     /**
