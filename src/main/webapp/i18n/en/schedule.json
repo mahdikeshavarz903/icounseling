@@ -4,8 +4,7 @@
       "home": {
         "title": "Schedules",
         "createLabel": "Create a new Schedule",
-        "createOrEditLabel": "Create or edit a Schedule",
-        "notFound": "No Schedules found"
+        "createOrEditLabel": "Create or edit a Schedule"
       },
       "created": "A new Schedule is created with identifier {{ param }}",
       "updated": "A Schedule is updated with identifier {{ param }}",
@@ -17,8 +16,7 @@
         "title": "Schedule"
       },
       "title": "Title",
-      "date": "Date",
-      "time": "Time",
+      "dateTime": "Date Time",
       "description": "Description",
       "task": "Task",
       "post": "Post",

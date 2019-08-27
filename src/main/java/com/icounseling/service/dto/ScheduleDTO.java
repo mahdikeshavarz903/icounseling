@@ -3,7 +3,6 @@ package com.icounseling.service.dto;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -17,10 +16,7 @@ public class ScheduleDTO implements Serializable {
     private String title;
 
     @NotNull
-    private LocalDate date;
-
-    @NotNull
-    private Instant time;
+    private Instant dateTime;
 
     @NotNull
     private String description;
@@ -42,20 +38,12 @@ public class ScheduleDTO implements Serializable {
         this.title = title;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Instant getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public Instant getTime() {
-        return time;
-    }
-
-    public void setTime(Instant time) {
-        this.time = time;
+    public void setDateTime(Instant dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getDescription() {
@@ -92,8 +80,7 @@ public class ScheduleDTO implements Serializable {
         return "ScheduleDTO{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
-            ", date='" + getDate() + "'" +
-            ", time='" + getTime() + "'" +
+            ", dateTime='" + getDateTime() + "'" +
             ", description='" + getDescription() + "'" +
             "}";
     }

@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,20 +30,12 @@ public class Planning implements Serializable {
     private String title;
 
     @NotNull
-    @Column(name = "start_date", nullable = false)
-    private LocalDate startDate;
+    @Column(name = "start_date_time", nullable = false)
+    private Instant startDateTime;
 
     @NotNull
-    @Column(name = "start_time", nullable = false)
-    private Instant startTime;
-
-    @NotNull
-    @Column(name = "end_date", nullable = false)
-    private LocalDate endDate;
-
-    @NotNull
-    @Column(name = "end_time", nullable = false)
-    private Instant endTime;
+    @Column(name = "end_date_time", nullable = false)
+    private Instant endDateTime;
 
     @NotNull
     @Column(name = "description", nullable = false)
@@ -80,56 +71,30 @@ public class Planning implements Serializable {
         this.title = title;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public Instant getStartDateTime() {
+        return startDateTime;
     }
 
-    public Planning startDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public Planning startDateTime(Instant startDateTime) {
+        this.startDateTime = startDateTime;
         return this;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setStartDateTime(Instant startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
-    public Instant getStartTime() {
-        return startTime;
+    public Instant getEndDateTime() {
+        return endDateTime;
     }
 
-    public Planning startTime(Instant startTime) {
-        this.startTime = startTime;
+    public Planning endDateTime(Instant endDateTime) {
+        this.endDateTime = endDateTime;
         return this;
     }
 
-    public void setStartTime(Instant startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public Planning endDate(LocalDate endDate) {
-        this.endDate = endDate;
-        return this;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public Instant getEndTime() {
-        return endTime;
-    }
-
-    public Planning endTime(Instant endTime) {
-        this.endTime = endTime;
-        return this;
-    }
-
-    public void setEndTime(Instant endTime) {
-        this.endTime = endTime;
+    public void setEndDateTime(Instant endDateTime) {
+        this.endDateTime = endDateTime;
     }
 
     public String getDescription() {
@@ -205,10 +170,8 @@ public class Planning implements Serializable {
         return "Planning{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
-            ", startDate='" + getStartDate() + "'" +
-            ", startTime='" + getStartTime() + "'" +
-            ", endDate='" + getEndDate() + "'" +
-            ", endTime='" + getEndTime() + "'" +
+            ", startDateTime='" + getStartDateTime() + "'" +
+            ", endDateTime='" + getEndDateTime() + "'" +
             ", description='" + getDescription() + "'" +
             "}";
     }

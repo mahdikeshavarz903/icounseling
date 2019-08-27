@@ -6,6 +6,4 @@ export interface IRate {
   commentId?: number;
 }
 
-export class Rate implements IRate {
-  constructor(public id?: number, public index?: number, public title?: string, public documentId?: number, public commentId?: number) {}
-}
+export const defaultValue: Readonly<IRate> = {};

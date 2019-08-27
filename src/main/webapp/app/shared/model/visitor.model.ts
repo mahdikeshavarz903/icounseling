@@ -12,15 +12,4 @@ export interface IVisitor {
   libraryId?: number;
 }
 
-export class Visitor implements IVisitor {
-  constructor(
-    public id?: number,
-    public scoreId?: number,
-    public educationId?: number,
-    public userId?: number,
-    public transactions?: ITransaction[],
-    public jobs?: IJob[],
-    public counselingCaseId?: number,
-    public libraryId?: number
-  ) {}
-}
+export const defaultValue: Readonly<IVisitor> = {};

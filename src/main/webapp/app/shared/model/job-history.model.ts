@@ -1,4 +1,4 @@
-import { Moment } from 'moment';
+import {Moment} from 'moment';
 
 export interface IJobHistory {
   id?: number;
@@ -7,6 +7,4 @@ export interface IJobHistory {
   jobId?: number;
 }
 
-export class JobHistory implements IJobHistory {
-  constructor(public id?: number, public startDate?: Moment, public endDate?: Moment, public jobId?: number) {}
-}
+export const defaultValue: Readonly<IJobHistory> = {};

@@ -1,4 +1,4 @@
-import { Moment } from 'moment';
+import {Moment} from 'moment';
 
 export const enum PaymentType {
   FREE = 'FREE',
@@ -33,24 +33,4 @@ export interface IDocument {
   counselorId?: number;
 }
 
-export class Document implements IDocument {
-  constructor(
-    public id?: number,
-    public title?: string,
-    public descriptionContentType?: string,
-    public description?: any,
-    public price?: number,
-    public publishedDate?: Moment,
-    public paymentType?: PaymentType,
-    public documentFormat?: DocumentFormat,
-    public imagesGalleryContentType?: string,
-    public imagesGallery?: any,
-    public tag?: string,
-    public rateIndex?: string,
-    public rateId?: number,
-    public commentId?: number,
-    public gategoryCategoryType?: string,
-    public gategoryId?: number,
-    public counselorId?: number
-  ) {}
-}
+export const defaultValue: Readonly<IDocument> = {};

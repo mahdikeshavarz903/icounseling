@@ -1,5 +1,5 @@
-import { Moment } from 'moment';
-import { ICategory } from 'app/shared/model/category.model';
+import {Moment} from 'moment';
+import {ICategory} from 'app/shared/model/category.model';
 
 export interface ILibrary {
   id?: number;
@@ -9,12 +9,4 @@ export interface ILibrary {
   categories?: ICategory[];
 }
 
-export class Library implements ILibrary {
-  constructor(
-    public id?: number,
-    public name?: string,
-    public creationTime?: Moment,
-    public visitorId?: number,
-    public categories?: ICategory[]
-  ) {}
-}
+export const defaultValue: Readonly<ILibrary> = {};

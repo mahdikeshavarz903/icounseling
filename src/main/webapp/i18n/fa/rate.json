@@ -4,8 +4,7 @@
       "home": {
         "title": "Rates",
         "createLabel": "Create a new Rate",
-        "createOrEditLabel": "Create or edit a Rate",
-        "notFound": "No Rates found"
+        "createOrEditLabel": "Create or edit a Rate"
       },
       "created": "A new Rate is created with identifier {{ param }}",
       "updated": "A Rate is updated with identifier {{ param }}",

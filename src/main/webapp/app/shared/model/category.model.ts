@@ -1,4 +1,4 @@
-import { IDocument } from 'app/shared/model/document.model';
+import {IDocument} from 'app/shared/model/document.model';
 
 export const enum CategoryType {
   ROMANCE = 'ROMANCE',
@@ -23,13 +23,4 @@ export interface ICategory {
   libraryId?: number;
 }
 
-export class Category implements ICategory {
-  constructor(
-    public id?: number,
-    public imagesContentType?: string,
-    public images?: any,
-    public categoryType?: CategoryType,
-    public documents?: IDocument[],
-    public libraryId?: number
-  ) {}
-}
+export const defaultValue: Readonly<ICategory> = {};

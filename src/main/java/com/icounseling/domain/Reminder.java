@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDate;
 
 /**
  * A Reminder.
@@ -25,12 +24,8 @@ public class Reminder implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "date", nullable = false)
-    private LocalDate date;
-
-    @NotNull
-    @Column(name = "time", nullable = false)
-    private Instant time;
+    @Column(name = "date_time", nullable = false)
+    private Instant dateTime;
 
     @OneToOne(mappedBy = "reminder")
     @JsonIgnore
@@ -45,30 +40,17 @@ public class Reminder implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Instant getDateTime() {
+        return dateTime;
     }
 
-    public Reminder date(LocalDate date) {
-        this.date = date;
+    public Reminder dateTime(Instant dateTime) {
+        this.dateTime = dateTime;
         return this;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public Instant getTime() {
-        return time;
-    }
-
-    public Reminder time(Instant time) {
-        this.time = time;
-        return this;
-    }
-
-    public void setTime(Instant time) {
-        this.time = time;
+    public void setDateTime(Instant dateTime) {
+        this.dateTime = dateTime;
     }
 
     public Task getTask() {
@@ -105,8 +87,7 @@ public class Reminder implements Serializable {
     public String toString() {
         return "Reminder{" +
             "id=" + getId() +
-            ", date='" + getDate() + "'" +
-            ", time='" + getTime() + "'" +
+            ", dateTime='" + getDateTime() + "'" +
             "}";
     }
 }

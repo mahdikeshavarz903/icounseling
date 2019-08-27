@@ -5,8 +5,6 @@ export interface ITransaction {
   visitorId?: number;
 }
 
-export class Transaction implements ITransaction {
-  constructor(public id?: number, public totalAmount?: number, public status?: boolean, public visitorId?: number) {
-    this.status = this.status || false;
-  }
-}
+export const defaultValue: Readonly<ITransaction> = {
+  status: false
+};

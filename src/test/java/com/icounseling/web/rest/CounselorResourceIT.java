@@ -16,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
@@ -27,7 +28,6 @@ import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.List;
 
 import static com.icounseling.web.rest.TestUtil.createFormattingConversionService;
@@ -89,6 +89,7 @@ public class CounselorResourceIT {
     @Autowired
     private EntityManager em;
 
+    @Qualifier("defaultValidator")
     @Autowired
     private Validator validator;
 
@@ -144,14 +145,17 @@ public class CounselorResourceIT {
 
     public static TimeReserved createTimeReservedEntity(EntityManager em) {
         TimeReserved timeReserved = new TimeReserved()
-            .date(LocalDate.ofEpochDay(0L))
             .description("AAAAAAAAAA")
-            .time(Instant.ofEpochMilli(0L));
+            .dateTime(Instant.ofEpochMilli(0L));
         return timeReserved;
     }
 
     public static Planning createPlanningEntity(EntityManager em) {
-        Planning planning = new Planning();
+        Planning planning = new Planning()
+            .title("AAAAAAAAAA")
+            .startDateTime(Instant.ofEpochMilli(0L))
+            .endDateTime(Instant.ofEpochMilli(0L))
+            .description("AAAAAAAAAA");
         return planning;
     }
 

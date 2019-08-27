@@ -10,6 +10,4 @@ export interface ICounselingCase {
   counselorId?: number;
 }
 
-export class CounselingCase implements ICounselingCase {
-  constructor(public id?: number, public status?: CounselingCaseStatus, public visitorId?: number, public counselorId?: number) {}
-}
+export const defaultValue: Readonly<ICounselingCase> = {};

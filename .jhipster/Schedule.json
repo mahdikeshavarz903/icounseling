@@ -9,15 +9,8 @@
             ]
         },
         {
-          "fieldName": "date",
-          "fieldType": "LocalDate",
-          "fieldValidateRules": [
-            "required"
-          ]
-        },
-      {
-        "fieldName": "time",
-        "fieldType": "Instant",
+          "fieldName": "dateTime",
+          "fieldType": "Instant",
             "fieldValidateRules": [
                 "required"
             ]

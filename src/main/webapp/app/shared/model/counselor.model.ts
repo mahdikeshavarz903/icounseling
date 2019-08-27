@@ -34,17 +34,4 @@ export interface ICounselor {
   counselingCases?: ICounselingCase[];
 }
 
-export class Counselor implements ICounselor {
-  constructor(
-    public id?: number,
-    public consultantType?: ConsultantType,
-    public educationId?: number,
-    public scoreId?: number,
-    public userId?: number,
-    public posts?: IPost[],
-    public documents?: IDocument[],
-    public timeReserveds?: ITimeReserved[],
-    public plannings?: IPlanning[],
-    public counselingCases?: ICounselingCase[]
-  ) {}
-}
+export const defaultValue: Readonly<ICounselor> = {};

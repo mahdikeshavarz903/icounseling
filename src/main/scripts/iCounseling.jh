@@ -33,10 +33,8 @@ entity Education{
 
 entity Planning{
     title String required,
-    startDate LocalDate required,
-    StartTime Instant required,
-    endDate LocalDate required,
-    endTime Instant required,
+    StartDateTime Instant required,
+    endDateTime Instant required,
     description String required
 }
 
@@ -54,13 +52,11 @@ enum RepeatUntil{
 }
 
 entity Reminder{
-	date LocalDate required,
-    time Instant required
+    dateTime Instant required
 }
 
 entity TimeReserved{
-	date LocalDate required,
-    time Instant required,
+    dateTime Instant required,
     description String required
 }
 
@@ -88,8 +84,7 @@ enum JobCategory{
 
 entity Schedule{
 	title String required,
-	date LocalDate required,
-    time Instant required,
+    dateTime Instant required,
     description String required
 }
 

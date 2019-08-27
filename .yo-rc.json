@@ -1,14 +1,14 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "com.icounseling",
+      "packageName": "com.counseling",
       "nativeLanguage": "fa"
     },
-    "jhipsterVersion": "6.2.0",
+    "jhipsterVersion": "6.0.1",
     "applicationType": "monolith",
     "baseName": "iCounseling",
-    "packageName": "com.icounseling",
-    "packageFolder": "com/icounseling",
+    "packageName": "com.counseling",
+    "packageFolder": "com/counseling",
     "serverPort": "8080",
     "authenticationType": "jwt",
     "cacheProvider": "ehcache",
@@ -22,12 +22,12 @@
     "serviceDiscoveryType": false,
     "buildTool": "maven",
     "enableSwaggerCodegen": false,
-    "jwtSecretKey": "MGRhOWNmOTViNDQ4YTVkYTViODZkYzM0NzFmY2IxMGIzMmI5NjIxMTcyMjI4ZWM5YmM1ZWU3NmNmMWI0M2NiMzlkNTRjM2IxYWJmZmUxNzE0YmQ3ZWRkOTM2YWFkMzliZGY1MjA1MzQxOTM0MjEyZTQ2N2Q4MTUzOWU2YWZiNjU=",
-    "useSass": true,
-    "clientPackageManager": "npm",
-    "clientFramework": "angularX",
+    "jwtSecretKey": "ZGQxYjk2YzJiMDdiNzU2MjY4OGNjZjgxNTMxYTUxNjgzNDE5NjcwNmQyYWYyNTFlYWMzNDQyNTEzZWQzMTkyMmIxYTIxZWJlY2NkZWI5ODFkZTU3NmM5ZjUwNzcwMTY3ZmRlMzU1ZTRhZTBhYmQzODZlZGQ4ZGYxYjk1MGQ4Y2I=",
+    "clientFramework": "react",
     "clientTheme": "none",
     "clientThemeVariant": "",
+    "useSass": true,
+    "clientPackageManager": "npm",
     "testFrameworks": [],
     "jhiPrefix": "jhi",
     "entitySuffix": "",
@@ -35,10 +35,9 @@
     "otherModules": [],
     "enableTranslation": true,
     "nativeLanguage": "fa",
-    "languages": ["fa", "en"],
-    "appsFolders": ["iCounseling"],
-    "directoryPath": "../",
-    "monitoring": "no",
-    "blueprints": []
+    "languages": [
+      "fa",
+      "en"
+    ]
   }
 }

@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDate;
 
 /**
  * A TimeReserved.
@@ -25,12 +24,8 @@ public class TimeReserved implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "date", nullable = false)
-    private LocalDate date;
-
-    @NotNull
-    @Column(name = "time", nullable = false)
-    private Instant time;
+    @Column(name = "date_time", nullable = false)
+    private Instant dateTime;
 
     @NotNull
     @Column(name = "description", nullable = false)
@@ -49,30 +44,17 @@ public class TimeReserved implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Instant getDateTime() {
+        return dateTime;
     }
 
-    public TimeReserved date(LocalDate date) {
-        this.date = date;
+    public TimeReserved dateTime(Instant dateTime) {
+        this.dateTime = dateTime;
         return this;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public Instant getTime() {
-        return time;
-    }
-
-    public TimeReserved time(Instant time) {
-        this.time = time;
-        return this;
-    }
-
-    public void setTime(Instant time) {
-        this.time = time;
+    public void setDateTime(Instant dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getDescription() {
@@ -122,8 +104,7 @@ public class TimeReserved implements Serializable {
     public String toString() {
         return "TimeReserved{" +
             "id=" + getId() +
-            ", date='" + getDate() + "'" +
-            ", time='" + getTime() + "'" +
+            ", dateTime='" + getDateTime() + "'" +
             ", description='" + getDescription() + "'" +
             "}";
     }

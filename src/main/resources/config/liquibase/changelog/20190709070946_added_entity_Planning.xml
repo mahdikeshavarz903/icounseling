@@ -18,19 +18,11 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="start_date" type="date">
+            <column name="start_date_time" type="datetime">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="start_time" type="datetime">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="end_date" type="date">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="end_time" type="datetime">
+            <column name="end_date_time" type="datetime">
                 <constraints nullable="false"/>
             </column>
 
@@ -45,8 +37,8 @@
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
 
-        <dropDefaultValue tableName="planning" columnName="start_time" columnDataType="datetime"/>
-        <dropDefaultValue tableName="planning" columnName="end_time" columnDataType="datetime"/>
+        <dropDefaultValue tableName="planning" columnName="start_date_time" columnDataType="datetime"/>
+        <dropDefaultValue tableName="planning" columnName="end_date_time" columnDataType="datetime"/>
     </changeSet>
 
     <changeSet id="20190709070946-1-relations" author="jhipster">
@@ -69,10 +61,8 @@
             tableName="planning">
             <column name="id" type="numeric"/>
             <column name="title" type="string"/>
-            <column name="start_date" type="date"/>
-            <column name="start_time" type="datetime"/>
-            <column name="end_date" type="date"/>
-            <column name="end_time" type="datetime"/>
+            <column name="start_date_time" type="datetime"/>
+            <column name="end_date_time" type="datetime"/>
             <column name="description" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>

@@ -2,14 +2,7 @@
     "name": "TimeReserved",
     "fields": [
         {
-            "fieldName": "date",
-            "fieldType": "LocalDate",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-          "fieldName": "time",
+          "fieldName": "dateTime",
           "fieldType": "Instant",
             "fieldValidateRules": [
                 "required"

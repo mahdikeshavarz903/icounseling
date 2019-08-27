@@ -1,4 +1,4 @@
-import { IComment } from 'app/shared/model/comment.model';
+import {IComment} from 'app/shared/model/comment.model';
 
 export const enum DocumentFormat {
   PDF = 'PDF',
@@ -18,14 +18,4 @@ export interface IPost {
   counselorId?: number;
 }
 
-export class Post implements IPost {
-  constructor(
-    public id?: number,
-    public imageContentType?: string,
-    public image?: any,
-    public documentFormat?: DocumentFormat,
-    public scheduleId?: number,
-    public comments?: IComment[],
-    public counselorId?: number
-  ) {}
-}
+export const defaultValue: Readonly<IPost> = {};

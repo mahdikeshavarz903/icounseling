@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
@@ -22,8 +23,6 @@ import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -39,13 +38,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = ICounselingApp.class)
 public class ReminderResourceIT {
 
-    private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
-    private static final LocalDate SMALLER_DATE = LocalDate.ofEpochDay(-1L);
-
-    private static final Instant DEFAULT_TIME = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-    private static final Instant SMALLER_TIME = Instant.ofEpochMilli(-1L);
+    private static final Instant DEFAULT_DATE_TIME = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant SMALLER_DATE_TIME = Instant.ofEpochMilli(-1L);
 
     @Autowired
     private ReminderRepository reminderRepository;
@@ -68,6 +63,7 @@ public class ReminderResourceIT {
     @Autowired
     private EntityManager em;
 
+    @Qualifier("defaultValidator")
     @Autowired
     private Validator validator;
 
@@ -95,8 +91,7 @@ public class ReminderResourceIT {
      */
     public static Reminder createEntity(EntityManager em) {
         Reminder reminder = new Reminder()
-            .date(DEFAULT_DATE)
-            .time(DEFAULT_TIME);
+            .dateTime(DEFAULT_DATE_TIME);
         return reminder;
     }
     /**
@@ -107,8 +102,7 @@ public class ReminderResourceIT {
      */
     public static Reminder createUpdatedEntity(EntityManager em) {
         Reminder reminder = new Reminder()
-            .date(UPDATED_DATE)
-            .time(UPDATED_TIME);
+            .dateTime(UPDATED_DATE_TIME);
         return reminder;
     }
 
@@ -133,8 +127,7 @@ public class ReminderResourceIT {
         List<Reminder> reminderList = reminderRepository.findAll();
         assertThat(reminderList).hasSize(databaseSizeBeforeCreate + 1);
         Reminder testReminder = reminderList.get(reminderList.size() - 1);
-        assertThat(testReminder.getDate()).isEqualTo(DEFAULT_DATE);
-        assertThat(testReminder.getTime()).isEqualTo(DEFAULT_TIME);
+        assertThat(testReminder.getDateTime()).isEqualTo(DEFAULT_DATE_TIME);
     }
 
     @Test
@@ -160,29 +153,10 @@ public class ReminderResourceIT {
 
     @Test
     @Transactional
-    public void checkDateIsRequired() throws Exception {
+    public void checkDateTimeIsRequired() throws Exception {
         int databaseSizeBeforeTest = reminderRepository.findAll().size();
         // set the field null
-        reminder.setDate(null);
-
-        // Create the Reminder, which fails.
-        ReminderDTO reminderDTO = reminderMapper.toDto(reminder);
-
-        restReminderMockMvc.perform(post("/api/reminders")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(reminderDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Reminder> reminderList = reminderRepository.findAll();
-        assertThat(reminderList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkTimeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = reminderRepository.findAll().size();
-        // set the field null
-        reminder.setTime(null);
+        reminder.setDateTime(null);
 
         // Create the Reminder, which fails.
         ReminderDTO reminderDTO = reminderMapper.toDto(reminder);
@@ -207,8 +181,7 @@ public class ReminderResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(reminder.getId().intValue())))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].time").value(hasItem(DEFAULT_TIME.toString())));
+            .andExpect(jsonPath("$.[*].dateTime").value(hasItem(DEFAULT_DATE_TIME.toString())));
     }
     
     @Test
@@ -222,8 +195,7 @@ public class ReminderResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(reminder.getId().intValue()))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
-            .andExpect(jsonPath("$.time").value(DEFAULT_TIME.toString()));
+            .andExpect(jsonPath("$.dateTime").value(DEFAULT_DATE_TIME.toString()));
     }
 
     @Test
@@ -247,8 +219,7 @@ public class ReminderResourceIT {
         // Disconnect from session so that the updates on updatedReminder are not directly saved in db
         em.detach(updatedReminder);
         updatedReminder
-            .date(UPDATED_DATE)
-            .time(UPDATED_TIME);
+            .dateTime(UPDATED_DATE_TIME);
         ReminderDTO reminderDTO = reminderMapper.toDto(updatedReminder);
 
         restReminderMockMvc.perform(put("/api/reminders")
@@ -260,8 +231,7 @@ public class ReminderResourceIT {
         List<Reminder> reminderList = reminderRepository.findAll();
         assertThat(reminderList).hasSize(databaseSizeBeforeUpdate);
         Reminder testReminder = reminderList.get(reminderList.size() - 1);
-        assertThat(testReminder.getDate()).isEqualTo(UPDATED_DATE);
-        assertThat(testReminder.getTime()).isEqualTo(UPDATED_TIME);
+        assertThat(testReminder.getDateTime()).isEqualTo(UPDATED_DATE_TIME);
     }
 
     @Test

@@ -6,12 +6,4 @@ export interface IJob {
   visitorId?: number;
 }
 
-export class Job implements IJob {
-  constructor(
-    public id?: number,
-    public jobTitle?: string,
-    public minSalary?: number,
-    public maxSalary?: number,
-    public visitorId?: number
-  ) {}
-}
+export const defaultValue: Readonly<IJob> = {};

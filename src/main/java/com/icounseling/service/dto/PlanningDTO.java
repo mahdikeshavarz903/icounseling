@@ -3,7 +3,6 @@ package com.icounseling.service.dto;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -17,16 +16,10 @@ public class PlanningDTO implements Serializable {
     private String title;
 
     @NotNull
-    private LocalDate startDate;
+    private Instant startDateTime;
 
     @NotNull
-    private Instant startTime;
-
-    @NotNull
-    private LocalDate endDate;
-
-    @NotNull
-    private Instant endTime;
+    private Instant endDateTime;
 
     @NotNull
     private String description;
@@ -50,36 +43,20 @@ public class PlanningDTO implements Serializable {
         this.title = title;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public Instant getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setStartDateTime(Instant startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
-    public Instant getStartTime() {
-        return startTime;
+    public Instant getEndDateTime() {
+        return endDateTime;
     }
 
-    public void setStartTime(Instant startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public Instant getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Instant endTime) {
-        this.endTime = endTime;
+    public void setEndDateTime(Instant endDateTime) {
+        this.endDateTime = endDateTime;
     }
 
     public String getDescription() {
@@ -124,10 +101,8 @@ public class PlanningDTO implements Serializable {
         return "PlanningDTO{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
-            ", startDate='" + getStartDate() + "'" +
-            ", startTime='" + getStartTime() + "'" +
-            ", endDate='" + getEndDate() + "'" +
-            ", endTime='" + getEndTime() + "'" +
+            ", startDateTime='" + getStartDateTime() + "'" +
+            ", endDateTime='" + getEndDateTime() + "'" +
             ", description='" + getDescription() + "'" +
             ", counselor=" + getCounselorId() +
             "}";
