@@ -17,7 +17,8 @@
         "title": "Schedule"
       },
       "title": "Title",
-      "dateAndTime": "Date And Time",
+      "date": "Date",
+      "time": "Time",
       "description": "Description",
       "task": "Task",
       "post": "Post",

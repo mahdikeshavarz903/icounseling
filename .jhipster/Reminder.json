@@ -10,7 +10,7 @@
         },
         {
             "fieldName": "time",
-            "fieldType": "LocalDate",
+          "fieldType": "Instant",
             "fieldValidateRules": [
                 "required"
             ]

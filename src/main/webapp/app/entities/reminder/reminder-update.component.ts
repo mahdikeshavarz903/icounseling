@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
 import * as moment from 'moment';
-import { JhiAlertService } from 'ng-jhipster';
-import { IReminder, Reminder } from 'app/shared/model/reminder.model';
-import { ReminderService } from './reminder.service';
-import { ITask } from 'app/shared/model/task.model';
-import { TaskService } from 'app/entities/task';
+import {DATE_TIME_FORMAT} from 'app/shared/constants/input.constants';
+import {JhiAlertService} from 'ng-jhipster';
+import {IReminder, Reminder} from 'app/shared/model/reminder.model';
+import {ReminderService} from './reminder.service';
+import {ITask} from 'app/shared/model/task.model';
+import {TaskService} from 'app/entities/task';
 
 @Component({
   selector: 'jhi-reminder-update',
@@ -20,7 +21,6 @@ export class ReminderUpdateComponent implements OnInit {
 
   tasks: ITask[];
   dateDp: any;
-  timeDp: any;
 
   editForm = this.fb.group({
     id: [],
@@ -54,7 +54,7 @@ export class ReminderUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: reminder.id,
       date: reminder.date,
-      time: reminder.time
+      time: reminder.time != null ? reminder.time.format(DATE_TIME_FORMAT) : null
     });
   }
 
@@ -77,7 +77,7 @@ export class ReminderUpdateComponent implements OnInit {
       ...new Reminder(),
       id: this.editForm.get(['id']).value,
       date: this.editForm.get(['date']).value,
-      time: this.editForm.get(['time']).value
+      time: this.editForm.get(['time']).value != null ? moment(this.editForm.get(['time']).value, DATE_TIME_FORMAT) : undefined
     };
   }
 

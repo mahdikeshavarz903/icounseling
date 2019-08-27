@@ -16,6 +16,12 @@
       "detail": {
         "title": "Planning"
       },
+      "title": "Title",
+      "startDate": "Start Date",
+      "startTime": "Start Time",
+      "endDate": "End Date",
+      "endTime": "End Time",
+      "description": "Description",
       "task": "Task",
       "counselor": "Counselor"
     }

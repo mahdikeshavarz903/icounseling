@@ -36,14 +36,6 @@
       "ownerSide": true
     },
     {
-      "relationshipType": "one-to-one",
-      "otherEntityName": "user",
-      "otherEntityRelationshipName": "counselor",
-      "relationshipName": "user",
-      "otherEntityField": "id",
-      "ownerSide": true
-    },
-    {
       "relationshipType": "one-to-many",
       "otherEntityName": "post",
       "otherEntityRelationshipName": "counselor",

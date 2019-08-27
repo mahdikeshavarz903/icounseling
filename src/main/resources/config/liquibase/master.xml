@@ -35,6 +35,8 @@
     <include file="config/liquibase/changelog/20190730111048_added_entity_Counselor.xml"
              relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190730111055_added_entity_Visitor.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190730111048_added_entity_Counselor.xml"
+             relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20190709070942_added_entity_constraints_CounselingCase.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070944_added_entity_constraints_Reseume.xml" relativeToChangelogFile="false"/>
@@ -49,6 +51,10 @@
     <include file="config/liquibase/changelog/20190709070959_added_entity_constraints_Library.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709071000_added_entity_constraints_Category.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709071001_added_entity_constraints_Transaction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190730111048_added_entity_constraints_Counselor.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190730111055_added_entity_constraints_Visitor.xml"
+             relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190730111048_added_entity_constraints_Counselor.xml"
              relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190730111055_added_entity_constraints_Visitor.xml"

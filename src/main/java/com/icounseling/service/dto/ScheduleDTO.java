@@ -1,7 +1,9 @@
 package com.icounseling.service.dto;
-import java.time.ZonedDateTime;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -15,7 +17,10 @@ public class ScheduleDTO implements Serializable {
     private String title;
 
     @NotNull
-    private ZonedDateTime dateAndTime;
+    private LocalDate date;
+
+    @NotNull
+    private Instant time;
 
     @NotNull
     private String description;
@@ -37,12 +42,20 @@ public class ScheduleDTO implements Serializable {
         this.title = title;
     }
 
-    public ZonedDateTime getDateAndTime() {
-        return dateAndTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateAndTime(ZonedDateTime dateAndTime) {
-        this.dateAndTime = dateAndTime;
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public Instant getTime() {
+        return time;
+    }
+
+    public void setTime(Instant time) {
+        this.time = time;
     }
 
     public String getDescription() {
@@ -79,7 +92,8 @@ public class ScheduleDTO implements Serializable {
         return "ScheduleDTO{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
-            ", dateAndTime='" + getDateAndTime() + "'" +
+            ", date='" + getDate() + "'" +
+            ", time='" + getTime() + "'" +
             ", description='" + getDescription() + "'" +
             "}";
     }

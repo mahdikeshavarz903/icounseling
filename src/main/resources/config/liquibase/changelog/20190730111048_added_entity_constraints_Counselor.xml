@@ -20,5 +20,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="score"/>
 
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="counselor"
+                                 constraintName="fk_counselor_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
     </changeSet>
 </databaseChangeLog>

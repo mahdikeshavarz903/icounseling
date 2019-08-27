@@ -1,11 +1,14 @@
 package com.icounseling.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +26,30 @@ public class Planning implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Column(name = "title", nullable = false)
+    private String title;
+
+    @NotNull
+    @Column(name = "start_date", nullable = false)
+    private LocalDate startDate;
+
+    @NotNull
+    @Column(name = "start_time", nullable = false)
+    private Instant startTime;
+
+    @NotNull
+    @Column(name = "end_date", nullable = false)
+    private LocalDate endDate;
+
+    @NotNull
+    @Column(name = "end_time", nullable = false)
+    private Instant endTime;
+
+    @NotNull
+    @Column(name = "description", nullable = false)
+    private String description;
+
     @OneToMany(mappedBy = "planning")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Task> tasks = new HashSet<>();
@@ -38,6 +65,84 @@ public class Planning implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Planning title(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public Planning startDate(LocalDate startDate) {
+        this.startDate = startDate;
+        return this;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public Instant getStartTime() {
+        return startTime;
+    }
+
+    public Planning startTime(Instant startTime) {
+        this.startTime = startTime;
+        return this;
+    }
+
+    public void setStartTime(Instant startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public Planning endDate(LocalDate endDate) {
+        this.endDate = endDate;
+        return this;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public Instant getEndTime() {
+        return endTime;
+    }
+
+    public Planning endTime(Instant endTime) {
+        this.endTime = endTime;
+        return this;
+    }
+
+    public void setEndTime(Instant endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Planning description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Set<Task> getTasks() {
@@ -99,6 +204,12 @@ public class Planning implements Serializable {
     public String toString() {
         return "Planning{" +
             "id=" + getId() +
+            ", title='" + getTitle() + "'" +
+            ", startDate='" + getStartDate() + "'" +
+            ", startTime='" + getStartTime() + "'" +
+            ", endDate='" + getEndDate() + "'" +
+            ", endTime='" + getEndTime() + "'" +
+            ", description='" + getDescription() + "'" +
             "}";
     }
 }

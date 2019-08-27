@@ -9,8 +9,15 @@
             ]
         },
         {
-            "fieldName": "dateAndTime",
-            "fieldType": "ZonedDateTime",
+          "fieldName": "date",
+          "fieldType": "LocalDate",
+          "fieldValidateRules": [
+            "required"
+          ]
+        },
+      {
+        "fieldName": "time",
+        "fieldType": "Instant",
             "fieldValidateRules": [
                 "required"
             ]

@@ -27,7 +27,7 @@
             <tr *ngFor="let reminder of reminders ;trackBy: trackId">
                 <td><a [routerLink]="['/reminder', reminder.id, 'view' ]">{{reminder.id}}</a></td>
                 <td>{{reminder.date | date:'mediumDate'}}</td>
-                <td>{{reminder.time | date:'mediumDate'}}</td>
+                <td>{{reminder.time | date:'medium'}}</td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"

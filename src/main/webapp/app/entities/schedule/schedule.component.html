@@ -19,7 +19,12 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="title"><span jhiTranslate="iCounselingApp.schedule.title">Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="dateAndTime"><span jhiTranslate="iCounselingApp.schedule.dateAndTime">Date And Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="date"><span jhiTranslate="iCounselingApp.schedule.date">Date</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </th>
+                <th jhiSortBy="time"><span jhiTranslate="iCounselingApp.schedule.time">Time</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </th>
             <th jhiSortBy="description"><span jhiTranslate="iCounselingApp.schedule.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
@@ -28,7 +33,8 @@
             <tr *ngFor="let schedule of schedules ;trackBy: trackId">
                 <td><a [routerLink]="['/schedule', schedule.id, 'view' ]">{{schedule.id}}</a></td>
                 <td>{{schedule.title}}</td>
-                <td>{{schedule.dateAndTime | date:'medium'}}</td>
+                <td>{{schedule.date | date:'mediumDate'}}</td>
+                <td>{{schedule.time | date:'medium'}}</td>
                 <td>{{schedule.description}}</td>
                 <td class="text-right">
                     <div class="btn-group">

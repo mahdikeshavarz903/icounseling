@@ -1,12 +1,13 @@
 package com.icounseling.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDate;
 
 /**
@@ -29,7 +30,7 @@ public class Reminder implements Serializable {
 
     @NotNull
     @Column(name = "time", nullable = false)
-    private LocalDate time;
+    private Instant time;
 
     @OneToOne(mappedBy = "reminder")
     @JsonIgnore
@@ -57,16 +58,16 @@ public class Reminder implements Serializable {
         this.date = date;
     }
 
-    public LocalDate getTime() {
+    public Instant getTime() {
         return time;
     }
 
-    public Reminder time(LocalDate time) {
+    public Reminder time(Instant time) {
         this.time = time;
         return this;
     }
 
-    public void setTime(LocalDate time) {
+    public void setTime(Instant time) {
         this.time = time;
     }
 

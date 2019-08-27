@@ -5,6 +5,30 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="iCounselingApp.planning.title">Title</span></dt>
+                <dd>
+                    <span>{{planning.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.planning.startDate">Start Date</span></dt>
+                <dd>
+                    <span>{{planning.startDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.planning.startTime">Start Time</span></dt>
+                <dd>
+                    <span>{{planning.startTime}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.planning.endDate">End Date</span></dt>
+                <dd>
+                    <span>{{planning.endDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.planning.endTime">End Time</span></dt>
+                <dd>
+                    <span>{{planning.endTime}}</span>
+                </dd>
+                <dt><span jhiTranslate="iCounselingApp.planning.description">Description</span></dt>
+                <dd>
+                    <span>{{planning.description}}</span>
+                </dd>
                 <dt><span jhiTranslate="iCounselingApp.planning.counselor">Counselor</span></dt>
                 <dd>
                     <div *ngIf="planning.counselorId">

@@ -4,6 +4,8 @@ import com.icounseling.ICounselingApp;
 import com.icounseling.domain.*;
 import com.icounseling.domain.enumeration.ConsultantType;
 import com.icounseling.domain.enumeration.CounselingCaseStatus;
+import com.icounseling.domain.enumeration.RepeatTime;
+import com.icounseling.domain.enumeration.RepeatUntil;
 import com.icounseling.repository.*;
 import com.icounseling.service.CounselorService;
 import com.icounseling.service.dto.CounselorDTO;
@@ -24,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -66,6 +69,12 @@ public class CounselorResourceIT {
     private CounselorService counselorService;
 
     @Autowired
+    private PlanningRepository planningRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @Autowired
     private TimeReservedRepository timeReservedRepository;
 
     @Autowired
@@ -88,6 +97,10 @@ public class CounselorResourceIT {
     private Counselor counselor;
 
     private TimeReserved timerReserved;
+
+    private Planning planning;
+
+    private Task task;
 
     @BeforeEach
     public void setup() {
@@ -133,10 +146,21 @@ public class CounselorResourceIT {
         TimeReserved timeReserved = new TimeReserved()
             .date(LocalDate.ofEpochDay(0L))
             .description("AAAAAAAAAA")
-            .time(LocalDate.ofEpochDay(0L));
+            .time(Instant.ofEpochMilli(0L));
         return timeReserved;
     }
 
+    public static Planning createPlanningEntity(EntityManager em) {
+        Planning planning = new Planning();
+        return planning;
+    }
+
+    public static Task createTaskEntity(EntityManager em) {
+        Task task = new Task()
+            .repeatTime(RepeatTime.NONE)
+            .repeatUntil(RepeatUntil.NO_END_DATE);
+        return task;
+    }
     /**
      * Create an updated entity for this test.
      *
@@ -155,6 +179,8 @@ public class CounselorResourceIT {
         counselor = createEntity(em);
         visitor = createVisitorEntity(em);
         timerReserved = createTimeReservedEntity(em);
+        planning = createPlanningEntity(em);
+        task = createTaskEntity(em);
     }
 
     @Test
@@ -264,7 +290,7 @@ public class CounselorResourceIT {
 //            .andExpect(jsonPath("$.[*].visitor").value(counselingCase.getVisitor().getId().intValue()))
 //            .andExpect(jsonPath("$.[*].counselor").value(counselingCase.getCounselor().getId().intValue()));
     }
-    
+
     @Test
     @Transactional
     public void getCounselor() throws Exception {
@@ -311,14 +337,36 @@ public class CounselorResourceIT {
     @Transactional
     public void getAllReservedTimes() throws Exception {
         timeReservedRepository.saveAndFlush(timerReserved);
-
-        counselorRepository.save(counselor);
+        counselorRepository.saveAndFlush(counselor);
 
         timerReserved.setCounselor(counselor);
 
         restCounselorMockMvc.perform(get("/api/counselors/{id}/reserved-times?sort=id,desc", counselor.getId().intValue()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlans() throws Exception {
+        planningRepository.saveAndFlush(planning);
+        taskRepository.saveAndFlush(task);
+        counselorRepository.saveAndFlush(counselor);
+
+        planning.setCounselor(counselor);
+
+        RepeatTime rt = RepeatTime.NONE;
+        RepeatUntil ru = RepeatUntil.NO_END_DATE;
+        task.setPlanning(planning);
+        task.setRepeatTime(rt);
+        task.setRepeatUntil(ru);
+
+        restCounselorMockMvc.perform(get("/api/counselors/{id}/all-plans?sort=id,desc", counselor.getId().intValue()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
+            .andExpect(jsonPath("$.[*].repeatTime").value(hasItem(rt.toString())))
+            .andExpect(jsonPath("$.[*].repeatUntil").value(hasItem(ru.toString())));
     }
 
     @Test

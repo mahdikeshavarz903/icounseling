@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
 import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { JhiAlertService } from 'ng-jhipster';
-import { ISchedule, Schedule } from 'app/shared/model/schedule.model';
-import { ScheduleService } from './schedule.service';
-import { ITask } from 'app/shared/model/task.model';
-import { TaskService } from 'app/entities/task';
-import { IPost } from 'app/shared/model/post.model';
-import { PostService } from 'app/entities/post';
-import { IComment } from 'app/shared/model/comment.model';
-import { CommentService } from 'app/entities/comment';
+import {DATE_TIME_FORMAT} from 'app/shared/constants/input.constants';
+import {JhiAlertService} from 'ng-jhipster';
+import {ISchedule, Schedule} from 'app/shared/model/schedule.model';
+import {ScheduleService} from './schedule.service';
+import {ITask} from 'app/shared/model/task.model';
+import {TaskService} from 'app/entities/task';
+import {IPost} from 'app/shared/model/post.model';
+import {PostService} from 'app/entities/post';
+import {IComment} from 'app/shared/model/comment.model';
+import {CommentService} from 'app/entities/comment';
 
 @Component({
   selector: 'jhi-schedule-update',
@@ -28,11 +28,13 @@ export class ScheduleUpdateComponent implements OnInit {
   posts: IPost[];
 
   comments: IComment[];
+  dateDp: any;
 
   editForm = this.fb.group({
     id: [],
     title: [null, [Validators.required]],
-    dateAndTime: [null, [Validators.required]],
+    date: [null, [Validators.required]],
+    time: [null, [Validators.required]],
     description: [null, [Validators.required]]
   });
 
@@ -78,7 +80,8 @@ export class ScheduleUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: schedule.id,
       title: schedule.title,
-      dateAndTime: schedule.dateAndTime != null ? schedule.dateAndTime.format(DATE_TIME_FORMAT) : null,
+      date: schedule.date,
+      time: schedule.time != null ? schedule.time.format(DATE_TIME_FORMAT) : null,
       description: schedule.description
     });
   }
@@ -102,8 +105,8 @@ export class ScheduleUpdateComponent implements OnInit {
       ...new Schedule(),
       id: this.editForm.get(['id']).value,
       title: this.editForm.get(['title']).value,
-      dateAndTime:
-        this.editForm.get(['dateAndTime']).value != null ? moment(this.editForm.get(['dateAndTime']).value, DATE_TIME_FORMAT) : undefined,
+      date: this.editForm.get(['date']).value,
+      time: this.editForm.get(['time']).value != null ? moment(this.editForm.get(['time']).value, DATE_TIME_FORMAT) : undefined,
       description: this.editForm.get(['description']).value
     };
   }

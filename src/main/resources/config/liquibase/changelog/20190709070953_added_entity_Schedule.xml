@@ -18,7 +18,11 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="date_and_time" type="datetime">
+            <column name="date" type="date">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="time" type="datetime">
                 <constraints nullable="false" />
             </column>
 
@@ -29,7 +33,7 @@
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
 
-        <dropDefaultValue tableName="schedule" columnName="date_and_time" columnDataType="datetime"/>
+        <dropDefaultValue tableName="schedule" columnName="time" columnDataType="datetime"/>
     </changeSet>
 
     <changeSet id="20190709070953-1-relations" author="jhipster">
@@ -52,7 +56,8 @@
             tableName="schedule">
             <column name="id" type="numeric"/>
             <column name="title" type="string"/>
-            <column name="date_and_time" type="datetime"/>
+            <column name="date" type="date"/>
+            <column name="time" type="datetime"/>
             <column name="description" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>

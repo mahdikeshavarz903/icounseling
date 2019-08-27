@@ -21,8 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static com.icounseling.web.rest.TestUtil.createFormattingConversionService;
@@ -41,9 +43,9 @@ public class ReminderResourceIT {
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
     private static final LocalDate SMALLER_DATE = LocalDate.ofEpochDay(-1L);
 
-    private static final LocalDate DEFAULT_TIME = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_TIME = LocalDate.now(ZoneId.systemDefault());
-    private static final LocalDate SMALLER_TIME = LocalDate.ofEpochDay(-1L);
+    private static final Instant DEFAULT_TIME = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant SMALLER_TIME = Instant.ofEpochMilli(-1L);
 
     @Autowired
     private ReminderRepository reminderRepository;

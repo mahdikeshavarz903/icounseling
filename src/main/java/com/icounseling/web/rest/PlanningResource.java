@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -49,7 +50,7 @@ public class PlanningResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/plannings")
-    public ResponseEntity<PlanningDTO> createPlanning(@RequestBody PlanningDTO planningDTO) throws URISyntaxException {
+    public ResponseEntity<PlanningDTO> createPlanning(@Valid @RequestBody PlanningDTO planningDTO) throws URISyntaxException {
         log.debug("REST request to save Planning : {}", planningDTO);
         if (planningDTO.getId() != null) {
             throw new BadRequestAlertException("A new planning cannot already have an ID", ENTITY_NAME, "idexists");
@@ -70,7 +71,7 @@ public class PlanningResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/plannings")
-    public ResponseEntity<PlanningDTO> updatePlanning(@RequestBody PlanningDTO planningDTO) throws URISyntaxException {
+    public ResponseEntity<PlanningDTO> updatePlanning(@Valid @RequestBody PlanningDTO planningDTO) throws URISyntaxException {
         log.debug("REST request to update Planning : {}", planningDTO);
         if (planningDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

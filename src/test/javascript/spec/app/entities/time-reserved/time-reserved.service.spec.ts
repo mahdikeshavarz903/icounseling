@@ -1,13 +1,11 @@
 /* tslint:disable max-line-length */
-import { TestBed, getTestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { of } from 'rxjs';
-import { take, map } from 'rxjs/operators';
+import {getTestBed, TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {map, take} from 'rxjs/operators';
 import * as moment from 'moment';
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
-import { TimeReservedService } from 'app/entities/time-reserved/time-reserved.service';
-import { ITimeReserved, TimeReserved } from 'app/shared/model/time-reserved.model';
+import {DATE_FORMAT, DATE_TIME_FORMAT} from 'app/shared/constants/input.constants';
+import {TimeReservedService} from 'app/entities/time-reserved/time-reserved.service';
+import {ITimeReserved, TimeReserved} from 'app/shared/model/time-reserved.model';
 
 describe('Service Tests', () => {
   describe('TimeReserved Service', () => {
@@ -27,7 +25,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new TimeReserved(0, currentDate, 'AAAAAAA', currentDate);
+      elemDefault = new TimeReserved(0, currentDate, currentDate, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -35,7 +33,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             date: currentDate.format(DATE_FORMAT),
-            time: currentDate.format(DATE_FORMAT)
+            time: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
@@ -54,7 +52,7 @@ describe('Service Tests', () => {
           {
             id: 0,
             date: currentDate.format(DATE_FORMAT),
-            time: currentDate.format(DATE_FORMAT)
+            time: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
@@ -78,8 +76,8 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             date: currentDate.format(DATE_FORMAT),
-            description: 'BBBBBB',
-            time: currentDate.format(DATE_FORMAT)
+            time: currentDate.format(DATE_TIME_FORMAT),
+            description: 'BBBBBB'
           },
           elemDefault
         );
@@ -104,8 +102,8 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             date: currentDate.format(DATE_FORMAT),
-            description: 'BBBBBB',
-            time: currentDate.format(DATE_FORMAT)
+            time: currentDate.format(DATE_TIME_FORMAT),
+            description: 'BBBBBB'
           },
           elemDefault
         );

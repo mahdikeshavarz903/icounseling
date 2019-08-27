@@ -1,7 +1,9 @@
 package com.icounseling.service.dto;
-import java.time.LocalDate;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -15,7 +17,7 @@ public class ReminderDTO implements Serializable {
     private LocalDate date;
 
     @NotNull
-    private LocalDate time;
+    private Instant time;
 
 
     public Long getId() {
@@ -34,11 +36,11 @@ public class ReminderDTO implements Serializable {
         this.date = date;
     }
 
-    public LocalDate getTime() {
+    public Instant getTime() {
         return time;
     }
 
-    public void setTime(LocalDate time) {
+    public void setTime(Instant time) {
         this.time = time;
     }
 

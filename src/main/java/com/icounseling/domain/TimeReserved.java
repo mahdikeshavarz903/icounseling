@@ -1,12 +1,13 @@
 package com.icounseling.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDate;
 
 /**
@@ -28,12 +29,12 @@ public class TimeReserved implements Serializable {
     private LocalDate date;
 
     @NotNull
-    @Column(name = "description", nullable = false)
-    private String description;
+    @Column(name = "time", nullable = false)
+    private Instant time;
 
     @NotNull
-    @Column(name = "time", nullable = false)
-    private LocalDate time;
+    @Column(name = "description", nullable = false)
+    private String description;
 
     @ManyToOne
     @JsonIgnoreProperties("timeReserveds")
@@ -61,6 +62,19 @@ public class TimeReserved implements Serializable {
         this.date = date;
     }
 
+    public Instant getTime() {
+        return time;
+    }
+
+    public TimeReserved time(Instant time) {
+        this.time = time;
+        return this;
+    }
+
+    public void setTime(Instant time) {
+        this.time = time;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -72,19 +86,6 @@ public class TimeReserved implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public LocalDate getTime() {
-        return time;
-    }
-
-    public TimeReserved time(LocalDate time) {
-        this.time = time;
-        return this;
-    }
-
-    public void setTime(LocalDate time) {
-        this.time = time;
     }
 
     public Counselor getCounselor() {
@@ -122,8 +123,8 @@ public class TimeReserved implements Serializable {
         return "TimeReserved{" +
             "id=" + getId() +
             ", date='" + getDate() + "'" +
-            ", description='" + getDescription() + "'" +
             ", time='" + getTime() + "'" +
+            ", description='" + getDescription() + "'" +
             "}";
     }
 }

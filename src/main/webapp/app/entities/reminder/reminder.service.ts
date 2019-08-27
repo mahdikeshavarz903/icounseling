@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import * as moment from 'moment';
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
-import { map } from 'rxjs/operators';
+import {DATE_FORMAT} from 'app/shared/constants/input.constants';
+import {map} from 'rxjs/operators';
 
-import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption } from 'app/shared';
-import { IReminder } from 'app/shared/model/reminder.model';
+import {SERVER_API_URL} from 'app/app.constants';
+import {createRequestOption} from 'app/shared';
+import {IReminder} from 'app/shared/model/reminder.model';
 
 type EntityResponseType = HttpResponse<IReminder>;
 type EntityArrayResponseType = HttpResponse<IReminder[]>;
@@ -52,7 +52,7 @@ export class ReminderService {
   protected convertDateFromClient(reminder: IReminder): IReminder {
     const copy: IReminder = Object.assign({}, reminder, {
       date: reminder.date != null && reminder.date.isValid() ? reminder.date.format(DATE_FORMAT) : null,
-      time: reminder.time != null && reminder.time.isValid() ? reminder.time.format(DATE_FORMAT) : null
+      time: reminder.time != null && reminder.time.isValid() ? reminder.time.toJSON() : null
     });
     return copy;
   }

@@ -1,11 +1,11 @@
 /* tslint:disable max-line-length */
-import { TestBed, getTestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { of } from 'rxjs';
-import { take, map } from 'rxjs/operators';
-import { PlanningService } from 'app/entities/planning/planning.service';
-import { IPlanning, Planning } from 'app/shared/model/planning.model';
+import {getTestBed, TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {map, take} from 'rxjs/operators';
+import * as moment from 'moment';
+import {DATE_FORMAT, DATE_TIME_FORMAT} from 'app/shared/constants/input.constants';
+import {PlanningService} from 'app/entities/planning/planning.service';
+import {IPlanning, Planning} from 'app/shared/model/planning.model';
 
 describe('Service Tests', () => {
   describe('Planning Service', () => {
@@ -14,6 +14,7 @@ describe('Service Tests', () => {
     let httpMock: HttpTestingController;
     let elemDefault: IPlanning;
     let expectedResult;
+    let currentDate: moment.Moment;
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule]
@@ -22,13 +23,22 @@ describe('Service Tests', () => {
       injector = getTestBed();
       service = injector.get(PlanningService);
       httpMock = injector.get(HttpTestingController);
+      currentDate = moment();
 
-      elemDefault = new Planning(0);
+      elemDefault = new Planning(0, 'AAAAAAA', currentDate, currentDate, currentDate, currentDate, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
       it('should find an element', async () => {
-        const returnedFromService = Object.assign({}, elemDefault);
+        const returnedFromService = Object.assign(
+          {
+            startDate: currentDate.format(DATE_FORMAT),
+            startTime: currentDate.format(DATE_TIME_FORMAT),
+            endDate: currentDate.format(DATE_FORMAT),
+            endTime: currentDate.format(DATE_TIME_FORMAT)
+          },
+          elemDefault
+        );
         service
           .find(123)
           .pipe(take(1))
@@ -42,11 +52,23 @@ describe('Service Tests', () => {
       it('should create a Planning', async () => {
         const returnedFromService = Object.assign(
           {
-            id: 0
+            id: 0,
+            startDate: currentDate.format(DATE_FORMAT),
+            startTime: currentDate.format(DATE_TIME_FORMAT),
+            endDate: currentDate.format(DATE_FORMAT),
+            endTime: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            startDate: currentDate,
+            startTime: currentDate,
+            endDate: currentDate,
+            endTime: currentDate
+          },
+          returnedFromService
+        );
         service
           .create(new Planning(null))
           .pipe(take(1))
@@ -57,9 +79,27 @@ describe('Service Tests', () => {
       });
 
       it('should update a Planning', async () => {
-        const returnedFromService = Object.assign({}, elemDefault);
+        const returnedFromService = Object.assign(
+          {
+            title: 'BBBBBB',
+            startDate: currentDate.format(DATE_FORMAT),
+            startTime: currentDate.format(DATE_TIME_FORMAT),
+            endDate: currentDate.format(DATE_FORMAT),
+            endTime: currentDate.format(DATE_TIME_FORMAT),
+            description: 'BBBBBB'
+          },
+          elemDefault
+        );
 
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            startDate: currentDate,
+            startTime: currentDate,
+            endDate: currentDate,
+            endTime: currentDate
+          },
+          returnedFromService
+        );
         service
           .update(expected)
           .pipe(take(1))
@@ -70,8 +110,26 @@ describe('Service Tests', () => {
       });
 
       it('should return a list of Planning', async () => {
-        const returnedFromService = Object.assign({}, elemDefault);
-        const expected = Object.assign({}, returnedFromService);
+        const returnedFromService = Object.assign(
+          {
+            title: 'BBBBBB',
+            startDate: currentDate.format(DATE_FORMAT),
+            startTime: currentDate.format(DATE_TIME_FORMAT),
+            endDate: currentDate.format(DATE_FORMAT),
+            endTime: currentDate.format(DATE_TIME_FORMAT),
+            description: 'BBBBBB'
+          },
+          elemDefault
+        );
+        const expected = Object.assign(
+          {
+            startDate: currentDate,
+            startTime: currentDate,
+            endDate: currentDate,
+            endTime: currentDate
+          },
+          returnedFromService
+        );
         service
           .query(expected)
           .pipe(

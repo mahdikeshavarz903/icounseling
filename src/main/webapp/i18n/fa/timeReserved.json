@@ -17,8 +17,8 @@
         "title": "Time Reserved"
       },
       "date": "Date",
-      "description": "Description",
       "time": "Time",
+      "description": "Description",
       "counselor": "Counselor"
     }
   }

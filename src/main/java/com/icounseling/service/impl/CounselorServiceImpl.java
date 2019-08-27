@@ -1,20 +1,13 @@
 package com.icounseling.service.impl;
 
 import com.icounseling.domain.Counselor;
+import com.icounseling.domain.Planning;
 import com.icounseling.domain.Visitor;
-import com.icounseling.repository.CounselingCaseRepository;
-import com.icounseling.repository.CounselorRepository;
-import com.icounseling.repository.TimeReservedRepository;
-import com.icounseling.repository.VisitorRepository;
+import com.icounseling.repository.*;
 import com.icounseling.service.CounselorService;
-import com.icounseling.service.dto.CounselingCaseDTO;
-import com.icounseling.service.dto.CounselorDTO;
-import com.icounseling.service.dto.TimeReservedDTO;
-import com.icounseling.service.dto.VisitorDTO;
-import com.icounseling.service.mapper.CounselingCaseMapper;
-import com.icounseling.service.mapper.CounselorMapper;
-import com.icounseling.service.mapper.TimeReservedMapper;
-import com.icounseling.service.mapper.VisitorMapper;
+import com.icounseling.service.TaskService;
+import com.icounseling.service.dto.*;
+import com.icounseling.service.mapper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -47,9 +40,17 @@ public class CounselorServiceImpl implements CounselorService {
 
     private final TimeReservedMapper timeReservedMapper;
 
+    private final PlanningRepository planningRepository;
+
+    private final TaskService taskService;
+
+    private final TaskRepository taskRepository;
+
+    private final TaskMapper taskMapper;
+
     private final VisitorMapper visitorMapper;
 
-    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, TimeReservedRepository timeReservedRepository, TimeReservedMapper timeReservedMapper, VisitorMapper visitorMapper) {
+    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, TimeReservedRepository timeReservedRepository, TimeReservedMapper timeReservedMapper, PlanningMapper planningMapper, PlanningRepository planningRepository, TaskService taskService, TaskRepository taskRepository, TaskMapper taskMapper, VisitorMapper visitorMapper) {
         this.counselorRepository = counselorRepository;
         this.counselorMapper = counselorMapper;
         this.counselingCaseRepository = counselingCaseRepository;
@@ -57,6 +58,10 @@ public class CounselorServiceImpl implements CounselorService {
         this.visitorRepository = visitorRepository;
         this.timeReservedRepository = timeReservedRepository;
         this.timeReservedMapper = timeReservedMapper;
+        this.planningRepository = planningRepository;
+        this.taskService = taskService;
+        this.taskRepository = taskRepository;
+        this.taskMapper = taskMapper;
         this.visitorMapper = visitorMapper;
     }
 
@@ -144,6 +149,13 @@ public class CounselorServiceImpl implements CounselorService {
         Page<TimeReservedDTO> timeReservedDTO = timeReservedRepository.findTimeReservedByCounselorId(id, pageable)
             .map(timeReservedMapper::toDto);
         return timeReservedDTO;
+    }
+
+    @Override
+    public Page<TaskDTO> findAllCounselorPlans(Long id, Pageable pageable) {
+        log.debug("Request to get all reserved time for counselor with ID : {}", id);
+        Planning planning = planningRepository.findAllByCounselorId(id);
+        return taskRepository.findAllByPlanning(planning, pageable).map(taskMapper::toDto);
     }
 
     /**

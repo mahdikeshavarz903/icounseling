@@ -2,10 +2,7 @@ package com.icounseling.web.rest;
 
 import com.icounseling.security.AuthoritiesConstants;
 import com.icounseling.service.CounselorService;
-import com.icounseling.service.dto.CounselingCaseDTO;
-import com.icounseling.service.dto.CounselorDTO;
-import com.icounseling.service.dto.TimeReservedDTO;
-import com.icounseling.service.dto.VisitorDTO;
+import com.icounseling.service.dto.*;
 import com.icounseling.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -163,7 +160,7 @@ public class CounselorResource {
     /**
      * {@code GET  /counselors/visitors/{id}} : Get all information for one visitor.
      *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the VisitorDTO object in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the TimeReservedDTO object in body.
      */
     @GetMapping("/counselors/{id}/reserved-times")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
@@ -174,4 +171,66 @@ public class CounselorResource {
         return ResponseEntity.ok().headers(headers).body(timeReservedDTOS.getContent());
     }
 
+    /**
+     * {@code GET  /counselors/{id}/all-plans} : Get all counselor plans.
+     *
+     * @param pageable    the pagination information.
+     * @param id          the counselor id
+     * @param queryParams a {@link MultiValueMap} query parameters.
+     * @param uriBuilder  a {@link UriComponentsBuilder} URI builder.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the PlanningDTO object in body.
+     */
+    @GetMapping("/counselors/{id}/all-plans")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
+    public ResponseEntity<List<TaskDTO>> getAllCounselorPlanning(Pageable pageable, @PathVariable Long id, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
+        log.debug("REST request to get all counselor plans");
+        Page<TaskDTO> taskDTOS = counselorService.findAllCounselorPlans(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), taskDTOS);
+        return ResponseEntity.ok().headers(headers).body(taskDTOS.getContent());
+    }
+
+    /**
+     * {@code GET  /counselors/{id}/create-plan} : Create new plan.
+     *
+     * @param id          the counselor id
+     * @param planningDTO create counselor plan with planningDTO
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the PlanningDTO object in body.
+     */
+    @PostMapping("/counselors/{id}/create-plan")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
+    public ResponseEntity<PlanningDTO> createCounselorPlan(@PathVariable Long id, @Valid @RequestBody PlanningDTO planningDTO) {
+        log.debug("REST request to create new plan for counselor");
+
+        return null;
+    }
+
+    /**
+     * {@code GET  /counselors/{id}/update-plan/{planId}} : Update counselor plan.
+     *
+     * @param id          the counselor id
+     * @param planId      the plan id
+     * @param planningDTO update counselor plan with planningDTO
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the PlanningDTO object in body.
+     */
+    @PostMapping("/counselors/{id}/update-plan/{planId}")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
+    public ResponseEntity<PlanningDTO> updateCounselorPlan(@PathVariable Long id, @PathVariable Long planId, @Valid @RequestBody PlanningDTO planningDTO) {
+        log.debug("REST request to update plan with ID : {}", planId);
+
+        return null;
+    }
+
+    /**
+     * {@code GET  /counselors/{id}/remove-plan/{planId}} : Remove counselor plan.
+     *
+     * @param id     the counselor id
+     * @param planId the plan id
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @DeleteMapping("/counselors/{id}/remove-plan/{planId}")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
+    public ResponseEntity<Void> deleteCounselorPlan(@PathVariable Long id, @PathVariable Long planId) {
+        log.debug("REST request to delete counselor plan with ID : {}", planId);
+        return null;
+    }
 }

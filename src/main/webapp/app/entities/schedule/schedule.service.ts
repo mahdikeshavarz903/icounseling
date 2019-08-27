@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import * as moment from 'moment';
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
-import { map } from 'rxjs/operators';
+import {DATE_FORMAT} from 'app/shared/constants/input.constants';
+import {map} from 'rxjs/operators';
 
-import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption } from 'app/shared';
-import { ISchedule } from 'app/shared/model/schedule.model';
+import {SERVER_API_URL} from 'app/app.constants';
+import {createRequestOption} from 'app/shared';
+import {ISchedule} from 'app/shared/model/schedule.model';
 
 type EntityResponseType = HttpResponse<ISchedule>;
 type EntityArrayResponseType = HttpResponse<ISchedule[]>;
@@ -51,14 +51,16 @@ export class ScheduleService {
 
   protected convertDateFromClient(schedule: ISchedule): ISchedule {
     const copy: ISchedule = Object.assign({}, schedule, {
-      dateAndTime: schedule.dateAndTime != null && schedule.dateAndTime.isValid() ? schedule.dateAndTime.toJSON() : null
+      date: schedule.date != null && schedule.date.isValid() ? schedule.date.format(DATE_FORMAT) : null,
+      time: schedule.time != null && schedule.time.isValid() ? schedule.time.toJSON() : null
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.dateAndTime = res.body.dateAndTime != null ? moment(res.body.dateAndTime) : null;
+      res.body.date = res.body.date != null ? moment(res.body.date) : null;
+      res.body.time = res.body.time != null ? moment(res.body.time) : null;
     }
     return res;
   }
@@ -66,7 +68,8 @@ export class ScheduleService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((schedule: ISchedule) => {
-        schedule.dateAndTime = schedule.dateAndTime != null ? moment(schedule.dateAndTime) : null;
+        schedule.date = schedule.date != null ? moment(schedule.date) : null;
+        schedule.time = schedule.time != null ? moment(schedule.time) : null;
       });
     }
     return res;

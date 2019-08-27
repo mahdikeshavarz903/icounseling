@@ -18,6 +18,24 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="title"><span jhiTranslate="iCounselingApp.planning.title">Title</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </th>
+                <th jhiSortBy="startDate"><span jhiTranslate="iCounselingApp.planning.startDate">Start Date</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </th>
+                <th jhiSortBy="startTime"><span jhiTranslate="iCounselingApp.planning.startTime">Start Time</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </th>
+                <th jhiSortBy="endDate"><span jhiTranslate="iCounselingApp.planning.endDate">End Date</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </th>
+                <th jhiSortBy="endTime"><span jhiTranslate="iCounselingApp.planning.endTime">End Time</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </th>
+                <th jhiSortBy="description"><span jhiTranslate="iCounselingApp.planning.description">Description</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </th>
             <th jhiSortBy="counselorId"><span jhiTranslate="iCounselingApp.planning.counselor">Counselor</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
@@ -25,6 +43,12 @@
             <tbody>
             <tr *ngFor="let planning of plannings ;trackBy: trackId">
                 <td><a [routerLink]="['/planning', planning.id, 'view' ]">{{planning.id}}</a></td>
+                <td>{{planning.title}}</td>
+                <td>{{planning.startDate | date:'mediumDate'}}</td>
+                <td>{{planning.startTime | date:'medium'}}</td>
+                <td>{{planning.endDate | date:'mediumDate'}}</td>
+                <td>{{planning.endTime | date:'medium'}}</td>
+                <td>{{planning.description}}</td>
                 <td>
                     <div *ngIf="planning.counselorId">
                         <a [routerLink]="['/counselor', planning.counselorId , 'view' ]">{{planning.counselorId}}</a>
