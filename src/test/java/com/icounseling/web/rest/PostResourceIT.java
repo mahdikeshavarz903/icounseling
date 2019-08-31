@@ -2,12 +2,12 @@ package com.icounseling.web.rest;
 
 import com.icounseling.ICounselingApp;
 import com.icounseling.domain.Post;
+import com.icounseling.domain.enumeration.DocumentFormat;
 import com.icounseling.repository.PostRepository;
 import com.icounseling.service.PostService;
 import com.icounseling.service.dto.PostDTO;
 import com.icounseling.service.mapper.PostMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -30,10 +30,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.icounseling.domain.enumeration.DocumentFormat;
 /**
- * Integration tests for the {@Link PostResource} REST controller.
+ * Integration tests for the {@link PostResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class PostResourceIT {

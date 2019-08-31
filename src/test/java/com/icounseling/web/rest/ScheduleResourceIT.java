@@ -7,11 +7,11 @@ import com.icounseling.service.ScheduleService;
 import com.icounseling.service.dto.ScheduleDTO;
 import com.icounseling.service.mapper.ScheduleMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
@@ -23,12 +23,9 @@ import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import static com.icounseling.web.rest.TestUtil.sameInstant;
 import static com.icounseling.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -36,7 +33,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link ScheduleResource} REST controller.
+ * Integration tests for the {@link ScheduleResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class ScheduleResourceIT {
@@ -44,8 +41,9 @@ public class ScheduleResourceIT {
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
-    private static final ZonedDateTime DEFAULT_DATE_AND_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_DATE_AND_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    private static final Instant DEFAULT_DATE_TIME = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant SMALLER_DATE_TIME = Instant.ofEpochMilli(-1L);
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
@@ -71,6 +69,7 @@ public class ScheduleResourceIT {
     @Autowired
     private EntityManager em;
 
+    @Qualifier("defaultValidator")
     @Autowired
     private Validator validator;
 
@@ -99,7 +98,7 @@ public class ScheduleResourceIT {
     public static Schedule createEntity(EntityManager em) {
         Schedule schedule = new Schedule()
             .title(DEFAULT_TITLE)
-            .dateAndTime(DEFAULT_DATE_AND_TIME)
+            .dateTime(DEFAULT_DATE_TIME)
             .description(DEFAULT_DESCRIPTION);
         return schedule;
     }
@@ -112,7 +111,7 @@ public class ScheduleResourceIT {
     public static Schedule createUpdatedEntity(EntityManager em) {
         Schedule schedule = new Schedule()
             .title(UPDATED_TITLE)
-            .dateAndTime(UPDATED_DATE_AND_TIME)
+            .dateTime(UPDATED_DATE_TIME)
             .description(UPDATED_DESCRIPTION);
         return schedule;
     }
@@ -139,7 +138,7 @@ public class ScheduleResourceIT {
         assertThat(scheduleList).hasSize(databaseSizeBeforeCreate + 1);
         Schedule testSchedule = scheduleList.get(scheduleList.size() - 1);
         assertThat(testSchedule.getTitle()).isEqualTo(DEFAULT_TITLE);
-        assertThat(testSchedule.getDateAndTime()).isEqualTo(DEFAULT_DATE_AND_TIME);
+        assertThat(testSchedule.getDateTime()).isEqualTo(DEFAULT_DATE_TIME);
         assertThat(testSchedule.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
@@ -185,10 +184,10 @@ public class ScheduleResourceIT {
 
     @Test
     @Transactional
-    public void checkDateAndTimeIsRequired() throws Exception {
+    public void checkDateTimeIsRequired() throws Exception {
         int databaseSizeBeforeTest = scheduleRepository.findAll().size();
         // set the field null
-        schedule.setDateAndTime(null);
+        schedule.setDateTime(null);
 
         // Create the Schedule, which fails.
         ScheduleDTO scheduleDTO = scheduleMapper.toDto(schedule);
@@ -233,7 +232,7 @@ public class ScheduleResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(schedule.getId().intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
-            .andExpect(jsonPath("$.[*].dateAndTime").value(hasItem(sameInstant(DEFAULT_DATE_AND_TIME))))
+            .andExpect(jsonPath("$.[*].dateTime").value(hasItem(DEFAULT_DATE_TIME.toString())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
     
@@ -249,7 +248,7 @@ public class ScheduleResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(schedule.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
-            .andExpect(jsonPath("$.dateAndTime").value(sameInstant(DEFAULT_DATE_AND_TIME)))
+            .andExpect(jsonPath("$.dateTime").value(DEFAULT_DATE_TIME.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
     }
 
@@ -275,7 +274,7 @@ public class ScheduleResourceIT {
         em.detach(updatedSchedule);
         updatedSchedule
             .title(UPDATED_TITLE)
-            .dateAndTime(UPDATED_DATE_AND_TIME)
+            .dateTime(UPDATED_DATE_TIME)
             .description(UPDATED_DESCRIPTION);
         ScheduleDTO scheduleDTO = scheduleMapper.toDto(updatedSchedule);
 
@@ -289,7 +288,7 @@ public class ScheduleResourceIT {
         assertThat(scheduleList).hasSize(databaseSizeBeforeUpdate);
         Schedule testSchedule = scheduleList.get(scheduleList.size() - 1);
         assertThat(testSchedule.getTitle()).isEqualTo(UPDATED_TITLE);
-        assertThat(testSchedule.getDateAndTime()).isEqualTo(UPDATED_DATE_AND_TIME);
+        assertThat(testSchedule.getDateTime()).isEqualTo(UPDATED_DATE_TIME);
         assertThat(testSchedule.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 

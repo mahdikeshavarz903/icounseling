@@ -1,13 +1,13 @@
 package com.icounseling.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 
 /**
  * A TimeReserved.
@@ -24,16 +24,12 @@ public class TimeReserved implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "date", nullable = false)
-    private LocalDate date;
+    @Column(name = "date_time", nullable = false)
+    private Instant dateTime;
 
     @NotNull
     @Column(name = "description", nullable = false)
     private String description;
-
-    @NotNull
-    @Column(name = "time", nullable = false)
-    private LocalDate time;
 
     @ManyToOne
     @JsonIgnoreProperties("timeReserveds")
@@ -48,17 +44,17 @@ public class TimeReserved implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Instant getDateTime() {
+        return dateTime;
     }
 
-    public TimeReserved date(LocalDate date) {
-        this.date = date;
+    public TimeReserved dateTime(Instant dateTime) {
+        this.dateTime = dateTime;
         return this;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDateTime(Instant dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getDescription() {
@@ -72,19 +68,6 @@ public class TimeReserved implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public LocalDate getTime() {
-        return time;
-    }
-
-    public TimeReserved time(LocalDate time) {
-        this.time = time;
-        return this;
-    }
-
-    public void setTime(LocalDate time) {
-        this.time = time;
     }
 
     public Counselor getCounselor() {
@@ -121,9 +104,8 @@ public class TimeReserved implements Serializable {
     public String toString() {
         return "TimeReserved{" +
             "id=" + getId() +
-            ", date='" + getDate() + "'" +
+            ", dateTime='" + getDateTime() + "'" +
             ", description='" + getDescription() + "'" +
-            ", time='" + getTime() + "'" +
             "}";
     }
 }

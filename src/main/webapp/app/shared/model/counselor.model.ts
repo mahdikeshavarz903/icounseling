@@ -1,8 +1,8 @@
-import { IPost } from 'app/shared/model/post.model';
-import { IDocument } from 'app/shared/model/document.model';
-import { ITimeReserved } from 'app/shared/model/time-reserved.model';
-import { IPlanning } from 'app/shared/model/planning.model';
-import { ICounselingCase } from 'app/shared/model/counseling-case.model';
+import {IPost} from 'app/shared/model/post.model';
+import {IDocument} from 'app/shared/model/document.model';
+import {ITimeReserved} from 'app/shared/model/time-reserved.model';
+import {IPlanning} from 'app/shared/model/planning.model';
+import {ICounselingCase} from 'app/shared/model/counseling-case.model';
 
 export const enum ConsultantType {
   PSYCHOLOGY = 'PSYCHOLOGY',
@@ -26,6 +26,7 @@ export interface ICounselor {
   consultantType?: ConsultantType;
   educationId?: number;
   scoreId?: number;
+  userId?: number;
   posts?: IPost[];
   documents?: IDocument[];
   timeReserveds?: ITimeReserved[];
@@ -33,16 +34,4 @@ export interface ICounselor {
   counselingCases?: ICounselingCase[];
 }
 
-export class Counselor implements ICounselor {
-  constructor(
-    public id?: number,
-    public consultantType?: ConsultantType,
-    public educationId?: number,
-    public scoreId?: number,
-    public posts?: IPost[],
-    public documents?: IDocument[],
-    public timeReserveds?: ITimeReserved[],
-    public plannings?: IPlanning[],
-    public counselingCases?: ICounselingCase[]
-  ) {}
-}
+export const defaultValue: Readonly<ICounselor> = {};

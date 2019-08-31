@@ -6,6 +6,4 @@ export interface IComment {
   postId?: number;
 }
 
-export class Comment implements IComment {
-  constructor(public id?: number, public scheduleId?: number, public rateId?: number, public documentId?: number, public postId?: number) {}
-}
+export const defaultValue: Readonly<IComment> = {};

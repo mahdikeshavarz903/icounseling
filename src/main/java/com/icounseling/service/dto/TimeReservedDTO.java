@@ -1,7 +1,8 @@
 package com.icounseling.service.dto;
-import java.time.LocalDate;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -12,13 +13,10 @@ public class TimeReservedDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private LocalDate date;
+    private Instant dateTime;
 
     @NotNull
     private String description;
-
-    @NotNull
-    private LocalDate time;
 
 
     private Long counselorId;
@@ -31,12 +29,12 @@ public class TimeReservedDTO implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Instant getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDateTime(Instant dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getDescription() {
@@ -45,14 +43,6 @@ public class TimeReservedDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public LocalDate getTime() {
-        return time;
-    }
-
-    public void setTime(LocalDate time) {
-        this.time = time;
     }
 
     public Long getCounselorId() {
@@ -88,9 +78,8 @@ public class TimeReservedDTO implements Serializable {
     public String toString() {
         return "TimeReservedDTO{" +
             "id=" + getId() +
-            ", date='" + getDate() + "'" +
+            ", dateTime='" + getDateTime() + "'" +
             ", description='" + getDescription() + "'" +
-            ", time='" + getTime() + "'" +
             ", counselor=" + getCounselorId() +
             "}";
     }

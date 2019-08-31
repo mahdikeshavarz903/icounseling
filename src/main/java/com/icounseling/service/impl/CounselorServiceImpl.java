@@ -1,13 +1,15 @@
 package com.icounseling.service.impl;
 
-import com.icounseling.service.CounselorService;
 import com.icounseling.domain.Counselor;
-import com.icounseling.repository.CounselorRepository;
-import com.icounseling.service.dto.CounselorDTO;
-import com.icounseling.service.mapper.CounselorMapper;
+import com.icounseling.domain.Planning;
+import com.icounseling.domain.Visitor;
+import com.icounseling.repository.*;
+import com.icounseling.service.CounselorService;
+import com.icounseling.service.TaskService;
+import com.icounseling.service.dto.*;
+import com.icounseling.service.mapper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,9 +30,39 @@ public class CounselorServiceImpl implements CounselorService {
 
     private final CounselorMapper counselorMapper;
 
-    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper) {
+    private final CounselingCaseRepository counselingCaseRepository;
+
+    private final CounselingCaseMapper counselingCaseMapper;
+
+    private final VisitorRepository visitorRepository;
+
+    private final TimeReservedRepository timeReservedRepository;
+
+    private final TimeReservedMapper timeReservedMapper;
+
+    private final PlanningRepository planningRepository;
+
+    private final TaskService taskService;
+
+    private final TaskRepository taskRepository;
+
+    private final TaskMapper taskMapper;
+
+    private final VisitorMapper visitorMapper;
+
+    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, TimeReservedRepository timeReservedRepository, TimeReservedMapper timeReservedMapper, PlanningMapper planningMapper, PlanningRepository planningRepository, TaskService taskService, TaskRepository taskRepository, TaskMapper taskMapper, VisitorMapper visitorMapper) {
         this.counselorRepository = counselorRepository;
         this.counselorMapper = counselorMapper;
+        this.counselingCaseRepository = counselingCaseRepository;
+        this.counselingCaseMapper = counselingCaseMapper;
+        this.visitorRepository = visitorRepository;
+        this.timeReservedRepository = timeReservedRepository;
+        this.timeReservedMapper = timeReservedMapper;
+        this.planningRepository = planningRepository;
+        this.taskService = taskService;
+        this.taskRepository = taskRepository;
+        this.taskMapper = taskMapper;
+        this.visitorMapper = visitorMapper;
     }
 
     /**
@@ -61,6 +93,19 @@ public class CounselorServiceImpl implements CounselorService {
             .map(counselorMapper::toDto);
     }
 
+    /**
+     * Get all CounselingCases for one counselor.
+     *
+     * @param pageable the pagination information.
+     * @param id       the id of the entity.
+     * @return the list of entities.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<CounselingCaseDTO> findAllCasesForOneCounselor(Long id, Pageable pageable) {
+        log.debug("Request to get all CounselingCases for one counselor");
+        return counselingCaseRepository.findVisitorByCounselorId(id, pageable).map(counselingCaseMapper::toDto);
+    }
 
     /**
      * Get one counselor by id.
@@ -74,6 +119,43 @@ public class CounselorServiceImpl implements CounselorService {
         log.debug("Request to get Counselor : {}", id);
         return counselorRepository.findById(id)
             .map(counselorMapper::toDto);
+    }
+
+    /**
+     * Get visitor information with ID.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<VisitorDTO> findAllVisitorInformation(Long id) {
+        log.debug("Request to get visitor information with ID : {}", id);
+        Optional<Visitor> visitor = visitorRepository.findUserByVisitorId(id);
+        return visitor.map(visitorMapper::toDto);
+    }
+
+    /**
+     * Get visitor information with ID.
+     *
+     * @param id       counselor id.
+     * @param pageable the pagination information.
+     * @return the entity.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<TimeReservedDTO> findAllReservedTime(Long id, Pageable pageable) {
+        log.debug("Request to get all reserved time for counselor with ID : {}", id);
+        Page<TimeReservedDTO> timeReservedDTO = timeReservedRepository.findTimeReservedByCounselorId(id, pageable)
+            .map(timeReservedMapper::toDto);
+        return timeReservedDTO;
+    }
+
+    @Override
+    public Page<TaskDTO> findAllCounselorPlans(Long id, Pageable pageable) {
+        log.debug("Request to get all reserved time for counselor with ID : {}", id);
+        Planning planning = planningRepository.findAllByCounselorId(id);
+        return taskRepository.findAllByPlanning(planning, pageable).map(taskMapper::toDto);
     }
 
     /**

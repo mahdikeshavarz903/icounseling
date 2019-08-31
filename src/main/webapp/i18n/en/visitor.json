@@ -4,8 +4,7 @@
       "home": {
         "title": "Visitors",
         "createLabel": "Create a new Visitor",
-        "createOrEditLabel": "Create or edit a Visitor",
-        "notFound": "No Visitor found"
+        "createOrEditLabel": "Create or edit a Visitor"
       },
       "created": "A new Visitor is created with identifier {{ param }}",
       "updated": "A Visitor is updated with identifier {{ param }}",
@@ -18,6 +17,7 @@
       },
       "score": "Score",
       "education": "Education",
+      "user": "User",
       "transaction": "Transaction",
       "job": "Job",
       "counselingCase": "Counseling Case",

@@ -4,8 +4,7 @@
       "home": {
         "title": "Reminders",
         "createLabel": "Create a new Reminder",
-        "createOrEditLabel": "Create or edit a Reminder",
-        "notFound": "No Reminder found"
+        "createOrEditLabel": "Create or edit a Reminder"
       },
       "created": "A new Reminder is created with identifier {{ param }}",
       "updated": "A Reminder is updated with identifier {{ param }}",
@@ -16,8 +15,7 @@
       "detail": {
         "title": "Reminder"
       },
-      "date": "Date",
-      "time": "Time",
+      "dateTime": "Date Time",
       "task": "Task"
     }
   }

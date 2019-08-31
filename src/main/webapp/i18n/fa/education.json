@@ -4,8 +4,7 @@
       "home": {
         "title": "Educations",
         "createLabel": "Create a new Education",
-        "createOrEditLabel": "Create or edit a Education",
-        "notFound": "No Education found"
+        "createOrEditLabel": "Create or edit a Education"
       },
       "created": "A new Education is created with identifier {{ param }}",
       "updated": "A Education is updated with identifier {{ param }}",

@@ -22,7 +22,6 @@
       "data": {
         "remoteAddress": "Remote Address:"
       }
-    },
-    "notFound": "No audit found"
+    }
   }
 }

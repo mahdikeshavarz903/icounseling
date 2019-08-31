@@ -13,14 +13,4 @@ export interface IScore {
   visitorId?: number;
 }
 
-export class Score implements IScore {
-  constructor(
-    public id?: number,
-    public total?: number,
-    public imageContentType?: string,
-    public image?: any,
-    public degree?: ScoreDegree,
-    public counselorId?: number,
-    public visitorId?: number
-  ) {}
-}
+export const defaultValue: Readonly<IScore> = {};

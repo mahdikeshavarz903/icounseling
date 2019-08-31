@@ -4,7 +4,7 @@
       "packageName": "com.icounseling",
       "nativeLanguage": "fa"
     },
-    "jhipsterVersion": "6.1.2",
+    "jhipsterVersion": "6.0.1",
     "applicationType": "monolith",
     "baseName": "iCounseling",
     "packageName": "com.icounseling",
@@ -22,12 +22,12 @@
     "serviceDiscoveryType": false,
     "buildTool": "maven",
     "enableSwaggerCodegen": false,
-    "jwtSecretKey": "MGRhOWNmOTViNDQ4YTVkYTViODZkYzM0NzFmY2IxMGIzMmI5NjIxMTcyMjI4ZWM5YmM1ZWU3NmNmMWI0M2NiMzlkNTRjM2IxYWJmZmUxNzE0YmQ3ZWRkOTM2YWFkMzliZGY1MjA1MzQxOTM0MjEyZTQ2N2Q4MTUzOWU2YWZiNjU=",
-    "useSass": true,
-    "clientPackageManager": "npm",
-    "clientFramework": "angularX",
+    "jwtSecretKey": "ZGQxYjk2YzJiMDdiNzU2MjY4OGNjZjgxNTMxYTUxNjgzNDE5NjcwNmQyYWYyNTFlYWMzNDQyNTEzZWQzMTkyMmIxYTIxZWJlY2NkZWI5ODFkZTU3NmM5ZjUwNzcwMTY3ZmRlMzU1ZTRhZTBhYmQzODZlZGQ4ZGYxYjk1MGQ4Y2I=",
+    "clientFramework": "react",
     "clientTheme": "none",
     "clientThemeVariant": "",
+    "useSass": true,
+    "clientPackageManager": "npm",
     "testFrameworks": [],
     "jhiPrefix": "jhi",
     "entitySuffix": "",
@@ -35,9 +35,11 @@
     "otherModules": [],
     "enableTranslation": true,
     "nativeLanguage": "fa",
-    "languages": ["fa", "en"],
-    "appsFolders": ["iCounseling"],
-    "directoryPath": "../",
-    "monitoring": "no"
+    "languages": [
+      "fa",
+      "en"
+    ],
+    "herokuAppName": "i-counseling",
+    "herokuDeployType": "jar"
   }
 }

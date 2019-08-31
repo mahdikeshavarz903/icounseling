@@ -1,4 +1,4 @@
-import { IReseume } from 'app/shared/model/reseume.model';
+import {IReseume} from 'app/shared/model/reseume.model';
 
 export const enum EducationDegree {
   ASSOCIATE_DEGREE = 'ASSOCIATE_DEGREE',
@@ -15,12 +15,4 @@ export interface IEducation {
   visitorId?: number;
 }
 
-export class Education implements IEducation {
-  constructor(
-    public id?: number,
-    public type?: EducationDegree,
-    public reseumes?: IReseume[],
-    public counselorId?: number,
-    public visitorId?: number
-  ) {}
-}
+export const defaultValue: Readonly<IEducation> = {};

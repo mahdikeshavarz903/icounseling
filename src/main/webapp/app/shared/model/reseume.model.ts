@@ -3,6 +3,4 @@ export interface IReseume {
   educationId?: number;
 }
 
-export class Reseume implements IReseume {
-  constructor(public id?: number, public educationId?: number) {}
-}
+export const defaultValue: Readonly<IReseume> = {};

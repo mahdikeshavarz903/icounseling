@@ -1,13 +1,13 @@
 package com.icounseling.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 /**
  * A Schedule.
@@ -28,8 +28,8 @@ public class Schedule implements Serializable {
     private String title;
 
     @NotNull
-    @Column(name = "date_and_time", nullable = false)
-    private ZonedDateTime dateAndTime;
+    @Column(name = "date_time", nullable = false)
+    private Instant dateTime;
 
     @NotNull
     @Column(name = "description", nullable = false)
@@ -69,17 +69,17 @@ public class Schedule implements Serializable {
         this.title = title;
     }
 
-    public ZonedDateTime getDateAndTime() {
-        return dateAndTime;
+    public Instant getDateTime() {
+        return dateTime;
     }
 
-    public Schedule dateAndTime(ZonedDateTime dateAndTime) {
-        this.dateAndTime = dateAndTime;
+    public Schedule dateTime(Instant dateTime) {
+        this.dateTime = dateTime;
         return this;
     }
 
-    public void setDateAndTime(ZonedDateTime dateAndTime) {
-        this.dateAndTime = dateAndTime;
+    public void setDateTime(Instant dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getDescription() {
@@ -156,7 +156,7 @@ public class Schedule implements Serializable {
         return "Schedule{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
-            ", dateAndTime='" + getDateAndTime() + "'" +
+            ", dateTime='" + getDateTime() + "'" +
             ", description='" + getDescription() + "'" +
             "}";
     }

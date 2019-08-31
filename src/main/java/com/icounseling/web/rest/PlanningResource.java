@@ -1,9 +1,8 @@
 package com.icounseling.web.rest;
 
 import com.icounseling.service.PlanningService;
-import com.icounseling.web.rest.errors.BadRequestAlertException;
 import com.icounseling.service.dto.PlanningDTO;
-
+import com.icounseling.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -13,15 +12,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +50,7 @@ public class PlanningResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/plannings")
-    public ResponseEntity<PlanningDTO> createPlanning(@RequestBody PlanningDTO planningDTO) throws URISyntaxException {
+    public ResponseEntity<PlanningDTO> createPlanning(@Valid @RequestBody PlanningDTO planningDTO) throws URISyntaxException {
         log.debug("REST request to save Planning : {}", planningDTO);
         if (planningDTO.getId() != null) {
             throw new BadRequestAlertException("A new planning cannot already have an ID", ENTITY_NAME, "idexists");
@@ -74,7 +71,7 @@ public class PlanningResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/plannings")
-    public ResponseEntity<PlanningDTO> updatePlanning(@RequestBody PlanningDTO planningDTO) throws URISyntaxException {
+    public ResponseEntity<PlanningDTO> updatePlanning(@Valid @RequestBody PlanningDTO planningDTO) throws URISyntaxException {
         log.debug("REST request to update Planning : {}", planningDTO);
         if (planningDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -88,16 +85,16 @@ public class PlanningResource {
     /**
      * {@code GET  /plannings} : get all the plannings.
      *
+
      * @param pageable the pagination information.
-     * @param queryParams a {@link MultiValueMap} query parameters.
-     * @param uriBuilder a {@link UriComponentsBuilder} URI builder.
+
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of plannings in body.
      */
     @GetMapping("/plannings")
-    public ResponseEntity<List<PlanningDTO>> getAllPlannings(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<List<PlanningDTO>> getAllPlannings(Pageable pageable) {
         log.debug("REST request to get a page of Plannings");
         Page<PlanningDTO> page = planningService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 

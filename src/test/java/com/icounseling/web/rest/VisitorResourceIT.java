@@ -7,7 +7,6 @@ import com.icounseling.service.VisitorService;
 import com.icounseling.service.dto.VisitorDTO;
 import com.icounseling.service.mapper.VisitorMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -31,7 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link VisitorResource} REST controller.
+ * Integration tests for the {@link VisitorResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class VisitorResourceIT {

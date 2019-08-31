@@ -1,11 +1,14 @@
-import { ITask } from 'app/shared/model/task.model';
+import {Moment} from 'moment';
+import {ITask} from 'app/shared/model/task.model';
 
 export interface IPlanning {
   id?: number;
+  title?: string;
+  startDateTime?: Moment;
+  endDateTime?: Moment;
+  description?: string;
   tasks?: ITask[];
   counselorId?: number;
 }
 
-export class Planning implements IPlanning {
-  constructor(public id?: number, public tasks?: ITask[], public counselorId?: number) {}
-}
+export const defaultValue: Readonly<IPlanning> = {};

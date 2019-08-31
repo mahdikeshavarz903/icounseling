@@ -4,8 +4,7 @@
       "home": {
         "title": "Counselors",
         "createLabel": "Create a new Counselor",
-        "createOrEditLabel": "Create or edit a Counselor",
-        "notFound": "No Counselor found"
+        "createOrEditLabel": "Create or edit a Counselor"
       },
       "created": "A new Counselor is created with identifier {{ param }}",
       "updated": "A Counselor is updated with identifier {{ param }}",
@@ -19,6 +18,7 @@
       "consultantType": "Consultant Type",
       "education": "Education",
       "score": "Score",
+      "user": "User",
       "post": "Post",
       "document": "Document",
       "timeReserved": "Time Reserved",

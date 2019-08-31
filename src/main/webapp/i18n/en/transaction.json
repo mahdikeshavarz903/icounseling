@@ -4,8 +4,7 @@
       "home": {
         "title": "Transactions",
         "createLabel": "Create a new Transaction",
-        "createOrEditLabel": "Create or edit a Transaction",
-        "notFound": "No Transaction found"
+        "createOrEditLabel": "Create or edit a Transaction"
       },
       "created": "A new Transaction is created with identifier {{ param }}",
       "updated": "A Transaction is updated with identifier {{ param }}",

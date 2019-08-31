@@ -15,14 +15,12 @@
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070942_added_entity_CounselingCase.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190709070943_added_entity_Counselor.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070944_added_entity_Reseume.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070945_added_entity_Education.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070946_added_entity_Planning.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070947_added_entity_Task.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070948_added_entity_Reminder.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070949_added_entity_TimeReserved.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190709070950_added_entity_Visitor.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070951_added_entity_Job.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070952_added_entity_JobHistory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070953_added_entity_Schedule.xml" relativeToChangelogFile="false"/>
@@ -34,14 +32,17 @@
     <include file="config/liquibase/changelog/20190709070959_added_entity_Library.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709071000_added_entity_Category.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709071001_added_entity_Transaction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190730111048_added_entity_Counselor.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190730111055_added_entity_Visitor.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190730111048_added_entity_Counselor.xml"
+             relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20190709070942_added_entity_constraints_CounselingCase.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190709070943_added_entity_constraints_Counselor.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070944_added_entity_constraints_Reseume.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070946_added_entity_constraints_Planning.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070947_added_entity_constraints_Task.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070949_added_entity_constraints_TimeReserved.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190709070950_added_entity_constraints_Visitor.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070951_added_entity_constraints_Job.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070952_added_entity_constraints_JobHistory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709070954_added_entity_constraints_Document.xml" relativeToChangelogFile="false"/>
@@ -50,5 +51,13 @@
     <include file="config/liquibase/changelog/20190709070959_added_entity_constraints_Library.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709071000_added_entity_constraints_Category.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190709071001_added_entity_constraints_Transaction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190730111048_added_entity_constraints_Counselor.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190730111055_added_entity_constraints_Visitor.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190730111048_added_entity_constraints_Counselor.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190730111055_added_entity_constraints_Visitor.xml"
+             relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

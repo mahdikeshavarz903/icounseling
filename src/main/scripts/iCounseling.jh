@@ -31,7 +31,11 @@ entity Education{
 	type EducationDegree required
 }
 
-entity Planning{	
+entity Planning{
+    title String required,
+    StartDateTime Instant required,
+    endDateTime Instant required,
+    description String required
 }
 
 entity Task{
@@ -48,14 +52,12 @@ enum RepeatUntil{
 }
 
 entity Reminder{
-	date LocalDate required,
-    time LocalDate required
+    dateTime Instant required
 }
 
 entity TimeReserved{
-	date LocalDate required,
-    description String required,
-    time LocalDate required
+    dateTime Instant required,
+    description String required
 }
 
 entity Visitor{
@@ -82,7 +84,7 @@ enum JobCategory{
 
 entity Schedule{
 	title String required,
-	dateAndTime ZonedDateTime required,
+    dateTime Instant required,
     description String required
 }
 
@@ -188,6 +190,8 @@ relationship OneToOne{
     Comment{rate} to Rate{comment}
     Document{comment} to Comment{document}
     Library{visitor} to Visitor{library}
+    Visitor{user} to User{visitor}
+    Counselor{user} to User{counselor}
 }
 
 dto * with mapstruct

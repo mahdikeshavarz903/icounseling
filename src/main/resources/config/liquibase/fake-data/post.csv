@@ -1,0 +1,11 @@
+id;image;image_content_type;document_format
+1;../fake-data/blob/hipster.png;image/png;PPT
+2;../fake-data/blob/hipster.png;image/png;XLSX
+3;../fake-data/blob/hipster.png;image/png;DOC
+4;../fake-data/blob/hipster.png;image/png;XLSX
+5;../fake-data/blob/hipster.png;image/png;DOC
+6;../fake-data/blob/hipster.png;image/png;DOCX
+7;../fake-data/blob/hipster.png;image/png;PPT
+8;../fake-data/blob/hipster.png;image/png;XLSX
+9;../fake-data/blob/hipster.png;image/png;PDF
+10;../fake-data/blob/hipster.png;image/png;PDF

@@ -2,15 +2,8 @@
     "name": "Reminder",
     "fields": [
         {
-            "fieldName": "date",
-            "fieldType": "LocalDate",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "time",
-            "fieldType": "LocalDate",
+          "fieldName": "dateTime",
+          "fieldType": "Instant",
             "fieldValidateRules": [
                 "required"
             ]

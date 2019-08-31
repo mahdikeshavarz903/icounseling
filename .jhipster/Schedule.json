@@ -9,8 +9,8 @@
             ]
         },
         {
-            "fieldName": "dateAndTime",
-            "fieldType": "ZonedDateTime",
+          "fieldName": "dateTime",
+          "fieldType": "Instant",
             "fieldValidateRules": [
                 "required"
             ]

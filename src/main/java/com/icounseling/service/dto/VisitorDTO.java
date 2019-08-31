@@ -14,6 +14,8 @@ public class VisitorDTO implements Serializable {
 
     private Long educationId;
 
+    private Long userId;
+
     public Long getId() {
         return id;
     }
@@ -36,6 +38,14 @@ public class VisitorDTO implements Serializable {
 
     public void setEducationId(Long educationId) {
         this.educationId = educationId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -65,6 +75,7 @@ public class VisitorDTO implements Serializable {
             "id=" + getId() +
             ", score=" + getScoreId() +
             ", education=" + getEducationId() +
+            ", user=" + getUserId() +
             "}";
     }
 }

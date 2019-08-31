@@ -4,8 +4,7 @@
       "home": {
         "title": "Scores",
         "createLabel": "Create a new Score",
-        "createOrEditLabel": "Create or edit a Score",
-        "notFound": "No Score found"
+        "createOrEditLabel": "Create or edit a Score"
       },
       "created": "A new Score is created with identifier {{ param }}",
       "updated": "A Score is updated with identifier {{ param }}",

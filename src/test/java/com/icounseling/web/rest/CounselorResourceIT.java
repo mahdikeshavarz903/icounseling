@@ -1,17 +1,22 @@
 package com.icounseling.web.rest;
 
 import com.icounseling.ICounselingApp;
-import com.icounseling.domain.Counselor;
-import com.icounseling.repository.CounselorRepository;
+import com.icounseling.domain.*;
+import com.icounseling.domain.enumeration.ConsultantType;
+import com.icounseling.domain.enumeration.CounselingCaseStatus;
+import com.icounseling.domain.enumeration.RepeatTime;
+import com.icounseling.domain.enumeration.RepeatUntil;
+import com.icounseling.repository.*;
 import com.icounseling.service.CounselorService;
 import com.icounseling.service.dto.CounselorDTO;
 import com.icounseling.service.mapper.CounselorMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
@@ -22,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
 import java.util.List;
 
 import static com.icounseling.web.rest.TestUtil.createFormattingConversionService;
@@ -29,16 +35,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.icounseling.domain.enumeration.ConsultantType;
 /**
- * Integration tests for the {@Link CounselorResource} REST controller.
+ * Integration tests for the {@link CounselorResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class CounselorResourceIT {
 
     private static final ConsultantType DEFAULT_CONSULTANT_TYPE = ConsultantType.PSYCHOLOGY;
     private static final ConsultantType UPDATED_CONSULTANT_TYPE = ConsultantType.LEGAL;
+    private static final CounselingCaseStatus COUNSELING_CASE_STATUS_OPEN = CounselingCaseStatus.OPENED;
+    private static final CounselingCaseStatus COUNSELING_CASE_STATUS_CLOSED = CounselingCaseStatus.CLOSED;
 
     @Autowired
     private CounselorRepository counselorRepository;
@@ -47,7 +53,29 @@ public class CounselorResourceIT {
     private CounselorMapper counselorMapper;
 
     @Autowired
+    private CounselingCaseRepository counselingCaseRepository;
+
+    private CounselingCase counselingCase;
+
+    private Visitor visitor;
+
+    @Autowired
+    private VisitorRepository visitorRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private CounselorService counselorService;
+
+    @Autowired
+    private PlanningRepository planningRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @Autowired
+    private TimeReservedRepository timeReservedRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -61,12 +89,19 @@ public class CounselorResourceIT {
     @Autowired
     private EntityManager em;
 
+    @Qualifier("defaultValidator")
     @Autowired
     private Validator validator;
 
     private MockMvc restCounselorMockMvc;
 
     private Counselor counselor;
+
+    private TimeReserved timerReserved;
+
+    private Planning planning;
+
+    private Task task;
 
     @BeforeEach
     public void setup() {
@@ -91,6 +126,45 @@ public class CounselorResourceIT {
             .consultantType(DEFAULT_CONSULTANT_TYPE);
         return counselor;
     }
+
+    public static CounselingCase createCounselingCaseEntity(EntityManager em) {
+        CounselingCase counselingCase = new CounselingCase();
+        counselingCase.setCounselor(createEntity(em));
+        counselingCase.setStatus(CounselingCaseStatus.OPENED);
+
+        Visitor visitor = new Visitor();
+        counselingCase.setVisitor(visitor);
+
+        return counselingCase;
+    }
+
+    public static Visitor createVisitorEntity(EntityManager em) {
+        Visitor visitor = new Visitor();
+        return visitor;
+    }
+
+    public static TimeReserved createTimeReservedEntity(EntityManager em) {
+        TimeReserved timeReserved = new TimeReserved()
+            .description("AAAAAAAAAA")
+            .dateTime(Instant.ofEpochMilli(0L));
+        return timeReserved;
+    }
+
+    public static Planning createPlanningEntity(EntityManager em) {
+        Planning planning = new Planning()
+            .title("AAAAAAAAAA")
+            .startDateTime(Instant.ofEpochMilli(0L))
+            .endDateTime(Instant.ofEpochMilli(0L))
+            .description("AAAAAAAAAA");
+        return planning;
+    }
+
+    public static Task createTaskEntity(EntityManager em) {
+        Task task = new Task()
+            .repeatTime(RepeatTime.NONE)
+            .repeatUntil(RepeatUntil.NO_END_DATE);
+        return task;
+    }
     /**
      * Create an updated entity for this test.
      *
@@ -105,7 +179,12 @@ public class CounselorResourceIT {
 
     @BeforeEach
     public void initTest() {
+        counselingCase = createCounselingCaseEntity(em);
         counselor = createEntity(em);
+        visitor = createVisitorEntity(em);
+        timerReserved = createTimeReservedEntity(em);
+        planning = createPlanningEntity(em);
+        task = createTaskEntity(em);
     }
 
     @Test
@@ -180,7 +259,42 @@ public class CounselorResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(counselor.getId().intValue())))
             .andExpect(jsonPath("$.[*].consultantType").value(hasItem(DEFAULT_CONSULTANT_TYPE.toString())));
     }
-    
+
+    @Test
+    @Transactional
+    public void getAllCasesForOneCounselor() throws Exception {
+        // Initialize the database
+        counselingCaseRepository.saveAndFlush(counselingCase);
+
+        CounselingCase counselingCase2 = createCounselingCaseEntity(em);
+        CounselingCase counselingCase3 = createCounselingCaseEntity(em);
+
+        Counselor counselor = createEntity(em);
+        Visitor visitor2 = new Visitor();
+        Visitor visitor3 = new Visitor();
+
+        counselingCase2.setCounselor(counselor);
+        counselingCase2.setVisitor(visitor2);
+        counselingCase2.setStatus(CounselingCaseStatus.OPENED);
+
+        counselingCase3.setCounselor(counselor);
+        counselingCase3.setVisitor(visitor3);
+        counselingCase3.setStatus(CounselingCaseStatus.CLOSED);
+
+        counselingCaseRepository.save(counselingCase2);
+        counselingCaseRepository.save(counselingCase3);
+
+        // get all counseling cases
+        restCounselorMockMvc.perform((get("/api/counselors/1/counseling-case?sort=id,desc")))
+            //restCounselorMockMvc.perform((get("/api/counselors/{id}/counseling-case?sort=id,desc", counselor.getId().intValue())))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+//            .andExpect(jsonPath("$.[*].id").value(hasItem(visitor2.getId().intValue())));
+//            .andExpect(jsonPath("$.[*].status").value(hasItem(COUNSELING_CASE_STATUS_OPEN.toString())));
+//            .andExpect(jsonPath("$.[*].visitor").value(counselingCase.getVisitor().getId().intValue()))
+//            .andExpect(jsonPath("$.[*].counselor").value(counselingCase.getCounselor().getId().intValue()));
+    }
+
     @Test
     @Transactional
     public void getCounselor() throws Exception {
@@ -193,6 +307,70 @@ public class CounselorResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(counselor.getId().intValue()))
             .andExpect(jsonPath("$.consultantType").value(DEFAULT_CONSULTANT_TYPE.toString()));
+    }
+
+    @Test
+    @Transactional
+    public void getAllVisitorInformation() throws Exception {
+        // Initialize variables
+        User user = new User();
+        user.setId(4L);
+        user.setLogin("09193446830");
+        user.setPassword(RandomStringUtils.random(60));
+        user.setActivated(true);
+        user.setEmail("Mahdikeshavarz@gmail.com");
+        user.setFirstName("Mahdi");
+        user.setLastName("Keshavarz");
+        user.setImageUrl("http://placehold.it/50x50");
+        user.setLangKey("en");
+        visitor.setUser(user);
+
+        // Initialize the database
+        userRepository.saveAndFlush(user);
+        visitorRepository.saveAndFlush(visitor);
+
+        // Get all the counselorList
+        restCounselorMockMvc.perform(get("/api/counselors/visitors/{id}", visitor.getId().intValue()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+        //.andExpect(jsonPath("$.[*].id").value(hasItem(visitor.getId().intValue())));
+//            .andExpect(jsonPath("$.[*].consultantType").value(hasItem(DEFAULT_CONSULTANT_TYPE.toString())));
+    }
+
+    @Test
+    @Transactional
+    public void getAllReservedTimes() throws Exception {
+        timeReservedRepository.saveAndFlush(timerReserved);
+        counselorRepository.saveAndFlush(counselor);
+
+        timerReserved.setCounselor(counselor);
+
+        restCounselorMockMvc.perform(get("/api/counselors/{id}/reserved-times?sort=id,desc", counselor.getId().intValue()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlans() throws Exception {
+        planningRepository.saveAndFlush(planning);
+        taskRepository.saveAndFlush(task);
+        counselorRepository.saveAndFlush(counselor);
+
+        planning.setCounselor(counselor);
+
+        RepeatTime rt = RepeatTime.NONE;
+        RepeatUntil ru = RepeatUntil.NO_END_DATE;
+        task.setPlanning(planning);
+        task.setRepeatTime(rt);
+        task.setRepeatUntil(ru);
+
+        restCounselorMockMvc.perform(get("/api/counselors/{id}/all-plans?sort=id,desc", counselor.getId().intValue()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
+            .andExpect(jsonPath("$.[*].repeatTime").value(hasItem(rt.toString())))
+            .andExpect(jsonPath("$.[*].repeatUntil").value(hasItem(ru.toString())));
     }
 
     @Test

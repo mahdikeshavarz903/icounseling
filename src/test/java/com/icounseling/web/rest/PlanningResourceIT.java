@@ -7,11 +7,11 @@ import com.icounseling.service.PlanningService;
 import com.icounseling.service.dto.PlanningDTO;
 import com.icounseling.service.mapper.PlanningMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static com.icounseling.web.rest.TestUtil.createFormattingConversionService;
@@ -31,10 +33,24 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link PlanningResource} REST controller.
+ * Integration tests for the {@link PlanningResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class PlanningResourceIT {
+
+    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
+    private static final String UPDATED_TITLE = "BBBBBBBBBB";
+
+    private static final Instant DEFAULT_START_DATE_TIME = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_START_DATE_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant SMALLER_START_DATE_TIME = Instant.ofEpochMilli(-1L);
+
+    private static final Instant DEFAULT_END_DATE_TIME = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_END_DATE_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant SMALLER_END_DATE_TIME = Instant.ofEpochMilli(-1L);
+
+    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
     @Autowired
     private PlanningRepository planningRepository;
@@ -57,6 +73,7 @@ public class PlanningResourceIT {
     @Autowired
     private EntityManager em;
 
+    @Qualifier("defaultValidator")
     @Autowired
     private Validator validator;
 
@@ -83,7 +100,11 @@ public class PlanningResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Planning createEntity(EntityManager em) {
-        Planning planning = new Planning();
+        Planning planning = new Planning()
+            .title(DEFAULT_TITLE)
+            .startDateTime(DEFAULT_START_DATE_TIME)
+            .endDateTime(DEFAULT_END_DATE_TIME)
+            .description(DEFAULT_DESCRIPTION);
         return planning;
     }
     /**
@@ -93,7 +114,11 @@ public class PlanningResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Planning createUpdatedEntity(EntityManager em) {
-        Planning planning = new Planning();
+        Planning planning = new Planning()
+            .title(UPDATED_TITLE)
+            .startDateTime(UPDATED_START_DATE_TIME)
+            .endDateTime(UPDATED_END_DATE_TIME)
+            .description(UPDATED_DESCRIPTION);
         return planning;
     }
 
@@ -118,6 +143,10 @@ public class PlanningResourceIT {
         List<Planning> planningList = planningRepository.findAll();
         assertThat(planningList).hasSize(databaseSizeBeforeCreate + 1);
         Planning testPlanning = planningList.get(planningList.size() - 1);
+        assertThat(testPlanning.getTitle()).isEqualTo(DEFAULT_TITLE);
+        assertThat(testPlanning.getStartDateTime()).isEqualTo(DEFAULT_START_DATE_TIME);
+        assertThat(testPlanning.getEndDateTime()).isEqualTo(DEFAULT_END_DATE_TIME);
+        assertThat(testPlanning.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
     @Test
@@ -143,6 +172,82 @@ public class PlanningResourceIT {
 
     @Test
     @Transactional
+    public void checkTitleIsRequired() throws Exception {
+        int databaseSizeBeforeTest = planningRepository.findAll().size();
+        // set the field null
+        planning.setTitle(null);
+
+        // Create the Planning, which fails.
+        PlanningDTO planningDTO = planningMapper.toDto(planning);
+
+        restPlanningMockMvc.perform(post("/api/plannings")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(planningDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Planning> planningList = planningRepository.findAll();
+        assertThat(planningList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkStartDateTimeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = planningRepository.findAll().size();
+        // set the field null
+        planning.setStartDateTime(null);
+
+        // Create the Planning, which fails.
+        PlanningDTO planningDTO = planningMapper.toDto(planning);
+
+        restPlanningMockMvc.perform(post("/api/plannings")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(planningDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Planning> planningList = planningRepository.findAll();
+        assertThat(planningList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkEndDateTimeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = planningRepository.findAll().size();
+        // set the field null
+        planning.setEndDateTime(null);
+
+        // Create the Planning, which fails.
+        PlanningDTO planningDTO = planningMapper.toDto(planning);
+
+        restPlanningMockMvc.perform(post("/api/plannings")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(planningDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Planning> planningList = planningRepository.findAll();
+        assertThat(planningList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkDescriptionIsRequired() throws Exception {
+        int databaseSizeBeforeTest = planningRepository.findAll().size();
+        // set the field null
+        planning.setDescription(null);
+
+        // Create the Planning, which fails.
+        PlanningDTO planningDTO = planningMapper.toDto(planning);
+
+        restPlanningMockMvc.perform(post("/api/plannings")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(planningDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Planning> planningList = planningRepository.findAll();
+        assertThat(planningList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllPlannings() throws Exception {
         // Initialize the database
         planningRepository.saveAndFlush(planning);
@@ -151,7 +256,11 @@ public class PlanningResourceIT {
         restPlanningMockMvc.perform(get("/api/plannings?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(planning.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(planning.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].startDateTime").value(hasItem(DEFAULT_START_DATE_TIME.toString())))
+            .andExpect(jsonPath("$.[*].endDateTime").value(hasItem(DEFAULT_END_DATE_TIME.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
     
     @Test
@@ -164,7 +273,11 @@ public class PlanningResourceIT {
         restPlanningMockMvc.perform(get("/api/plannings/{id}", planning.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(planning.getId().intValue()));
+            .andExpect(jsonPath("$.id").value(planning.getId().intValue()))
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
+            .andExpect(jsonPath("$.startDateTime").value(DEFAULT_START_DATE_TIME.toString()))
+            .andExpect(jsonPath("$.endDateTime").value(DEFAULT_END_DATE_TIME.toString()))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
     }
 
     @Test
@@ -187,6 +300,11 @@ public class PlanningResourceIT {
         Planning updatedPlanning = planningRepository.findById(planning.getId()).get();
         // Disconnect from session so that the updates on updatedPlanning are not directly saved in db
         em.detach(updatedPlanning);
+        updatedPlanning
+            .title(UPDATED_TITLE)
+            .startDateTime(UPDATED_START_DATE_TIME)
+            .endDateTime(UPDATED_END_DATE_TIME)
+            .description(UPDATED_DESCRIPTION);
         PlanningDTO planningDTO = planningMapper.toDto(updatedPlanning);
 
         restPlanningMockMvc.perform(put("/api/plannings")
@@ -198,6 +316,10 @@ public class PlanningResourceIT {
         List<Planning> planningList = planningRepository.findAll();
         assertThat(planningList).hasSize(databaseSizeBeforeUpdate);
         Planning testPlanning = planningList.get(planningList.size() - 1);
+        assertThat(testPlanning.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testPlanning.getStartDateTime()).isEqualTo(UPDATED_START_DATE_TIME);
+        assertThat(testPlanning.getEndDateTime()).isEqualTo(UPDATED_END_DATE_TIME);
+        assertThat(testPlanning.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 
     @Test

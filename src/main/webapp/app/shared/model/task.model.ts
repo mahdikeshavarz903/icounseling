@@ -21,13 +21,4 @@ export interface ITask {
   planningId?: number;
 }
 
-export class Task implements ITask {
-  constructor(
-    public id?: number,
-    public repeatTime?: RepeatTime,
-    public repeatUntil?: RepeatUntil,
-    public reminderId?: number,
-    public scheduleId?: number,
-    public planningId?: number
-  ) {}
-}
+export const defaultValue: Readonly<ITask> = {};

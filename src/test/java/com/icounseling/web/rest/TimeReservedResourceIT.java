@@ -7,11 +7,11 @@ import com.icounseling.service.TimeReservedService;
 import com.icounseling.service.dto.TimeReservedDTO;
 import com.icounseling.service.mapper.TimeReservedMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
@@ -22,8 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static com.icounseling.web.rest.TestUtil.createFormattingConversionService;
@@ -33,19 +33,17 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@Link TimeReservedResource} REST controller.
+ * Integration tests for the {@link TimeReservedResource} REST controller.
  */
 @SpringBootTest(classes = ICounselingApp.class)
 public class TimeReservedResourceIT {
 
-    private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_DATE_TIME = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant SMALLER_DATE_TIME = Instant.ofEpochMilli(-1L);
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
-
-    private static final LocalDate DEFAULT_TIME = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_TIME = LocalDate.now(ZoneId.systemDefault());
 
     @Autowired
     private TimeReservedRepository timeReservedRepository;
@@ -68,6 +66,7 @@ public class TimeReservedResourceIT {
     @Autowired
     private EntityManager em;
 
+    @Qualifier("defaultValidator")
     @Autowired
     private Validator validator;
 
@@ -95,9 +94,8 @@ public class TimeReservedResourceIT {
      */
     public static TimeReserved createEntity(EntityManager em) {
         TimeReserved timeReserved = new TimeReserved()
-            .date(DEFAULT_DATE)
-            .description(DEFAULT_DESCRIPTION)
-            .time(DEFAULT_TIME);
+            .dateTime(DEFAULT_DATE_TIME)
+            .description(DEFAULT_DESCRIPTION);
         return timeReserved;
     }
     /**
@@ -108,9 +106,8 @@ public class TimeReservedResourceIT {
      */
     public static TimeReserved createUpdatedEntity(EntityManager em) {
         TimeReserved timeReserved = new TimeReserved()
-            .date(UPDATED_DATE)
-            .description(UPDATED_DESCRIPTION)
-            .time(UPDATED_TIME);
+            .dateTime(UPDATED_DATE_TIME)
+            .description(UPDATED_DESCRIPTION);
         return timeReserved;
     }
 
@@ -135,9 +132,8 @@ public class TimeReservedResourceIT {
         List<TimeReserved> timeReservedList = timeReservedRepository.findAll();
         assertThat(timeReservedList).hasSize(databaseSizeBeforeCreate + 1);
         TimeReserved testTimeReserved = timeReservedList.get(timeReservedList.size() - 1);
-        assertThat(testTimeReserved.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testTimeReserved.getDateTime()).isEqualTo(DEFAULT_DATE_TIME);
         assertThat(testTimeReserved.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testTimeReserved.getTime()).isEqualTo(DEFAULT_TIME);
     }
 
     @Test
@@ -163,10 +159,10 @@ public class TimeReservedResourceIT {
 
     @Test
     @Transactional
-    public void checkDateIsRequired() throws Exception {
+    public void checkDateTimeIsRequired() throws Exception {
         int databaseSizeBeforeTest = timeReservedRepository.findAll().size();
         // set the field null
-        timeReserved.setDate(null);
+        timeReserved.setDateTime(null);
 
         // Create the TimeReserved, which fails.
         TimeReservedDTO timeReservedDTO = timeReservedMapper.toDto(timeReserved);
@@ -201,25 +197,6 @@ public class TimeReservedResourceIT {
 
     @Test
     @Transactional
-    public void checkTimeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = timeReservedRepository.findAll().size();
-        // set the field null
-        timeReserved.setTime(null);
-
-        // Create the TimeReserved, which fails.
-        TimeReservedDTO timeReservedDTO = timeReservedMapper.toDto(timeReserved);
-
-        restTimeReservedMockMvc.perform(post("/api/time-reserveds")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(timeReservedDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<TimeReserved> timeReservedList = timeReservedRepository.findAll();
-        assertThat(timeReservedList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllTimeReserveds() throws Exception {
         // Initialize the database
         timeReservedRepository.saveAndFlush(timeReserved);
@@ -229,9 +206,8 @@ public class TimeReservedResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(timeReserved.getId().intValue())))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-            .andExpect(jsonPath("$.[*].time").value(hasItem(DEFAULT_TIME.toString())));
+            .andExpect(jsonPath("$.[*].dateTime").value(hasItem(DEFAULT_DATE_TIME.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
     
     @Test
@@ -245,9 +221,8 @@ public class TimeReservedResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(timeReserved.getId().intValue()))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
-            .andExpect(jsonPath("$.time").value(DEFAULT_TIME.toString()));
+            .andExpect(jsonPath("$.dateTime").value(DEFAULT_DATE_TIME.toString()))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
     }
 
     @Test
@@ -271,9 +246,8 @@ public class TimeReservedResourceIT {
         // Disconnect from session so that the updates on updatedTimeReserved are not directly saved in db
         em.detach(updatedTimeReserved);
         updatedTimeReserved
-            .date(UPDATED_DATE)
-            .description(UPDATED_DESCRIPTION)
-            .time(UPDATED_TIME);
+            .dateTime(UPDATED_DATE_TIME)
+            .description(UPDATED_DESCRIPTION);
         TimeReservedDTO timeReservedDTO = timeReservedMapper.toDto(updatedTimeReserved);
 
         restTimeReservedMockMvc.perform(put("/api/time-reserveds")
@@ -285,9 +259,8 @@ public class TimeReservedResourceIT {
         List<TimeReserved> timeReservedList = timeReservedRepository.findAll();
         assertThat(timeReservedList).hasSize(databaseSizeBeforeUpdate);
         TimeReserved testTimeReserved = timeReservedList.get(timeReservedList.size() - 1);
-        assertThat(testTimeReserved.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testTimeReserved.getDateTime()).isEqualTo(UPDATED_DATE_TIME);
         assertThat(testTimeReserved.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testTimeReserved.getTime()).isEqualTo(UPDATED_TIME);
     }
 
     @Test
