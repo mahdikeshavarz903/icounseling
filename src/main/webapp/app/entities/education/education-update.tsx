@@ -1,20 +1,24 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getCounselors} from 'app/entities/counselor/counselor.reducer';
-import {getEntities as getVisitors} from 'app/entities/visitor/visitor.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './education.reducer';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
+import { ICounselor } from 'app/shared/model/counselor.model';
+import { getEntities as getCounselors } from 'app/entities/counselor/counselor.reducer';
+import { IVisitor } from 'app/shared/model/visitor.model';
+import { getEntities as getVisitors } from 'app/entities/visitor/visitor.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './education.reducer';
+import { IEducation } from 'app/shared/model/education.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IEducationUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface IEducationUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IEducationUpdateState {
   isNew: boolean;
@@ -51,7 +55,7 @@ export class EducationUpdate extends React.Component<IEducationUpdateProps, IEdu
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const {educationEntity} = this.props;
+      const { educationEntity } = this.props;
       const entity = {
         ...educationEntity,
         ...values
@@ -70,16 +74,15 @@ export class EducationUpdate extends React.Component<IEducationUpdateProps, IEdu
   };
 
   render() {
-    const {educationEntity, counselors, visitors, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { educationEntity, counselors, visitors, loading, updating } = this.props;
+    const { isNew } = this.state;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
             <h2 id="iCounselingApp.education.home.createOrEditLabel">
-              <Translate contentKey="iCounselingApp.education.home.createOrEditLabel">Create or edit a
-                Education</Translate>
+              <Translate contentKey="iCounselingApp.education.home.createOrEditLabel">Create or edit a Education</Translate>
             </h2>
           </Col>
         </Row>
@@ -94,7 +97,7 @@ export class EducationUpdate extends React.Component<IEducationUpdateProps, IEdu
                     <Label for="education-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="education-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="education-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -109,21 +112,21 @@ export class EducationUpdate extends React.Component<IEducationUpdateProps, IEdu
                     value={(!isNew && educationEntity.type) || 'ASSOCIATE_DEGREE'}
                   >
                     <option value="ASSOCIATE_DEGREE">
-                      <Translate contentKey="iCounselingApp.EducationDegree.ASSOCIATE_DEGREE"/>
+                      <Translate contentKey="iCounselingApp.EducationDegree.ASSOCIATE_DEGREE" />
                     </option>
                     <option value="BACHELOR_DEGREE">
-                      <Translate contentKey="iCounselingApp.EducationDegree.BACHELOR_DEGREE"/>
+                      <Translate contentKey="iCounselingApp.EducationDegree.BACHELOR_DEGREE" />
                     </option>
                     <option value="DOCOTRAL_DEGREE">
-                      <Translate contentKey="iCounselingApp.EducationDegree.DOCOTRAL_DEGREE"/>
+                      <Translate contentKey="iCounselingApp.EducationDegree.DOCOTRAL_DEGREE" />
                     </option>
                     <option value="MASTER_DEGREE">
-                      <Translate contentKey="iCounselingApp.EducationDegree.MASTER_DEGREE"/>
+                      <Translate contentKey="iCounselingApp.EducationDegree.MASTER_DEGREE" />
                     </option>
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/education" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -131,7 +134,7 @@ export class EducationUpdate extends React.Component<IEducationUpdateProps, IEdu
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>

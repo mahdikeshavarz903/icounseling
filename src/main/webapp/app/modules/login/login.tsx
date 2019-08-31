@@ -1,13 +1,12 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Redirect, RouteComponentProps} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Redirect, RouteComponentProps } from 'react-router-dom';
 
-import {IRootState} from 'app/shared/reducers';
-import {login} from 'app/shared/reducers/authentication';
+import { IRootState } from 'app/shared/reducers';
+import { login } from 'app/shared/reducers/authentication';
 import LoginModal from './login-modal';
 
-export interface ILoginProps extends StateProps, DispatchProps, RouteComponentProps<{}> {
-}
+export interface ILoginProps extends StateProps, DispatchProps, RouteComponentProps<{}> {}
 
 export interface ILoginState {
   showModal: boolean;
@@ -20,7 +19,7 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
 
   componentDidUpdate(prevProps: ILoginProps, prevState) {
     if (this.props !== prevProps) {
-      this.setState({showModal: this.props.showModal});
+      this.setState({ showModal: this.props.showModal });
     }
   }
 
@@ -29,30 +28,29 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
   };
 
   handleClose = () => {
-    this.setState({showModal: false});
+    this.setState({ showModal: false });
   };
 
   render() {
-    const {location, isAuthenticated} = this.props;
-    const {from} = location.state || {from: {pathname: '/', search: location.search}};
-    const {showModal} = this.state;
+    const { location, isAuthenticated } = this.props;
+    const { from } = location.state || { from: { pathname: '/', search: location.search } };
+    const { showModal } = this.state;
     if (isAuthenticated) {
-      return <Redirect to={from}/>;
+      return <Redirect to={from} />;
     }
     return (
-      <LoginModal showModal={showModal} handleLogin={this.handleLogin} handleClose={this.handleClose}
-                  loginError={this.props.loginError}/>
+      <LoginModal showModal={showModal} handleLogin={this.handleLogin} handleClose={this.handleClose} loginError={this.props.loginError} />
     );
   }
 }
 
-const mapStateToProps = ({authentication}: IRootState) => ({
+const mapStateToProps = ({ authentication }: IRootState) => ({
   isAuthenticated: authentication.isAuthenticated,
   loginError: authentication.loginError,
   showModal: authentication.showModalLogin
 });
 
-const mapDispatchToProps = {login};
+const mapDispatchToProps = { login };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

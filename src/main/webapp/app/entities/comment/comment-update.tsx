@@ -1,22 +1,28 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getSchedules} from 'app/entities/schedule/schedule.reducer';
-import {getEntities as getRates} from 'app/entities/rate/rate.reducer';
-import {getEntities as getDocuments} from 'app/entities/document/document.reducer';
-import {getEntities as getPosts} from 'app/entities/post/post.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './comment.reducer';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
+import { ISchedule } from 'app/shared/model/schedule.model';
+import { getEntities as getSchedules } from 'app/entities/schedule/schedule.reducer';
+import { IRate } from 'app/shared/model/rate.model';
+import { getEntities as getRates } from 'app/entities/rate/rate.reducer';
+import { IDocument } from 'app/shared/model/document.model';
+import { getEntities as getDocuments } from 'app/entities/document/document.reducer';
+import { IPost } from 'app/shared/model/post.model';
+import { getEntities as getPosts } from 'app/entities/post/post.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './comment.reducer';
+import { IComment } from 'app/shared/model/comment.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ICommentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface ICommentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ICommentUpdateState {
   isNew: boolean;
@@ -59,7 +65,7 @@ export class CommentUpdate extends React.Component<ICommentUpdateProps, IComment
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const {commentEntity} = this.props;
+      const { commentEntity } = this.props;
       const entity = {
         ...commentEntity,
         ...values
@@ -78,8 +84,8 @@ export class CommentUpdate extends React.Component<ICommentUpdateProps, IComment
   };
 
   render() {
-    const {commentEntity, schedules, rates, documents, posts, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { commentEntity, schedules, rates, documents, posts, loading, updating } = this.props;
+    const { isNew } = this.state;
 
     return (
       <div>
@@ -101,7 +107,7 @@ export class CommentUpdate extends React.Component<ICommentUpdateProps, IComment
                     <Label for="comment-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="comment-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="comment-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -109,13 +115,13 @@ export class CommentUpdate extends React.Component<ICommentUpdateProps, IComment
                     <Translate contentKey="iCounselingApp.comment.schedule">Schedule</Translate>
                   </Label>
                   <AvInput id="comment-schedule" type="select" className="form-control" name="scheduleId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {schedules
                       ? schedules.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
@@ -124,13 +130,13 @@ export class CommentUpdate extends React.Component<ICommentUpdateProps, IComment
                     <Translate contentKey="iCounselingApp.comment.rate">Rate</Translate>
                   </Label>
                   <AvInput id="comment-rate" type="select" className="form-control" name="rateId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {rates
                       ? rates.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
@@ -139,18 +145,18 @@ export class CommentUpdate extends React.Component<ICommentUpdateProps, IComment
                     <Translate contentKey="iCounselingApp.comment.post">Post</Translate>
                   </Label>
                   <AvInput id="comment-post" type="select" className="form-control" name="postId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {posts
                       ? posts.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/comment" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -158,7 +164,7 @@ export class CommentUpdate extends React.Component<ICommentUpdateProps, IComment
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>

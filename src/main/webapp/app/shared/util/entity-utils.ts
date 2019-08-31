@@ -21,4 +21,4 @@ export const cleanEntity = entity => {
  * @returns The list of objects with mapped ids.
  */
 export const mapIdList = (idList: ReadonlyArray<any>) =>
-  idList.filter((entityId: any) => entityId !== '').map((entityId: any) => ({id: entityId}));
+  idList.filter((entityId: any) => entityId !== '').map((entityId: any) => ({ id: entityId }));

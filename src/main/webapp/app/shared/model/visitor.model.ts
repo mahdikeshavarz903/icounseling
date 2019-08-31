@@ -1,5 +1,5 @@
-import {ITransaction} from 'app/shared/model/transaction.model';
-import {IJob} from 'app/shared/model/job.model';
+import { ITransaction } from 'app/shared/model/transaction.model';
+import { IJob } from 'app/shared/model/job.model';
 
 export interface IVisitor {
   id?: number;

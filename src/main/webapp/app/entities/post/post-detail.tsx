@@ -1,18 +1,18 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Row} from 'reactstrap';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import {byteSize, openFile, Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { Translate, ICrudGetAction, openFile, byteSize } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntity} from './post.reducer';
-
+import { IRootState } from 'app/shared/reducers';
+import { getEntity } from './post.reducer';
+import { IPost } from 'app/shared/model/post.model';
 // tslint:disable-next-line:no-unused-variable
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IPostDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface IPostDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class PostDetail extends React.Component<IPostDetailProps> {
   componentDidMount() {
@@ -20,7 +20,7 @@ export class PostDetail extends React.Component<IPostDetailProps> {
   }
 
   render() {
-    const {postEntity} = this.props;
+    const { postEntity } = this.props;
     return (
       <Row>
         <Col md="8">
@@ -61,14 +61,14 @@ export class PostDetail extends React.Component<IPostDetailProps> {
             <dd>{postEntity.counselorId ? postEntity.counselorId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/post" replace color="info">
-            <FontAwesomeIcon icon="arrow-left"/>{' '}
+            <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/entity/post/${postEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt"/>{' '}
+            <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.edit">Edit</Translate>
             </span>
@@ -79,11 +79,11 @@ export class PostDetail extends React.Component<IPostDetailProps> {
   }
 }
 
-const mapStateToProps = ({post}: IRootState) => ({
+const mapStateToProps = ({ post }: IRootState) => ({
   postEntity: post.entity
 });
 
-const mapDispatchToProps = {getEntity};
+const mapDispatchToProps = { getEntity };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

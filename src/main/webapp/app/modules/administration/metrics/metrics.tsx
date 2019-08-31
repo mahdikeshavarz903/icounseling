@@ -1,29 +1,24 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Button, Col, Row} from 'reactstrap';
+import { connect } from 'react-redux';
+import { Button, Col, Progress, Row, Table } from 'reactstrap';
 import {
   CacheMetrics,
   DatasourceMetrics,
-  EndpointsRequestsMetrics,
   GarbageCollectorMetrics,
   HttpRequestMetrics,
   JvmMemory,
   JvmThreads,
+  EndpointsRequestsMetrics,
   SystemMetrics,
   Translate
 } from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {
-  APP_TIMESTAMP_FORMAT,
-  APP_TWO_DIGITS_AFTER_POINT_NUMBER_FORMAT,
-  APP_WHOLE_NUMBER_FORMAT
-} from 'app/config/constants';
-import {systemMetrics, systemThreadDump} from '../administration.reducer';
-import {IRootState} from 'app/shared/reducers';
+import { APP_TIMESTAMP_FORMAT, APP_TWO_DIGITS_AFTER_POINT_NUMBER_FORMAT, APP_WHOLE_NUMBER_FORMAT } from 'app/config/constants';
+import { systemMetrics, systemThreadDump } from '../administration.reducer';
+import { IRootState } from 'app/shared/reducers';
 
-export interface IMetricsPageProps extends StateProps, DispatchProps {
-}
+export interface IMetricsPageProps extends StateProps, DispatchProps {}
 
 export interface IMetricsPageState {
   showModal: boolean;
@@ -47,32 +42,29 @@ export class MetricsPage extends React.Component<IMetricsPageProps, IMetricsPage
   };
 
   render() {
-    const {metrics, threadDump, isFetching} = this.props;
+    const { metrics, threadDump, isFetching } = this.props;
     return (
       <div>
         <h2 id="metrics-page-heading">Application Metrics</h2>
         <p>
-          <Button onClick={this.getMetrics} color={isFetching ? 'btn btn-danger' : 'btn btn-primary'}
-                  disabled={isFetching}>
-            <FontAwesomeIcon icon="sync"/>
+          <Button onClick={this.getMetrics} color={isFetching ? 'btn btn-danger' : 'btn btn-primary'} disabled={isFetching}>
+            <FontAwesomeIcon icon="sync" />
             &nbsp;
             <Translate component="span" contentKey="health.refresh.button">
               Refresh
             </Translate>
           </Button>
         </p>
-        <hr/>
+        <hr />
 
         <Row>
           <Col sm="12">
             <h3>JVM Metrics</h3>
             <Row>
               <Col md="4">
-                {metrics && metrics.jvm ?
-                  <JvmMemory jvmMetrics={metrics.jvm} wholeNumberFormat={APP_WHOLE_NUMBER_FORMAT}/> : ''}
+                {metrics && metrics.jvm ? <JvmMemory jvmMetrics={metrics.jvm} wholeNumberFormat={APP_WHOLE_NUMBER_FORMAT} /> : ''}
               </Col>
-              <Col md="4">{threadDump ?
-                <JvmThreads jvmThreads={threadDump} wholeNumberFormat={APP_WHOLE_NUMBER_FORMAT}/> : ''}</Col>
+              <Col md="4">{threadDump ? <JvmThreads jvmThreads={threadDump} wholeNumberFormat={APP_WHOLE_NUMBER_FORMAT} /> : ''}</Col>
               <Col md="4">
                 {metrics && metrics.processMetrics ? (
                   <SystemMetrics
@@ -89,8 +81,7 @@ export class MetricsPage extends React.Component<IMetricsPageProps, IMetricsPage
         </Row>
 
         {metrics && metrics.garbageCollector ? (
-          <GarbageCollectorMetrics garbageCollectorMetrics={metrics.garbageCollector}
-                                   wholeNumberFormat={APP_WHOLE_NUMBER_FORMAT}/>
+          <GarbageCollectorMetrics garbageCollectorMetrics={metrics.garbageCollector} wholeNumberFormat={APP_WHOLE_NUMBER_FORMAT} />
         ) : (
           ''
         )}
@@ -104,8 +95,7 @@ export class MetricsPage extends React.Component<IMetricsPageProps, IMetricsPage
           ''
         )}
         {metrics && metrics.endpointsRequests ? (
-          <EndpointsRequestsMetrics endpointsRequestsMetrics={metrics.endpointsRequests}
-                                    wholeNumberFormat={APP_WHOLE_NUMBER_FORMAT}/>
+          <EndpointsRequestsMetrics endpointsRequestsMetrics={metrics.endpointsRequests} wholeNumberFormat={APP_WHOLE_NUMBER_FORMAT} />
         ) : (
           ''
         )}
@@ -113,8 +103,7 @@ export class MetricsPage extends React.Component<IMetricsPageProps, IMetricsPage
         {metrics.cache ? (
           <Row>
             <Col sm="12">
-              <CacheMetrics cacheMetrics={metrics.cache}
-                            twoDigitAfterPointFormat={APP_TWO_DIGITS_AFTER_POINT_NUMBER_FORMAT}/>
+              <CacheMetrics cacheMetrics={metrics.cache} twoDigitAfterPointFormat={APP_TWO_DIGITS_AFTER_POINT_NUMBER_FORMAT} />
             </Col>
           </Row>
         ) : (
@@ -144,7 +133,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   threadDump: storeState.administration.threadDump
 });
 
-const mapDispatchToProps = {systemMetrics, systemThreadDump};
+const mapDispatchToProps = { systemMetrics, systemThreadDump };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

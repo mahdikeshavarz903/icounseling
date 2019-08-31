@@ -1,18 +1,18 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Row} from 'reactstrap';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import {TextFormat, Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntity} from './time-reserved.reducer';
+import { IRootState } from 'app/shared/reducers';
+import { getEntity } from './time-reserved.reducer';
+import { ITimeReserved } from 'app/shared/model/time-reserved.model';
 // tslint:disable-next-line:no-unused-variable
-import {APP_DATE_FORMAT} from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ITimeReservedDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface ITimeReservedDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class TimeReservedDetail extends React.Component<ITimeReservedDetailProps> {
   componentDidMount() {
@@ -20,13 +20,12 @@ export class TimeReservedDetail extends React.Component<ITimeReservedDetailProps
   }
 
   render() {
-    const {timeReservedEntity} = this.props;
+    const { timeReservedEntity } = this.props;
     return (
       <Row>
         <Col md="8">
           <h2>
-            <Translate
-              contentKey="iCounselingApp.timeReserved.detail.title">TimeReserved</Translate> [<b>{timeReservedEntity.id}</b>]
+            <Translate contentKey="iCounselingApp.timeReserved.detail.title">TimeReserved</Translate> [<b>{timeReservedEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
@@ -35,7 +34,7 @@ export class TimeReservedDetail extends React.Component<ITimeReservedDetailProps
               </span>
             </dt>
             <dd>
-              <TextFormat value={timeReservedEntity.dateTime} type="date" format={APP_DATE_FORMAT}/>
+              <TextFormat value={timeReservedEntity.dateTime} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="description">
@@ -49,14 +48,14 @@ export class TimeReservedDetail extends React.Component<ITimeReservedDetailProps
             <dd>{timeReservedEntity.counselorId ? timeReservedEntity.counselorId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/time-reserved" replace color="info">
-            <FontAwesomeIcon icon="arrow-left"/>{' '}
+            <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/entity/time-reserved/${timeReservedEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt"/>{' '}
+            <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.edit">Edit</Translate>
             </span>
@@ -67,11 +66,11 @@ export class TimeReservedDetail extends React.Component<ITimeReservedDetailProps
   }
 }
 
-const mapStateToProps = ({timeReserved}: IRootState) => ({
+const mapStateToProps = ({ timeReserved }: IRootState) => ({
   timeReservedEntity: timeReserved.entity
 });
 
-const mapDispatchToProps = {getEntity};
+const mapDispatchToProps = { getEntity };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

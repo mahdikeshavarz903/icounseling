@@ -1,18 +1,18 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Row} from 'reactstrap';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import {TextFormat, Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntity} from './job-history.reducer';
+import { IRootState } from 'app/shared/reducers';
+import { getEntity } from './job-history.reducer';
+import { IJobHistory } from 'app/shared/model/job-history.model';
 // tslint:disable-next-line:no-unused-variable
-import {APP_DATE_FORMAT} from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IJobHistoryDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface IJobHistoryDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class JobHistoryDetail extends React.Component<IJobHistoryDetailProps> {
   componentDidMount() {
@@ -20,13 +20,12 @@ export class JobHistoryDetail extends React.Component<IJobHistoryDetailProps> {
   }
 
   render() {
-    const {jobHistoryEntity} = this.props;
+    const { jobHistoryEntity } = this.props;
     return (
       <Row>
         <Col md="8">
           <h2>
-            <Translate
-              contentKey="iCounselingApp.jobHistory.detail.title">JobHistory</Translate> [<b>{jobHistoryEntity.id}</b>]
+            <Translate contentKey="iCounselingApp.jobHistory.detail.title">JobHistory</Translate> [<b>{jobHistoryEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
@@ -35,7 +34,7 @@ export class JobHistoryDetail extends React.Component<IJobHistoryDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={jobHistoryEntity.startDate} type="date" format={APP_DATE_FORMAT}/>
+              <TextFormat value={jobHistoryEntity.startDate} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="endDate">
@@ -43,7 +42,7 @@ export class JobHistoryDetail extends React.Component<IJobHistoryDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={jobHistoryEntity.endDate} type="date" format={APP_DATE_FORMAT}/>
+              <TextFormat value={jobHistoryEntity.endDate} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="iCounselingApp.jobHistory.job">Job</Translate>
@@ -51,14 +50,14 @@ export class JobHistoryDetail extends React.Component<IJobHistoryDetailProps> {
             <dd>{jobHistoryEntity.jobId ? jobHistoryEntity.jobId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/job-history" replace color="info">
-            <FontAwesomeIcon icon="arrow-left"/>{' '}
+            <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/entity/job-history/${jobHistoryEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt"/>{' '}
+            <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.edit">Edit</Translate>
             </span>
@@ -69,11 +68,11 @@ export class JobHistoryDetail extends React.Component<IJobHistoryDetailProps> {
   }
 }
 
-const mapStateToProps = ({jobHistory}: IRootState) => ({
+const mapStateToProps = ({ jobHistory }: IRootState) => ({
   jobHistoryEntity: jobHistory.entity
 });
 
-const mapDispatchToProps = {getEntity};
+const mapDispatchToProps = { getEntity };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

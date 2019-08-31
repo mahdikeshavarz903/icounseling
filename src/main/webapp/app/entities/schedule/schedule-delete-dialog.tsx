@@ -1,14 +1,15 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {RouteComponentProps} from 'react-router-dom';
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {deleteEntity, getEntity} from './schedule.reducer';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Translate, ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export interface IScheduleDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+import { ISchedule } from 'app/shared/model/schedule.model';
+import { IRootState } from 'app/shared/reducers';
+import { getEntity, deleteEntity } from './schedule.reducer';
+
+export interface IScheduleDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class ScheduleDeleteDialog extends React.Component<IScheduleDeleteDialogProps> {
   componentDidMount() {
@@ -26,25 +27,25 @@ export class ScheduleDeleteDialog extends React.Component<IScheduleDeleteDialogP
   };
 
   render() {
-    const {scheduleEntity} = this.props;
+    const { scheduleEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>
           <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
         </ModalHeader>
         <ModalBody id="iCounselingApp.schedule.delete.question">
-          <Translate contentKey="iCounselingApp.schedule.delete.question" interpolate={{id: scheduleEntity.id}}>
+          <Translate contentKey="iCounselingApp.schedule.delete.question" interpolate={{ id: scheduleEntity.id }}>
             Are you sure you want to delete this Schedule?
           </Translate>
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
-            <FontAwesomeIcon icon="ban"/>
+            <FontAwesomeIcon icon="ban" />
             &nbsp;
             <Translate contentKey="entity.action.cancel">Cancel</Translate>
           </Button>
           <Button id="jhi-confirm-delete-schedule" color="danger" onClick={this.confirmDelete}>
-            <FontAwesomeIcon icon="trash"/>
+            <FontAwesomeIcon icon="trash" />
             &nbsp;
             <Translate contentKey="entity.action.delete">Delete</Translate>
           </Button>
@@ -54,11 +55,11 @@ export class ScheduleDeleteDialog extends React.Component<IScheduleDeleteDialogP
   }
 }
 
-const mapStateToProps = ({schedule}: IRootState) => ({
+const mapStateToProps = ({ schedule }: IRootState) => ({
   scheduleEntity: schedule.entity
 });
 
-const mapDispatchToProps = {getEntity, deleteEntity};
+const mapDispatchToProps = { getEntity, deleteEntity };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

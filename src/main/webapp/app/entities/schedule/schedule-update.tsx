@@ -1,21 +1,26 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {Translate, translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getTasks} from 'app/entities/task/task.reducer';
-import {getEntities as getPosts} from 'app/entities/post/post.reducer';
-import {getEntities as getComments} from 'app/entities/comment/comment.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './schedule.reducer';
-// tslint:disable-next-line:no-unused-variable
-import {convertDateTimeFromServer, convertDateTimeToServer} from 'app/shared/util/date-utils';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
-export interface IScheduleUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+import { ITask } from 'app/shared/model/task.model';
+import { getEntities as getTasks } from 'app/entities/task/task.reducer';
+import { IPost } from 'app/shared/model/post.model';
+import { getEntities as getPosts } from 'app/entities/post/post.reducer';
+import { IComment } from 'app/shared/model/comment.model';
+import { getEntities as getComments } from 'app/entities/comment/comment.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './schedule.reducer';
+import { ISchedule } from 'app/shared/model/schedule.model';
+// tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
+
+export interface IScheduleUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IScheduleUpdateState {
   isNew: boolean;
@@ -57,7 +62,7 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
     values.dateTime = convertDateTimeToServer(values.dateTime);
 
     if (errors.length === 0) {
-      const {scheduleEntity} = this.props;
+      const { scheduleEntity } = this.props;
       const entity = {
         ...scheduleEntity,
         ...values
@@ -76,16 +81,15 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
   };
 
   render() {
-    const {scheduleEntity, tasks, posts, comments, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { scheduleEntity, tasks, posts, comments, loading, updating } = this.props;
+    const { isNew } = this.state;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
             <h2 id="iCounselingApp.schedule.home.createOrEditLabel">
-              <Translate contentKey="iCounselingApp.schedule.home.createOrEditLabel">Create or edit a
-                Schedule</Translate>
+              <Translate contentKey="iCounselingApp.schedule.home.createOrEditLabel">Create or edit a Schedule</Translate>
             </h2>
           </Col>
         </Row>
@@ -100,7 +104,7 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                     <Label for="schedule-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="schedule-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="schedule-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -112,7 +116,7 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                     type="text"
                     name="title"
                     validate={{
-                      required: {value: true, errorMessage: translate('entity.validation.required')}
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
                 </AvGroup>
@@ -128,7 +132,7 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                     placeholder={'YYYY-MM-DD HH:mm'}
                     value={isNew ? null : convertDateTimeFromServer(this.props.scheduleEntity.dateTime)}
                     validate={{
-                      required: {value: true, errorMessage: translate('entity.validation.required')}
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
                 </AvGroup>
@@ -141,12 +145,12 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                     type="text"
                     name="description"
                     validate={{
-                      required: {value: true, errorMessage: translate('entity.validation.required')}
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/schedule" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -154,7 +158,7 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>

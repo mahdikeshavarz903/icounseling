@@ -1,19 +1,22 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {Translate, translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getVisitors} from 'app/entities/visitor/visitor.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './library.reducer';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
+import { IVisitor } from 'app/shared/model/visitor.model';
+import { getEntities as getVisitors } from 'app/entities/visitor/visitor.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './library.reducer';
+import { ILibrary } from 'app/shared/model/library.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ILibraryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface ILibraryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ILibraryUpdateState {
   isNew: boolean;
@@ -47,7 +50,7 @@ export class LibraryUpdate extends React.Component<ILibraryUpdateProps, ILibrary
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const {libraryEntity} = this.props;
+      const { libraryEntity } = this.props;
       const entity = {
         ...libraryEntity,
         ...values
@@ -66,8 +69,8 @@ export class LibraryUpdate extends React.Component<ILibraryUpdateProps, ILibrary
   };
 
   render() {
-    const {libraryEntity, visitors, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { libraryEntity, visitors, loading, updating } = this.props;
+    const { isNew } = this.state;
 
     return (
       <div>
@@ -89,7 +92,7 @@ export class LibraryUpdate extends React.Component<ILibraryUpdateProps, ILibrary
                     <Label for="library-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="library-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="library-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -101,7 +104,7 @@ export class LibraryUpdate extends React.Component<ILibraryUpdateProps, ILibrary
                     type="text"
                     name="name"
                     validate={{
-                      required: {value: true, errorMessage: translate('entity.validation.required')}
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
                 </AvGroup>
@@ -115,7 +118,7 @@ export class LibraryUpdate extends React.Component<ILibraryUpdateProps, ILibrary
                     className="form-control"
                     name="creationTime"
                     validate={{
-                      required: {value: true, errorMessage: translate('entity.validation.required')}
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
                 </AvGroup>
@@ -124,18 +127,18 @@ export class LibraryUpdate extends React.Component<ILibraryUpdateProps, ILibrary
                     <Translate contentKey="iCounselingApp.library.visitor">Visitor</Translate>
                   </Label>
                   <AvInput id="library-visitor" type="select" className="form-control" name="visitorId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {visitors
                       ? visitors.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/library" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -143,7 +146,7 @@ export class LibraryUpdate extends React.Component<ILibraryUpdateProps, ILibrary
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>

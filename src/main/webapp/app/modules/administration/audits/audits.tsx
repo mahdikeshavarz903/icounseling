@@ -1,25 +1,17 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {RouteComponentProps} from 'react-router';
-import {Input, Row, Table} from 'reactstrap';
-import {
-  getPaginationItemsNumber,
-  getSortState,
-  IPaginationBaseState,
-  JhiPagination,
-  TextFormat,
-  Translate
-} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
+import { Input, Row, Table } from 'reactstrap';
+import { Translate, TextFormat, JhiPagination, getPaginationItemsNumber, getSortState, IPaginationBaseState } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {APP_TIMESTAMP_FORMAT} from 'app/config/constants';
-import {ITEMS_PER_PAGE} from 'app/shared/util/pagination.constants';
+import { APP_TIMESTAMP_FORMAT } from 'app/config/constants';
+import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
-import {IRootState} from 'app/shared/reducers';
-import {getAudits} from '../administration.reducer';
+import { IRootState } from 'app/shared/reducers';
+import { getAudits } from '../administration.reducer';
 
-export interface IAuditsPageProps extends StateProps, DispatchProps, RouteComponentProps<{}> {
-}
+export interface IAuditsPageProps extends StateProps, DispatchProps, RouteComponentProps<{}> {}
 
 export interface IAuditsPageState extends IPaginationBaseState {
   fromDate: string;
@@ -86,59 +78,59 @@ export class AuditsPage extends React.Component<IAuditsPageProps, IAuditsPageSta
     this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}&sort=${this.state.sort},${this.state.order}`);
   };
 
-  handlePagination = activePage => this.setState({activePage}, () => this.transition());
+  handlePagination = activePage => this.setState({ activePage }, () => this.transition());
 
   getAudits = () => {
-    const {activePage, itemsPerPage, sort, order, fromDate, toDate} = this.state;
+    const { activePage, itemsPerPage, sort, order, fromDate, toDate } = this.state;
     this.props.getAudits(activePage - 1, itemsPerPage, `${sort},${order}`, fromDate, toDate);
   };
 
   render() {
-    const {audits, totalItems} = this.props;
-    const {fromDate, toDate} = this.state;
+    const { audits, totalItems } = this.props;
+    const { fromDate, toDate } = this.state;
     return (
       <div>
         <h2 id="audits-page-heading">Audits</h2>
         <span>
           <Translate contentKey="audits.filter.from">from</Translate>
         </span>
-        <Input type="date" value={fromDate} onChange={this.onChangeFromDate} name="fromDate" id="fromDate"/>
+        <Input type="date" value={fromDate} onChange={this.onChangeFromDate} name="fromDate" id="fromDate" />
         <span>
           <Translate contentKey="audits.filter.to">to</Translate>
         </span>
-        <Input type="date" value={toDate} onChange={this.onChangeToDate} name="toDate" id="toDate"/>
+        <Input type="date" value={toDate} onChange={this.onChangeToDate} name="toDate" id="toDate" />
         <Table striped responsive>
           <thead>
-          <tr>
-            <th onClick={this.sort('auditEventDate')}>
-              <Translate contentKey="audits.table.header.date">Date</Translate>
-              <FontAwesomeIcon icon="sort"/>
-            </th>
-            <th onClick={this.sort('principal')}>
-              <Translate contentKey="audits.table.header.principal">User</Translate>
-              <FontAwesomeIcon icon="sort"/>
-            </th>
-            <th onClick={this.sort('auditEventType')}>
-              <Translate contentKey="audits.table.header.status">State</Translate>
-              <FontAwesomeIcon icon="sort"/>
-            </th>
-            <th>
-              <Translate contentKey="audits.table.header.data">Extra data</Translate>
-            </th>
-          </tr>
+            <tr>
+              <th onClick={this.sort('auditEventDate')}>
+                <Translate contentKey="audits.table.header.date">Date</Translate>
+                <FontAwesomeIcon icon="sort" />
+              </th>
+              <th onClick={this.sort('principal')}>
+                <Translate contentKey="audits.table.header.principal">User</Translate>
+                <FontAwesomeIcon icon="sort" />
+              </th>
+              <th onClick={this.sort('auditEventType')}>
+                <Translate contentKey="audits.table.header.status">State</Translate>
+                <FontAwesomeIcon icon="sort" />
+              </th>
+              <th>
+                <Translate contentKey="audits.table.header.data">Extra data</Translate>
+              </th>
+            </tr>
           </thead>
           <tbody>
-          {audits.map((audit, i) => (
-            <tr key={`audit-${i}`}>
-              <td>{<TextFormat value={audit.timestamp} type="date" format={APP_TIMESTAMP_FORMAT}/>}</td>
-              <td>{audit.principal}</td>
-              <td>{audit.type}</td>
-              <td>
-                {audit.data ? audit.data.message : null}
-                {audit.data ? audit.data.remoteAddress : null}
-              </td>
-            </tr>
-          ))}
+            {audits.map((audit, i) => (
+              <tr key={`audit-${i}`}>
+                <td>{<TextFormat value={audit.timestamp} type="date" format={APP_TIMESTAMP_FORMAT} />}</td>
+                <td>{audit.principal}</td>
+                <td>{audit.type}</td>
+                <td>
+                  {audit.data ? audit.data.message : null}
+                  {audit.data ? audit.data.remoteAddress : null}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
         <Row className="justify-content-center">
@@ -159,7 +151,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   totalItems: storeState.administration.totalItems
 });
 
-const mapDispatchToProps = {getAudits};
+const mapDispatchToProps = { getAudits };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

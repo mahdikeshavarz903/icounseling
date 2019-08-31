@@ -1,4 +1,4 @@
-import {IReseume} from 'app/shared/model/reseume.model';
+import { IReseume } from 'app/shared/model/reseume.model';
 
 export const enum EducationDegree {
   ASSOCIATE_DEGREE = 'ASSOCIATE_DEGREE',

@@ -1,21 +1,26 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getReminders} from 'app/entities/reminder/reminder.reducer';
-import {getEntities as getSchedules} from 'app/entities/schedule/schedule.reducer';
-import {getEntities as getPlannings} from 'app/entities/planning/planning.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './task.reducer';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
+import { IReminder } from 'app/shared/model/reminder.model';
+import { getEntities as getReminders } from 'app/entities/reminder/reminder.reducer';
+import { ISchedule } from 'app/shared/model/schedule.model';
+import { getEntities as getSchedules } from 'app/entities/schedule/schedule.reducer';
+import { IPlanning } from 'app/shared/model/planning.model';
+import { getEntities as getPlannings } from 'app/entities/planning/planning.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './task.reducer';
+import { ITask } from 'app/shared/model/task.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ITaskUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface ITaskUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ITaskUpdateState {
   isNew: boolean;
@@ -55,7 +60,7 @@ export class TaskUpdate extends React.Component<ITaskUpdateProps, ITaskUpdateSta
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const {taskEntity} = this.props;
+      const { taskEntity } = this.props;
       const entity = {
         ...taskEntity,
         ...values
@@ -74,8 +79,8 @@ export class TaskUpdate extends React.Component<ITaskUpdateProps, ITaskUpdateSta
   };
 
   render() {
-    const {taskEntity, reminders, schedules, plannings, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { taskEntity, reminders, schedules, plannings, loading, updating } = this.props;
+    const { isNew } = this.state;
 
     return (
       <div>
@@ -97,7 +102,7 @@ export class TaskUpdate extends React.Component<ITaskUpdateProps, ITaskUpdateSta
                     <Label for="task-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="task-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="task-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -112,19 +117,19 @@ export class TaskUpdate extends React.Component<ITaskUpdateProps, ITaskUpdateSta
                     value={(!isNew && taskEntity.repeatTime) || 'NONE'}
                   >
                     <option value="NONE">
-                      <Translate contentKey="iCounselingApp.RepeatTime.NONE"/>
+                      <Translate contentKey="iCounselingApp.RepeatTime.NONE" />
                     </option>
                     <option value="DAILY">
-                      <Translate contentKey="iCounselingApp.RepeatTime.DAILY"/>
+                      <Translate contentKey="iCounselingApp.RepeatTime.DAILY" />
                     </option>
                     <option value="WEEKLY">
-                      <Translate contentKey="iCounselingApp.RepeatTime.WEEKLY"/>
+                      <Translate contentKey="iCounselingApp.RepeatTime.WEEKLY" />
                     </option>
                     <option value="MONTHLY">
-                      <Translate contentKey="iCounselingApp.RepeatTime.MONTHLY"/>
+                      <Translate contentKey="iCounselingApp.RepeatTime.MONTHLY" />
                     </option>
                     <option value="YEARLY">
-                      <Translate contentKey="iCounselingApp.RepeatTime.YEARLY"/>
+                      <Translate contentKey="iCounselingApp.RepeatTime.YEARLY" />
                     </option>
                   </AvInput>
                 </AvGroup>
@@ -140,13 +145,13 @@ export class TaskUpdate extends React.Component<ITaskUpdateProps, ITaskUpdateSta
                     value={(!isNew && taskEntity.repeatUntil) || 'NO_END_DATE'}
                   >
                     <option value="NO_END_DATE">
-                      <Translate contentKey="iCounselingApp.RepeatUntil.NO_END_DATE"/>
+                      <Translate contentKey="iCounselingApp.RepeatUntil.NO_END_DATE" />
                     </option>
                     <option value="SET_END_DATE">
-                      <Translate contentKey="iCounselingApp.RepeatUntil.SET_END_DATE"/>
+                      <Translate contentKey="iCounselingApp.RepeatUntil.SET_END_DATE" />
                     </option>
                     <option value="SET_NUMBER_OF_TIMES">
-                      <Translate contentKey="iCounselingApp.RepeatUntil.SET_NUMBER_OF_TIMES"/>
+                      <Translate contentKey="iCounselingApp.RepeatUntil.SET_NUMBER_OF_TIMES" />
                     </option>
                   </AvInput>
                 </AvGroup>
@@ -155,13 +160,13 @@ export class TaskUpdate extends React.Component<ITaskUpdateProps, ITaskUpdateSta
                     <Translate contentKey="iCounselingApp.task.reminder">Reminder</Translate>
                   </Label>
                   <AvInput id="task-reminder" type="select" className="form-control" name="reminderId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {reminders
                       ? reminders.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
@@ -170,13 +175,13 @@ export class TaskUpdate extends React.Component<ITaskUpdateProps, ITaskUpdateSta
                     <Translate contentKey="iCounselingApp.task.schedule">Schedule</Translate>
                   </Label>
                   <AvInput id="task-schedule" type="select" className="form-control" name="scheduleId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {schedules
                       ? schedules.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
@@ -185,18 +190,18 @@ export class TaskUpdate extends React.Component<ITaskUpdateProps, ITaskUpdateSta
                     <Translate contentKey="iCounselingApp.task.planning">Planning</Translate>
                   </Label>
                   <AvInput id="task-planning" type="select" className="form-control" name="planningId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {plannings
                       ? plannings.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/task" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -204,7 +209,7 @@ export class TaskUpdate extends React.Component<ITaskUpdateProps, ITaskUpdateSta
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>

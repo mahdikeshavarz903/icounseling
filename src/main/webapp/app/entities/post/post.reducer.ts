@@ -1,10 +1,10 @@
 import axios from 'axios';
-import {ICrudDeleteAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction} from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
 
-import {cleanEntity} from 'app/shared/util/entity-utils';
-import {FAILURE, REQUEST, SUCCESS} from 'app/shared/reducers/action-type.util';
+import { cleanEntity } from 'app/shared/util/entity-utils';
+import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
-import {defaultValue, IPost} from 'app/shared/model/post.model';
+import { IPost, defaultValue } from 'app/shared/model/post.model';
 
 export const ACTION_TYPES = {
   FETCH_POST_LIST: 'post/FETCH_POST_LIST',
@@ -90,7 +90,7 @@ export default (state: PostState = initialState, action): PostState => {
         entity: {}
       };
     case ACTION_TYPES.SET_BLOB:
-      const {name, data, contentType} = action.payload;
+      const { name, data, contentType } = action.payload;
       return {
         ...state,
         entity: {

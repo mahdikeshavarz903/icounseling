@@ -1,22 +1,28 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {byteSize, openFile, setFileData, translate, Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getRates} from 'app/entities/rate/rate.reducer';
-import {getEntities as getComments} from 'app/entities/comment/comment.reducer';
-import {getEntities as getCategories} from 'app/entities/category/category.reducer';
-import {getEntities as getCounselors} from 'app/entities/counselor/counselor.reducer';
-import {createEntity, getEntity, reset, setBlob, updateEntity} from './document.reducer';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, setFileData, openFile, byteSize, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
+import { IRate } from 'app/shared/model/rate.model';
+import { getEntities as getRates } from 'app/entities/rate/rate.reducer';
+import { IComment } from 'app/shared/model/comment.model';
+import { getEntities as getComments } from 'app/entities/comment/comment.reducer';
+import { ICategory } from 'app/shared/model/category.model';
+import { getEntities as getCategories } from 'app/entities/category/category.reducer';
+import { ICounselor } from 'app/shared/model/counselor.model';
+import { getEntities as getCounselors } from 'app/entities/counselor/counselor.reducer';
+import { getEntity, updateEntity, createEntity, setBlob, reset } from './document.reducer';
+import { IDocument } from 'app/shared/model/document.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IDocumentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface IDocumentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IDocumentUpdateState {
   isNew: boolean;
@@ -67,7 +73,7 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const {documentEntity} = this.props;
+      const { documentEntity } = this.props;
       const entity = {
         ...documentEntity,
         ...values
@@ -86,18 +92,17 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
   };
 
   render() {
-    const {documentEntity, rates, comments, categories, counselors, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { documentEntity, rates, comments, categories, counselors, loading, updating } = this.props;
+    const { isNew } = this.state;
 
-    const {description, descriptionContentType, imagesGallery, imagesGalleryContentType} = documentEntity;
+    const { description, descriptionContentType, imagesGallery, imagesGalleryContentType } = documentEntity;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
             <h2 id="iCounselingApp.document.home.createOrEditLabel">
-              <Translate contentKey="iCounselingApp.document.home.createOrEditLabel">Create or edit a
-                Document</Translate>
+              <Translate contentKey="iCounselingApp.document.home.createOrEditLabel">Create or edit a Document</Translate>
             </h2>
           </Col>
         </Row>
@@ -112,7 +117,7 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                     <Label for="document-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="document-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="document-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -124,7 +129,7 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                     type="text"
                     name="title"
                     validate={{
-                      required: {value: true, errorMessage: translate('entity.validation.required')}
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
                 </AvGroup>
@@ -133,13 +138,13 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                     <Label id="descriptionLabel" for="description">
                       <Translate contentKey="iCounselingApp.document.description">Description</Translate>
                     </Label>
-                    <br/>
+                    <br />
                     {description ? (
                       <div>
                         <a onClick={openFile(descriptionContentType, description)}>
                           <Translate contentKey="entity.action.open">Open</Translate>
                         </a>
-                        <br/>
+                        <br />
                         <Row>
                           <Col md="11">
                             <span>
@@ -148,19 +153,19 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                           </Col>
                           <Col md="1">
                             <Button color="danger" onClick={this.clearBlob('description')}>
-                              <FontAwesomeIcon icon="times-circle"/>
+                              <FontAwesomeIcon icon="times-circle" />
                             </Button>
                           </Col>
                         </Row>
                       </div>
                     ) : null}
-                    <input id="file_description" type="file" onChange={this.onBlobChange(false, 'description')}/>
+                    <input id="file_description" type="file" onChange={this.onBlobChange(false, 'description')} />
                     <AvInput
                       type="hidden"
                       name="description"
                       value={description}
                       validate={{
-                        required: {value: true, errorMessage: translate('entity.validation.required')}
+                        required: { value: true, errorMessage: translate('entity.validation.required') }
                       }}
                     />
                   </AvGroup>
@@ -175,8 +180,8 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                     className="form-control"
                     name="price"
                     validate={{
-                      required: {value: true, errorMessage: translate('entity.validation.required')},
-                      number: {value: true, errorMessage: translate('entity.validation.number')}
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      number: { value: true, errorMessage: translate('entity.validation.number') }
                     }}
                   />
                 </AvGroup>
@@ -184,7 +189,7 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                   <Label id="publishedDateLabel" for="document-publishedDate">
                     <Translate contentKey="iCounselingApp.document.publishedDate">Published Date</Translate>
                   </Label>
-                  <AvField id="document-publishedDate" type="date" className="form-control" name="publishedDate"/>
+                  <AvField id="document-publishedDate" type="date" className="form-control" name="publishedDate" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="paymentTypeLabel" for="document-paymentType">
@@ -198,10 +203,10 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                     value={(!isNew && documentEntity.paymentType) || 'FREE'}
                   >
                     <option value="FREE">
-                      <Translate contentKey="iCounselingApp.PaymentType.FREE"/>
+                      <Translate contentKey="iCounselingApp.PaymentType.FREE" />
                     </option>
                     <option value="PAID">
-                      <Translate contentKey="iCounselingApp.PaymentType.PAID"/>
+                      <Translate contentKey="iCounselingApp.PaymentType.PAID" />
                     </option>
                   </AvInput>
                 </AvGroup>
@@ -217,19 +222,19 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                     value={(!isNew && documentEntity.documentFormat) || 'PDF'}
                   >
                     <option value="PDF">
-                      <Translate contentKey="iCounselingApp.DocumentFormat.PDF"/>
+                      <Translate contentKey="iCounselingApp.DocumentFormat.PDF" />
                     </option>
                     <option value="DOCX">
-                      <Translate contentKey="iCounselingApp.DocumentFormat.DOCX"/>
+                      <Translate contentKey="iCounselingApp.DocumentFormat.DOCX" />
                     </option>
                     <option value="DOC">
-                      <Translate contentKey="iCounselingApp.DocumentFormat.DOC"/>
+                      <Translate contentKey="iCounselingApp.DocumentFormat.DOC" />
                     </option>
                     <option value="XLSX">
-                      <Translate contentKey="iCounselingApp.DocumentFormat.XLSX"/>
+                      <Translate contentKey="iCounselingApp.DocumentFormat.XLSX" />
                     </option>
                     <option value="PPT">
-                      <Translate contentKey="iCounselingApp.DocumentFormat.PPT"/>
+                      <Translate contentKey="iCounselingApp.DocumentFormat.PPT" />
                     </option>
                   </AvInput>
                 </AvGroup>
@@ -238,13 +243,13 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                     <Label id="imagesGalleryLabel" for="imagesGallery">
                       <Translate contentKey="iCounselingApp.document.imagesGallery">Images Gallery</Translate>
                     </Label>
-                    <br/>
+                    <br />
                     {imagesGallery ? (
                       <div>
                         <a onClick={openFile(imagesGalleryContentType, imagesGallery)}>
                           <Translate contentKey="entity.action.open">Open</Translate>
                         </a>
-                        <br/>
+                        <br />
                         <Row>
                           <Col md="11">
                             <span>
@@ -253,19 +258,19 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                           </Col>
                           <Col md="1">
                             <Button color="danger" onClick={this.clearBlob('imagesGallery')}>
-                              <FontAwesomeIcon icon="times-circle"/>
+                              <FontAwesomeIcon icon="times-circle" />
                             </Button>
                           </Col>
                         </Row>
                       </div>
                     ) : null}
-                    <input id="file_imagesGallery" type="file" onChange={this.onBlobChange(false, 'imagesGallery')}/>
+                    <input id="file_imagesGallery" type="file" onChange={this.onBlobChange(false, 'imagesGallery')} />
                     <AvInput
                       type="hidden"
                       name="imagesGallery"
                       value={imagesGallery}
                       validate={{
-                        required: {value: true, errorMessage: translate('entity.validation.required')}
+                        required: { value: true, errorMessage: translate('entity.validation.required') }
                       }}
                     />
                   </AvGroup>
@@ -279,7 +284,7 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                     type="text"
                     name="tag"
                     validate={{
-                      required: {value: true, errorMessage: translate('entity.validation.required')}
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
                 </AvGroup>
@@ -288,13 +293,13 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                     <Translate contentKey="iCounselingApp.document.rate">Rate</Translate>
                   </Label>
                   <AvInput id="document-rate" type="select" className="form-control" name="rateId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {rates
                       ? rates.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.index}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.index}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
@@ -303,13 +308,13 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                     <Translate contentKey="iCounselingApp.document.comment">Comment</Translate>
                   </Label>
                   <AvInput id="document-comment" type="select" className="form-control" name="commentId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {comments
                       ? comments.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
@@ -318,13 +323,13 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                     <Translate contentKey="iCounselingApp.document.gategory">Gategory</Translate>
                   </Label>
                   <AvInput id="document-gategory" type="select" className="form-control" name="gategoryId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {categories
                       ? categories.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.categoryType}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.categoryType}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
@@ -333,18 +338,18 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                     <Translate contentKey="iCounselingApp.document.counselor">Counselor</Translate>
                   </Label>
                   <AvInput id="document-counselor" type="select" className="form-control" name="counselorId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {counselors
                       ? counselors.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/document" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -352,7 +357,7 @@ export class DocumentUpdate extends React.Component<IDocumentUpdateProps, IDocum
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>

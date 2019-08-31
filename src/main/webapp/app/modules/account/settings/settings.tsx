@@ -1,16 +1,15 @@
 import React from 'react';
-import {Button, Col, Row} from 'reactstrap';
-import {connect} from 'react-redux';
-import {Translate, translate} from 'react-jhipster';
-import {AvField, AvForm} from 'availity-reactstrap-validation';
+import { Button, Col, Alert, Row } from 'reactstrap';
+import { connect } from 'react-redux';
+import { Translate, translate } from 'react-jhipster';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 
-import {languages, locales} from 'app/config/translation';
-import {IRootState} from 'app/shared/reducers';
-import {getSession} from 'app/shared/reducers/authentication';
-import {reset, saveAccountSettings} from './settings.reducer';
+import { locales, languages } from 'app/config/translation';
+import { IRootState } from 'app/shared/reducers';
+import { getSession } from 'app/shared/reducers/authentication';
+import { saveAccountSettings, reset } from './settings.reducer';
 
-export interface IUserSettingsProps extends StateProps, DispatchProps {
-}
+export interface IUserSettingsProps extends StateProps, DispatchProps {}
 
 export interface IUserSettingsState {
   account: any;
@@ -36,14 +35,14 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
   };
 
   render() {
-    const {account} = this.props;
+    const { account } = this.props;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
             <h2 id="settings-title">
-              <Translate contentKey="settings.title" interpolate={{username: account.login}}>
+              <Translate contentKey="settings.title" interpolate={{ username: account.login }}>
                 User settings for {account.login}
               </Translate>
             </h2>
@@ -56,9 +55,9 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
                 id="firstName"
                 placeholder={translate('settings.form.firstname.placeholder')}
                 validate={{
-                  required: {value: true, errorMessage: translate('settings.messages.validate.firstname.required')},
-                  minLength: {value: 1, errorMessage: translate('settings.messages.validate.firstname.minlength')},
-                  maxLength: {value: 50, errorMessage: translate('settings.messages.validate.firstname.maxlength')}
+                  required: { value: true, errorMessage: translate('settings.messages.validate.firstname.required') },
+                  minLength: { value: 1, errorMessage: translate('settings.messages.validate.firstname.minlength') },
+                  maxLength: { value: 50, errorMessage: translate('settings.messages.validate.firstname.maxlength') }
                 }}
                 value={account.firstName}
               />
@@ -70,9 +69,9 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
                 id="lastName"
                 placeholder={translate('settings.form.lastname.placeholder')}
                 validate={{
-                  required: {value: true, errorMessage: translate('settings.messages.validate.lastname.required')},
-                  minLength: {value: 1, errorMessage: translate('settings.messages.validate.lastname.minlength')},
-                  maxLength: {value: 50, errorMessage: translate('settings.messages.validate.lastname.maxlength')}
+                  required: { value: true, errorMessage: translate('settings.messages.validate.lastname.required') },
+                  minLength: { value: 1, errorMessage: translate('settings.messages.validate.lastname.minlength') },
+                  maxLength: { value: 50, errorMessage: translate('settings.messages.validate.lastname.maxlength') }
                 }}
                 value={account.lastName}
               />
@@ -83,9 +82,9 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
                 placeholder={translate('global.form.email.placeholder')}
                 type="email"
                 validate={{
-                  required: {value: true, errorMessage: translate('global.messages.validate.email.required')},
-                  minLength: {value: 5, errorMessage: translate('global.messages.validate.email.minlength')},
-                  maxLength: {value: 254, errorMessage: translate('global.messages.validate.email.maxlength')}
+                  required: { value: true, errorMessage: translate('global.messages.validate.email.required') },
+                  minLength: { value: 5, errorMessage: translate('global.messages.validate.email.minlength') },
+                  maxLength: { value: 254, errorMessage: translate('global.messages.validate.email.maxlength') }
                 }}
                 value={account.email}
               />
@@ -115,12 +114,12 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
   }
 }
 
-const mapStateToProps = ({authentication}: IRootState) => ({
+const mapStateToProps = ({ authentication }: IRootState) => ({
   account: authentication.account,
   isAuthenticated: authentication.isAuthenticated
 });
 
-const mapDispatchToProps = {getSession, saveAccountSettings, reset};
+const mapDispatchToProps = { getSession, saveAccountSettings, reset };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

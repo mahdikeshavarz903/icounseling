@@ -1,18 +1,18 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Row} from 'reactstrap';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { Translate, ICrudGetAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntity} from './counselor.reducer';
-
+import { IRootState } from 'app/shared/reducers';
+import { getEntity } from './counselor.reducer';
+import { ICounselor } from 'app/shared/model/counselor.model';
 // tslint:disable-next-line:no-unused-variable
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ICounselorDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface ICounselorDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class CounselorDetail extends React.Component<ICounselorDetailProps> {
   componentDidMount() {
@@ -20,13 +20,12 @@ export class CounselorDetail extends React.Component<ICounselorDetailProps> {
   }
 
   render() {
-    const {counselorEntity} = this.props;
+    const { counselorEntity } = this.props;
     return (
       <Row>
         <Col md="8">
           <h2>
-            <Translate
-              contentKey="iCounselingApp.counselor.detail.title">Counselor</Translate> [<b>{counselorEntity.id}</b>]
+            <Translate contentKey="iCounselingApp.counselor.detail.title">Counselor</Translate> [<b>{counselorEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
@@ -49,14 +48,14 @@ export class CounselorDetail extends React.Component<ICounselorDetailProps> {
             <dd>{counselorEntity.userId ? counselorEntity.userId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/counselor" replace color="info">
-            <FontAwesomeIcon icon="arrow-left"/>{' '}
+            <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/entity/counselor/${counselorEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt"/>{' '}
+            <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.edit">Edit</Translate>
             </span>
@@ -67,11 +66,11 @@ export class CounselorDetail extends React.Component<ICounselorDetailProps> {
   }
 }
 
-const mapStateToProps = ({counselor}: IRootState) => ({
+const mapStateToProps = ({ counselor }: IRootState) => ({
   counselorEntity: counselor.entity
 });
 
-const mapDispatchToProps = {getEntity};
+const mapDispatchToProps = { getEntity };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

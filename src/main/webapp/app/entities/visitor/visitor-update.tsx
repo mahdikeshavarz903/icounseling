@@ -1,23 +1,30 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getScores} from 'app/entities/score/score.reducer';
-import {getEntities as getEducations} from 'app/entities/education/education.reducer';
-import {getUsers} from 'app/modules/administration/user-management/user-management.reducer';
-import {getEntities as getCounselingCases} from 'app/entities/counseling-case/counseling-case.reducer';
-import {getEntities as getLibraries} from 'app/entities/library/library.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './visitor.reducer';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
+import { IScore } from 'app/shared/model/score.model';
+import { getEntities as getScores } from 'app/entities/score/score.reducer';
+import { IEducation } from 'app/shared/model/education.model';
+import { getEntities as getEducations } from 'app/entities/education/education.reducer';
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
+import { ICounselingCase } from 'app/shared/model/counseling-case.model';
+import { getEntities as getCounselingCases } from 'app/entities/counseling-case/counseling-case.reducer';
+import { ILibrary } from 'app/shared/model/library.model';
+import { getEntities as getLibraries } from 'app/entities/library/library.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './visitor.reducer';
+import { IVisitor } from 'app/shared/model/visitor.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IVisitorUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface IVisitorUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IVisitorUpdateState {
   isNew: boolean;
@@ -63,7 +70,7 @@ export class VisitorUpdate extends React.Component<IVisitorUpdateProps, IVisitor
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const {visitorEntity} = this.props;
+      const { visitorEntity } = this.props;
       const entity = {
         ...visitorEntity,
         ...values
@@ -82,8 +89,8 @@ export class VisitorUpdate extends React.Component<IVisitorUpdateProps, IVisitor
   };
 
   render() {
-    const {visitorEntity, scores, educations, users, counselingCases, libraries, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { visitorEntity, scores, educations, users, counselingCases, libraries, loading, updating } = this.props;
+    const { isNew } = this.state;
 
     return (
       <div>
@@ -105,7 +112,7 @@ export class VisitorUpdate extends React.Component<IVisitorUpdateProps, IVisitor
                     <Label for="visitor-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="visitor-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="visitor-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -113,13 +120,13 @@ export class VisitorUpdate extends React.Component<IVisitorUpdateProps, IVisitor
                     <Translate contentKey="iCounselingApp.visitor.score">Score</Translate>
                   </Label>
                   <AvInput id="visitor-score" type="select" className="form-control" name="scoreId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {scores
                       ? scores.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
@@ -128,13 +135,13 @@ export class VisitorUpdate extends React.Component<IVisitorUpdateProps, IVisitor
                     <Translate contentKey="iCounselingApp.visitor.education">Education</Translate>
                   </Label>
                   <AvInput id="visitor-education" type="select" className="form-control" name="educationId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {educations
                       ? educations.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
@@ -143,18 +150,18 @@ export class VisitorUpdate extends React.Component<IVisitorUpdateProps, IVisitor
                     <Translate contentKey="iCounselingApp.visitor.user">User</Translate>
                   </Label>
                   <AvInput id="visitor-user" type="select" className="form-control" name="userId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {users
                       ? users.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/visitor" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -162,7 +169,7 @@ export class VisitorUpdate extends React.Component<IVisitorUpdateProps, IVisitor
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>

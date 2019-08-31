@@ -1,19 +1,22 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {Translate, translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getTasks} from 'app/entities/task/task.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './reminder.reducer';
-// tslint:disable-next-line:no-unused-variable
-import {convertDateTimeFromServer, convertDateTimeToServer} from 'app/shared/util/date-utils';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
-export interface IReminderUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+import { ITask } from 'app/shared/model/task.model';
+import { getEntities as getTasks } from 'app/entities/task/task.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './reminder.reducer';
+import { IReminder } from 'app/shared/model/reminder.model';
+// tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
+
+export interface IReminderUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IReminderUpdateState {
   isNew: boolean;
@@ -49,7 +52,7 @@ export class ReminderUpdate extends React.Component<IReminderUpdateProps, IRemin
     values.dateTime = convertDateTimeToServer(values.dateTime);
 
     if (errors.length === 0) {
-      const {reminderEntity} = this.props;
+      const { reminderEntity } = this.props;
       const entity = {
         ...reminderEntity,
         ...values
@@ -68,16 +71,15 @@ export class ReminderUpdate extends React.Component<IReminderUpdateProps, IRemin
   };
 
   render() {
-    const {reminderEntity, tasks, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { reminderEntity, tasks, loading, updating } = this.props;
+    const { isNew } = this.state;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
             <h2 id="iCounselingApp.reminder.home.createOrEditLabel">
-              <Translate contentKey="iCounselingApp.reminder.home.createOrEditLabel">Create or edit a
-                Reminder</Translate>
+              <Translate contentKey="iCounselingApp.reminder.home.createOrEditLabel">Create or edit a Reminder</Translate>
             </h2>
           </Col>
         </Row>
@@ -92,7 +94,7 @@ export class ReminderUpdate extends React.Component<IReminderUpdateProps, IRemin
                     <Label for="reminder-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="reminder-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="reminder-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -107,12 +109,12 @@ export class ReminderUpdate extends React.Component<IReminderUpdateProps, IRemin
                     placeholder={'YYYY-MM-DD HH:mm'}
                     value={isNew ? null : convertDateTimeFromServer(this.props.reminderEntity.dateTime)}
                     validate={{
-                      required: {value: true, errorMessage: translate('entity.validation.required')}
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/reminder" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -120,7 +122,7 @@ export class ReminderUpdate extends React.Component<IReminderUpdateProps, IRemin
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>

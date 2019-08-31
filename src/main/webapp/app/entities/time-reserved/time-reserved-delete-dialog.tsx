@@ -1,14 +1,15 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {RouteComponentProps} from 'react-router-dom';
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {deleteEntity, getEntity} from './time-reserved.reducer';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Translate, ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export interface ITimeReservedDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+import { ITimeReserved } from 'app/shared/model/time-reserved.model';
+import { IRootState } from 'app/shared/reducers';
+import { getEntity, deleteEntity } from './time-reserved.reducer';
+
+export interface ITimeReservedDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class TimeReservedDeleteDialog extends React.Component<ITimeReservedDeleteDialogProps> {
   componentDidMount() {
@@ -26,25 +27,25 @@ export class TimeReservedDeleteDialog extends React.Component<ITimeReservedDelet
   };
 
   render() {
-    const {timeReservedEntity} = this.props;
+    const { timeReservedEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>
           <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
         </ModalHeader>
         <ModalBody id="iCounselingApp.timeReserved.delete.question">
-          <Translate contentKey="iCounselingApp.timeReserved.delete.question" interpolate={{id: timeReservedEntity.id}}>
+          <Translate contentKey="iCounselingApp.timeReserved.delete.question" interpolate={{ id: timeReservedEntity.id }}>
             Are you sure you want to delete this TimeReserved?
           </Translate>
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
-            <FontAwesomeIcon icon="ban"/>
+            <FontAwesomeIcon icon="ban" />
             &nbsp;
             <Translate contentKey="entity.action.cancel">Cancel</Translate>
           </Button>
           <Button id="jhi-confirm-delete-timeReserved" color="danger" onClick={this.confirmDelete}>
-            <FontAwesomeIcon icon="trash"/>
+            <FontAwesomeIcon icon="trash" />
             &nbsp;
             <Translate contentKey="entity.action.delete">Delete</Translate>
           </Button>
@@ -54,11 +55,11 @@ export class TimeReservedDeleteDialog extends React.Component<ITimeReservedDelet
   }
 }
 
-const mapStateToProps = ({timeReserved}: IRootState) => ({
+const mapStateToProps = ({ timeReserved }: IRootState) => ({
   timeReservedEntity: timeReserved.entity
 });
 
-const mapDispatchToProps = {getEntity, deleteEntity};
+const mapDispatchToProps = { getEntity, deleteEntity };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

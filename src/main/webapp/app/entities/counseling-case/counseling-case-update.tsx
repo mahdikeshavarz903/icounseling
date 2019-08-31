@@ -1,20 +1,24 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getVisitors} from 'app/entities/visitor/visitor.reducer';
-import {getEntities as getCounselors} from 'app/entities/counselor/counselor.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './counseling-case.reducer';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
+import { IVisitor } from 'app/shared/model/visitor.model';
+import { getEntities as getVisitors } from 'app/entities/visitor/visitor.reducer';
+import { ICounselor } from 'app/shared/model/counselor.model';
+import { getEntities as getCounselors } from 'app/entities/counselor/counselor.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './counseling-case.reducer';
+import { ICounselingCase } from 'app/shared/model/counseling-case.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ICounselingCaseUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface ICounselingCaseUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ICounselingCaseUpdateState {
   isNew: boolean;
@@ -51,7 +55,7 @@ export class CounselingCaseUpdate extends React.Component<ICounselingCaseUpdateP
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const {counselingCaseEntity} = this.props;
+      const { counselingCaseEntity } = this.props;
       const entity = {
         ...counselingCaseEntity,
         ...values
@@ -70,16 +74,15 @@ export class CounselingCaseUpdate extends React.Component<ICounselingCaseUpdateP
   };
 
   render() {
-    const {counselingCaseEntity, visitors, counselors, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { counselingCaseEntity, visitors, counselors, loading, updating } = this.props;
+    const { isNew } = this.state;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
             <h2 id="iCounselingApp.counselingCase.home.createOrEditLabel">
-              <Translate contentKey="iCounselingApp.counselingCase.home.createOrEditLabel">Create or edit a
-                CounselingCase</Translate>
+              <Translate contentKey="iCounselingApp.counselingCase.home.createOrEditLabel">Create or edit a CounselingCase</Translate>
             </h2>
           </Col>
         </Row>
@@ -94,7 +97,7 @@ export class CounselingCaseUpdate extends React.Component<ICounselingCaseUpdateP
                     <Label for="counseling-case-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="counseling-case-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="counseling-case-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -109,10 +112,10 @@ export class CounselingCaseUpdate extends React.Component<ICounselingCaseUpdateP
                     value={(!isNew && counselingCaseEntity.status) || 'OPENED'}
                   >
                     <option value="OPENED">
-                      <Translate contentKey="iCounselingApp.CounselingCaseStatus.OPENED"/>
+                      <Translate contentKey="iCounselingApp.CounselingCaseStatus.OPENED" />
                     </option>
                     <option value="CLOSED">
-                      <Translate contentKey="iCounselingApp.CounselingCaseStatus.CLOSED"/>
+                      <Translate contentKey="iCounselingApp.CounselingCaseStatus.CLOSED" />
                     </option>
                   </AvInput>
                 </AvGroup>
@@ -121,13 +124,13 @@ export class CounselingCaseUpdate extends React.Component<ICounselingCaseUpdateP
                     <Translate contentKey="iCounselingApp.counselingCase.visitor">Visitor</Translate>
                   </Label>
                   <AvInput id="counseling-case-visitor" type="select" className="form-control" name="visitorId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {visitors
                       ? visitors.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
@@ -136,18 +139,18 @@ export class CounselingCaseUpdate extends React.Component<ICounselingCaseUpdateP
                     <Translate contentKey="iCounselingApp.counselingCase.counselor">Counselor</Translate>
                   </Label>
                   <AvInput id="counseling-case-counselor" type="select" className="form-control" name="counselorId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {counselors
                       ? counselors.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/counseling-case" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -155,7 +158,7 @@ export class CounselingCaseUpdate extends React.Component<ICounselingCaseUpdateP
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>

@@ -1,6 +1,6 @@
 import React from 'react';
-import {Route} from 'react-router-dom';
-import {mount, shallow} from 'enzyme';
+import { Route } from 'react-router-dom';
+import { shallow, mount } from 'enzyme';
 
 import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 
@@ -17,11 +17,11 @@ describe('error-boundary-route component', () => {
 
   // All tests will go here
   it('Should throw error when no component is provided', () => {
-    expect(() => shallow(<ErrorBoundaryRoute/>)).toThrow(Error);
+    expect(() => shallow(<ErrorBoundaryRoute />)).toThrow(Error);
   });
 
   it('Should render fallback component when an uncaught error is thrown from component', () => {
-    const route = shallow(<ErrorBoundaryRoute component={ErrorComp} path="/"/>);
+    const route = shallow(<ErrorBoundaryRoute component={ErrorComp} path="/" />);
     const renderedRoute = route.find(Route);
     expect(renderedRoute.length).toEqual(1);
     expect(renderedRoute.props().path).toEqual('/');

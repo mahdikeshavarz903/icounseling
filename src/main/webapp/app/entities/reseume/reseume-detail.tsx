@@ -1,18 +1,18 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Row} from 'reactstrap';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { Translate, ICrudGetAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntity} from './reseume.reducer';
-
+import { IRootState } from 'app/shared/reducers';
+import { getEntity } from './reseume.reducer';
+import { IReseume } from 'app/shared/model/reseume.model';
 // tslint:disable-next-line:no-unused-variable
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IReseumeDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface IReseumeDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class ReseumeDetail extends React.Component<IReseumeDetailProps> {
   componentDidMount() {
@@ -20,7 +20,7 @@ export class ReseumeDetail extends React.Component<IReseumeDetailProps> {
   }
 
   render() {
-    const {reseumeEntity} = this.props;
+    const { reseumeEntity } = this.props;
     return (
       <Row>
         <Col md="8">
@@ -34,14 +34,14 @@ export class ReseumeDetail extends React.Component<IReseumeDetailProps> {
             <dd>{reseumeEntity.educationId ? reseumeEntity.educationId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/reseume" replace color="info">
-            <FontAwesomeIcon icon="arrow-left"/>{' '}
+            <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/entity/reseume/${reseumeEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt"/>{' '}
+            <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.edit">Edit</Translate>
             </span>
@@ -52,11 +52,11 @@ export class ReseumeDetail extends React.Component<IReseumeDetailProps> {
   }
 }
 
-const mapStateToProps = ({reseume}: IRootState) => ({
+const mapStateToProps = ({ reseume }: IRootState) => ({
   reseumeEntity: reseume.entity
 });
 
-const mapDispatchToProps = {getEntity};
+const mapDispatchToProps = { getEntity };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

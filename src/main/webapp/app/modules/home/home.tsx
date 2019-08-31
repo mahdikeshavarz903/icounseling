@@ -1,14 +1,15 @@
 import './home.scss';
 
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {Translate} from 'react-jhipster';
-import {connect} from 'react-redux';
-import {Alert, Col, Row} from 'reactstrap';
-import {getSession} from 'app/shared/reducers/authentication';
+import { Link } from 'react-router-dom';
+import { Translate } from 'react-jhipster';
+import { connect } from 'react-redux';
+import { Row, Col, Alert } from 'reactstrap';
 
-export interface IHomeProp extends StateProps, DispatchProps {
-}
+import { IRootState } from 'app/shared/reducers';
+import { getSession } from 'app/shared/reducers/authentication';
+
+export interface IHomeProp extends StateProps, DispatchProps {}
 
 export class Home extends React.Component<IHomeProp> {
   componentDidMount() {
@@ -16,7 +17,7 @@ export class Home extends React.Component<IHomeProp> {
   }
 
   render() {
-    const {account} = this.props;
+    const { account } = this.props;
     return (
       <Row>
         <Col md="9">
@@ -29,7 +30,7 @@ export class Home extends React.Component<IHomeProp> {
           {account && account.login ? (
             <div>
               <Alert color="success">
-                <Translate contentKey="home.logged.message" interpolate={{username: account.login}}>
+                <Translate contentKey="home.logged.message" interpolate={{ username: account.login }}>
                   You are logged in as user {account.login}.
                 </Translate>
               </Alert>
@@ -43,14 +44,13 @@ export class Home extends React.Component<IHomeProp> {
                 </Link>
                 <Translate contentKey="global.messages.info.authenticated.suffix">
                   , you can try the default accounts:
-                  <br/>- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
-                  <br/>- User (login=&quot;user&quot; and password=&quot;user&quot;).
+                  <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
+                  <br />- User (login=&quot;user&quot; and password=&quot;user&quot;).
                 </Translate>
               </Alert>
 
               <Alert color="warning">
-                <Translate contentKey="global.messages.info.register.noaccount">You do not have an account
-                  yet?</Translate>&nbsp;
+                <Translate contentKey="global.messages.info.register.noaccount">You do not have an account yet?</Translate>&nbsp;
                 <Link to="/register" className="alert-link">
                   <Translate contentKey="global.messages.info.register.link">Register a new account</Translate>
                 </Link>
@@ -73,8 +73,7 @@ export class Home extends React.Component<IHomeProp> {
               </a>
             </li>
             <li>
-              <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank"
-                 rel="noopener noreferrer">
+              <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer">
                 <Translate contentKey="home.link.bugtracker">JHipster bug tracker</Translate>
               </a>
             </li>
@@ -99,7 +98,7 @@ export class Home extends React.Component<IHomeProp> {
           </p>
         </Col>
         <Col md="3" className="pad">
-          <span className="hipster rounded"/>
+          <span className="hipster rounded" />
         </Col>
       </Row>
     );
@@ -111,7 +110,7 @@ const mapStateToProps = storeState => ({
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = {getSession};
+const mapDispatchToProps = { getSession };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

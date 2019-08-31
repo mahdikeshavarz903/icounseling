@@ -1,8 +1,8 @@
-import {IPost} from 'app/shared/model/post.model';
-import {IDocument} from 'app/shared/model/document.model';
-import {ITimeReserved} from 'app/shared/model/time-reserved.model';
-import {IPlanning} from 'app/shared/model/planning.model';
-import {ICounselingCase} from 'app/shared/model/counseling-case.model';
+import { IPost } from 'app/shared/model/post.model';
+import { IDocument } from 'app/shared/model/document.model';
+import { ITimeReserved } from 'app/shared/model/time-reserved.model';
+import { IPlanning } from 'app/shared/model/planning.model';
+import { ICounselingCase } from 'app/shared/model/counseling-case.model';
 
 export const enum ConsultantType {
   PSYCHOLOGY = 'PSYCHOLOGY',

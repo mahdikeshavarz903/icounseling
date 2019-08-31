@@ -1,8 +1,8 @@
 import axios from 'axios';
-import {Storage, translate} from 'react-jhipster';
+import { translate, Storage } from 'react-jhipster';
 
-import {FAILURE, REQUEST, SUCCESS} from 'app/shared/reducers/action-type.util';
-import {getSession} from 'app/shared/reducers/authentication';
+import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { getSession } from 'app/shared/reducers/authentication';
 
 export const ACTION_TYPES = {
   UPDATE_ACCOUNT: 'account/UPDATE_ACCOUNT',

@@ -1,18 +1,18 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Row} from 'reactstrap';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import {byteSize, openFile, Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { Translate, ICrudGetAction, openFile, byteSize } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntity} from './score.reducer';
-
+import { IRootState } from 'app/shared/reducers';
+import { getEntity } from './score.reducer';
+import { IScore } from 'app/shared/model/score.model';
 // tslint:disable-next-line:no-unused-variable
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IScoreDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface IScoreDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class ScoreDetail extends React.Component<IScoreDetailProps> {
   componentDidMount() {
@@ -20,7 +20,7 @@ export class ScoreDetail extends React.Component<IScoreDetailProps> {
   }
 
   render() {
-    const {scoreEntity} = this.props;
+    const { scoreEntity } = this.props;
     return (
       <Row>
         <Col md="8">
@@ -59,14 +59,14 @@ export class ScoreDetail extends React.Component<IScoreDetailProps> {
             <dd>{scoreEntity.degree}</dd>
           </dl>
           <Button tag={Link} to="/entity/score" replace color="info">
-            <FontAwesomeIcon icon="arrow-left"/>{' '}
+            <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/entity/score/${scoreEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt"/>{' '}
+            <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.edit">Edit</Translate>
             </span>
@@ -77,11 +77,11 @@ export class ScoreDetail extends React.Component<IScoreDetailProps> {
   }
 }
 
-const mapStateToProps = ({score}: IRootState) => ({
+const mapStateToProps = ({ score }: IRootState) => ({
   scoreEntity: score.entity
 });
 
-const mapDispatchToProps = {getEntity};
+const mapDispatchToProps = { getEntity };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

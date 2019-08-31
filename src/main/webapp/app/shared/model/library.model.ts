@@ -1,5 +1,5 @@
-import {Moment} from 'moment';
-import {ICategory} from 'app/shared/model/category.model';
+import { Moment } from 'moment';
+import { ICategory } from 'app/shared/model/category.model';
 
 export interface ILibrary {
   id?: number;

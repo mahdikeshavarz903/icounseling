@@ -1,20 +1,24 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {Translate, translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getDocuments} from 'app/entities/document/document.reducer';
-import {getEntities as getComments} from 'app/entities/comment/comment.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './rate.reducer';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
+import { IDocument } from 'app/shared/model/document.model';
+import { getEntities as getDocuments } from 'app/entities/document/document.reducer';
+import { IComment } from 'app/shared/model/comment.model';
+import { getEntities as getComments } from 'app/entities/comment/comment.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './rate.reducer';
+import { IRate } from 'app/shared/model/rate.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IRateUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface IRateUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IRateUpdateState {
   isNew: boolean;
@@ -51,7 +55,7 @@ export class RateUpdate extends React.Component<IRateUpdateProps, IRateUpdateSta
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const {rateEntity} = this.props;
+      const { rateEntity } = this.props;
       const entity = {
         ...rateEntity,
         ...values
@@ -70,8 +74,8 @@ export class RateUpdate extends React.Component<IRateUpdateProps, IRateUpdateSta
   };
 
   render() {
-    const {rateEntity, documents, comments, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { rateEntity, documents, comments, loading, updating } = this.props;
+    const { isNew } = this.state;
 
     return (
       <div>
@@ -93,7 +97,7 @@ export class RateUpdate extends React.Component<IRateUpdateProps, IRateUpdateSta
                     <Label for="rate-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="rate-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="rate-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -106,8 +110,8 @@ export class RateUpdate extends React.Component<IRateUpdateProps, IRateUpdateSta
                     className="form-control"
                     name="index"
                     validate={{
-                      required: {value: true, errorMessage: translate('entity.validation.required')},
-                      number: {value: true, errorMessage: translate('entity.validation.number')}
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      number: { value: true, errorMessage: translate('entity.validation.number') }
                     }}
                   />
                 </AvGroup>
@@ -120,12 +124,12 @@ export class RateUpdate extends React.Component<IRateUpdateProps, IRateUpdateSta
                     type="text"
                     name="title"
                     validate={{
-                      required: {value: true, errorMessage: translate('entity.validation.required')}
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/rate" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -133,7 +137,7 @@ export class RateUpdate extends React.Component<IRateUpdateProps, IRateUpdateSta
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
