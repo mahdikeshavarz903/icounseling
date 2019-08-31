@@ -1,19 +1,22 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getVisitors} from 'app/entities/visitor/visitor.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './job.reducer';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
+import { IVisitor } from 'app/shared/model/visitor.model';
+import { getEntities as getVisitors } from 'app/entities/visitor/visitor.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './job.reducer';
+import { IJob } from 'app/shared/model/job.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IJobUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface IJobUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IJobUpdateState {
   isNew: boolean;
@@ -47,7 +50,7 @@ export class JobUpdate extends React.Component<IJobUpdateProps, IJobUpdateState>
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const {jobEntity} = this.props;
+      const { jobEntity } = this.props;
       const entity = {
         ...jobEntity,
         ...values
@@ -66,8 +69,8 @@ export class JobUpdate extends React.Component<IJobUpdateProps, IJobUpdateState>
   };
 
   render() {
-    const {jobEntity, visitors, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { jobEntity, visitors, loading, updating } = this.props;
+    const { isNew } = this.state;
 
     return (
       <div>
@@ -89,44 +92,44 @@ export class JobUpdate extends React.Component<IJobUpdateProps, IJobUpdateState>
                     <Label for="job-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="job-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="job-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="jobTitleLabel" for="job-jobTitle">
                     <Translate contentKey="iCounselingApp.job.jobTitle">Job Title</Translate>
                   </Label>
-                  <AvField id="job-jobTitle" type="text" name="jobTitle"/>
+                  <AvField id="job-jobTitle" type="text" name="jobTitle" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="minSalaryLabel" for="job-minSalary">
                     <Translate contentKey="iCounselingApp.job.minSalary">Min Salary</Translate>
                   </Label>
-                  <AvField id="job-minSalary" type="string" className="form-control" name="minSalary"/>
+                  <AvField id="job-minSalary" type="string" className="form-control" name="minSalary" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="maxSalaryLabel" for="job-maxSalary">
                     <Translate contentKey="iCounselingApp.job.maxSalary">Max Salary</Translate>
                   </Label>
-                  <AvField id="job-maxSalary" type="string" className="form-control" name="maxSalary"/>
+                  <AvField id="job-maxSalary" type="string" className="form-control" name="maxSalary" />
                 </AvGroup>
                 <AvGroup>
                   <Label for="job-visitor">
                     <Translate contentKey="iCounselingApp.job.visitor">Visitor</Translate>
                   </Label>
                   <AvInput id="job-visitor" type="select" className="form-control" name="visitorId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {visitors
                       ? visitors.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/job" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -134,7 +137,7 @@ export class JobUpdate extends React.Component<IJobUpdateProps, IJobUpdateState>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>

@@ -1,26 +1,27 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Row, Table} from 'reactstrap';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Col, Row, Table } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
 import {
-  getPaginationItemsNumber,
+  Translate,
+  ICrudGetAllAction,
+  TextFormat,
   getSortState,
   IPaginationBaseState,
-  JhiPagination,
-  TextFormat,
-  Translate
+  getPaginationItemsNumber,
+  JhiPagination
 } from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntities} from './schedule.reducer';
+import { IRootState } from 'app/shared/reducers';
+import { getEntities } from './schedule.reducer';
+import { ISchedule } from 'app/shared/model/schedule.model';
 // tslint:disable-next-line:no-unused-variable
-import {APP_DATE_FORMAT} from 'app/config/constants';
-import {ITEMS_PER_PAGE} from 'app/shared/util/pagination.constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
-export interface IScheduleProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {
-}
+export interface IScheduleProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
 export type IScheduleState = IPaginationBaseState;
 
@@ -48,21 +49,21 @@ export class Schedule extends React.Component<IScheduleProps, IScheduleState> {
     this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}&sort=${this.state.sort},${this.state.order}`);
   }
 
-  handlePagination = activePage => this.setState({activePage}, () => this.sortEntities());
+  handlePagination = activePage => this.setState({ activePage }, () => this.sortEntities());
 
   getEntities = () => {
-    const {activePage, itemsPerPage, sort, order} = this.state;
+    const { activePage, itemsPerPage, sort, order } = this.state;
     this.props.getEntities(activePage - 1, itemsPerPage, `${sort},${order}`);
   };
 
   render() {
-    const {scheduleList, match, totalItems} = this.props;
+    const { scheduleList, match, totalItems } = this.props;
     return (
       <div>
         <h2 id="schedule-heading">
           <Translate contentKey="iCounselingApp.schedule.home.title">Schedules</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus"/>
+            <FontAwesomeIcon icon="plus" />
             &nbsp;
             <Translate contentKey="iCounselingApp.schedule.home.createLabel">Create new Schedule</Translate>
           </Link>
@@ -70,61 +71,59 @@ export class Schedule extends React.Component<IScheduleProps, IScheduleState> {
         <div className="table-responsive">
           <Table responsive>
             <thead>
-            <tr>
-              <th className="hand" onClick={this.sort('id')}>
-                <Translate contentKey="global.field.id">ID</Translate> <FontAwesomeIcon icon="sort"/>
-              </th>
-              <th className="hand" onClick={this.sort('title')}>
-                <Translate contentKey="iCounselingApp.schedule.title">Title</Translate> <FontAwesomeIcon icon="sort"/>
-              </th>
-              <th className="hand" onClick={this.sort('dateTime')}>
-                <Translate contentKey="iCounselingApp.schedule.dateTime">Date Time</Translate> <FontAwesomeIcon
-                icon="sort"/>
-              </th>
-              <th className="hand" onClick={this.sort('description')}>
-                <Translate contentKey="iCounselingApp.schedule.description">Description</Translate> <FontAwesomeIcon
-                icon="sort"/>
-              </th>
-              <th/>
-            </tr>
+              <tr>
+                <th className="hand" onClick={this.sort('id')}>
+                  <Translate contentKey="global.field.id">ID</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('title')}>
+                  <Translate contentKey="iCounselingApp.schedule.title">Title</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('dateTime')}>
+                  <Translate contentKey="iCounselingApp.schedule.dateTime">Date Time</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('description')}>
+                  <Translate contentKey="iCounselingApp.schedule.description">Description</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th />
+              </tr>
             </thead>
             <tbody>
-            {scheduleList.map((schedule, i) => (
-              <tr key={`entity-${i}`}>
-                <td>
-                  <Button tag={Link} to={`${match.url}/${schedule.id}`} color="link" size="sm">
-                    {schedule.id}
-                  </Button>
-                </td>
-                <td>{schedule.title}</td>
-                <td>
-                  <TextFormat type="date" value={schedule.dateTime} format={APP_DATE_FORMAT}/>
-                </td>
-                <td>{schedule.description}</td>
-                <td className="text-right">
-                  <div className="btn-group flex-btn-group-container">
-                    <Button tag={Link} to={`${match.url}/${schedule.id}`} color="info" size="sm">
-                      <FontAwesomeIcon icon="eye"/>{' '}
-                      <span className="d-none d-md-inline">
+              {scheduleList.map((schedule, i) => (
+                <tr key={`entity-${i}`}>
+                  <td>
+                    <Button tag={Link} to={`${match.url}/${schedule.id}`} color="link" size="sm">
+                      {schedule.id}
+                    </Button>
+                  </td>
+                  <td>{schedule.title}</td>
+                  <td>
+                    <TextFormat type="date" value={schedule.dateTime} format={APP_DATE_FORMAT} />
+                  </td>
+                  <td>{schedule.description}</td>
+                  <td className="text-right">
+                    <div className="btn-group flex-btn-group-container">
+                      <Button tag={Link} to={`${match.url}/${schedule.id}`} color="info" size="sm">
+                        <FontAwesomeIcon icon="eye" />{' '}
+                        <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>
-                    </Button>
-                    <Button tag={Link} to={`${match.url}/${schedule.id}/edit`} color="primary" size="sm">
-                      <FontAwesomeIcon icon="pencil-alt"/>{' '}
-                      <span className="d-none d-md-inline">
+                      </Button>
+                      <Button tag={Link} to={`${match.url}/${schedule.id}/edit`} color="primary" size="sm">
+                        <FontAwesomeIcon icon="pencil-alt" />{' '}
+                        <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.edit">Edit</Translate>
                         </span>
-                    </Button>
-                    <Button tag={Link} to={`${match.url}/${schedule.id}/delete`} color="danger" size="sm">
-                      <FontAwesomeIcon icon="trash"/>{' '}
-                      <span className="d-none d-md-inline">
+                      </Button>
+                      <Button tag={Link} to={`${match.url}/${schedule.id}/delete`} color="danger" size="sm">
+                        <FontAwesomeIcon icon="trash" />{' '}
+                        <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.delete">Delete</Translate>
                         </span>
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </Table>
         </div>
@@ -141,7 +140,7 @@ export class Schedule extends React.Component<IScheduleProps, IScheduleState> {
   }
 }
 
-const mapStateToProps = ({schedule}: IRootState) => ({
+const mapStateToProps = ({ schedule }: IRootState) => ({
   scheduleList: schedule.entities,
   totalItems: schedule.totalItems
 });

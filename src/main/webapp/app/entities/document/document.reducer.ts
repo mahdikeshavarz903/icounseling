@@ -1,10 +1,10 @@
 import axios from 'axios';
-import {ICrudDeleteAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction} from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
 
-import {cleanEntity} from 'app/shared/util/entity-utils';
-import {FAILURE, REQUEST, SUCCESS} from 'app/shared/reducers/action-type.util';
+import { cleanEntity } from 'app/shared/util/entity-utils';
+import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
-import {defaultValue, IDocument} from 'app/shared/model/document.model';
+import { IDocument, defaultValue } from 'app/shared/model/document.model';
 
 export const ACTION_TYPES = {
   FETCH_DOCUMENT_LIST: 'document/FETCH_DOCUMENT_LIST',
@@ -90,7 +90,7 @@ export default (state: DocumentState = initialState, action): DocumentState => {
         entity: {}
       };
     case ACTION_TYPES.SET_BLOB:
-      const {name, data, contentType} = action.payload;
+      const { name, data, contentType } = action.payload;
       return {
         ...state,
         entity: {

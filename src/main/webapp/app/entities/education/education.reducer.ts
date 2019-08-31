@@ -1,10 +1,10 @@
 import axios from 'axios';
-import {ICrudDeleteAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction} from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
 
-import {cleanEntity} from 'app/shared/util/entity-utils';
-import {FAILURE, REQUEST, SUCCESS} from 'app/shared/reducers/action-type.util';
+import { cleanEntity } from 'app/shared/util/entity-utils';
+import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
-import {defaultValue, IEducation} from 'app/shared/model/education.model';
+import { IEducation, defaultValue } from 'app/shared/model/education.model';
 
 export const ACTION_TYPES = {
   FETCH_EDUCATION_LIST: 'education/FETCH_EDUCATION_LIST',

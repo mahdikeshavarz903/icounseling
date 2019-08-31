@@ -1,16 +1,15 @@
 import React from 'react';
-import {Translate, translate} from 'react-jhipster';
-import {connect} from 'react-redux';
-import {AvField, AvForm} from 'availity-reactstrap-validation';
-import {Button, Col, Row} from 'reactstrap';
+import { Translate, translate } from 'react-jhipster';
+import { connect } from 'react-redux';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
+import { Row, Col, Button } from 'reactstrap';
 
-import {IRootState} from 'app/shared/reducers';
-import {getSession} from 'app/shared/reducers/authentication';
+import { IRootState } from 'app/shared/reducers';
+import { getSession } from 'app/shared/reducers/authentication';
 import PasswordStrengthBar from 'app/shared/layout/password/password-strength-bar';
-import {reset, savePassword} from './password.reducer';
+import { savePassword, reset } from './password.reducer';
 
-export interface IUserPasswordProps extends StateProps, DispatchProps {
-}
+export interface IUserPasswordProps extends StateProps, DispatchProps {}
 
 export interface IUserPasswordState {
   password: string;
@@ -35,18 +34,18 @@ export class PasswordPage extends React.Component<IUserPasswordProps, IUserPassw
   };
 
   updatePassword = event => {
-    this.setState({password: event.target.value});
+    this.setState({ password: event.target.value });
   };
 
   render() {
-    const {account} = this.props;
+    const { account } = this.props;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
             <h2 id="password-title">
-              <Translate contentKey="password.title" interpolate={{username: account.login}}>
+              <Translate contentKey="password.title" interpolate={{ username: account.login }}>
                 Password for {account.login}
               </Translate>
             </h2>
@@ -57,7 +56,7 @@ export class PasswordPage extends React.Component<IUserPasswordProps, IUserPassw
                 placeholder={translate('global.form.currentpassword.placeholder')}
                 type="password"
                 validate={{
-                  required: {value: true, errorMessage: translate('global.messages.validate.newpassword.required')}
+                  required: { value: true, errorMessage: translate('global.messages.validate.newpassword.required') }
                 }}
               />
               <AvField
@@ -66,13 +65,13 @@ export class PasswordPage extends React.Component<IUserPasswordProps, IUserPassw
                 placeholder={translate('global.form.newpassword.placeholder')}
                 type="password"
                 validate={{
-                  required: {value: true, errorMessage: translate('global.messages.validate.newpassword.required')},
-                  minLength: {value: 4, errorMessage: translate('global.messages.validate.newpassword.minlength')},
-                  maxLength: {value: 50, errorMessage: translate('global.messages.validate.newpassword.maxlength')}
+                  required: { value: true, errorMessage: translate('global.messages.validate.newpassword.required') },
+                  minLength: { value: 4, errorMessage: translate('global.messages.validate.newpassword.minlength') },
+                  maxLength: { value: 50, errorMessage: translate('global.messages.validate.newpassword.maxlength') }
                 }}
                 onChange={this.updatePassword}
               />
-              <PasswordStrengthBar password={this.state.password}/>
+              <PasswordStrengthBar password={this.state.password} />
               <AvField
                 name="confirmPassword"
                 label={translate('global.form.confirmpassword.label')}
@@ -108,12 +107,12 @@ export class PasswordPage extends React.Component<IUserPasswordProps, IUserPassw
   }
 }
 
-const mapStateToProps = ({authentication}: IRootState) => ({
+const mapStateToProps = ({ authentication }: IRootState) => ({
   account: authentication.account,
   isAuthenticated: authentication.isAuthenticated
 });
 
-const mapDispatchToProps = {getSession, savePassword, reset};
+const mapDispatchToProps = { getSession, savePassword, reset };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

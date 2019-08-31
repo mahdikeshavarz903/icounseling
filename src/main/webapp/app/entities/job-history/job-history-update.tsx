@@ -1,19 +1,22 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getJobs} from 'app/entities/job/job.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './job-history.reducer';
-// tslint:disable-next-line:no-unused-variable
-import {convertDateTimeFromServer, convertDateTimeToServer} from 'app/shared/util/date-utils';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
-export interface IJobHistoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+import { IJob } from 'app/shared/model/job.model';
+import { getEntities as getJobs } from 'app/entities/job/job.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './job-history.reducer';
+import { IJobHistory } from 'app/shared/model/job-history.model';
+// tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
+
+export interface IJobHistoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IJobHistoryUpdateState {
   isNew: boolean;
@@ -50,7 +53,7 @@ export class JobHistoryUpdate extends React.Component<IJobHistoryUpdateProps, IJ
     values.endDate = convertDateTimeToServer(values.endDate);
 
     if (errors.length === 0) {
-      const {jobHistoryEntity} = this.props;
+      const { jobHistoryEntity } = this.props;
       const entity = {
         ...jobHistoryEntity,
         ...values
@@ -69,16 +72,15 @@ export class JobHistoryUpdate extends React.Component<IJobHistoryUpdateProps, IJ
   };
 
   render() {
-    const {jobHistoryEntity, jobs, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { jobHistoryEntity, jobs, loading, updating } = this.props;
+    const { isNew } = this.state;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
             <h2 id="iCounselingApp.jobHistory.home.createOrEditLabel">
-              <Translate contentKey="iCounselingApp.jobHistory.home.createOrEditLabel">Create or edit a
-                JobHistory</Translate>
+              <Translate contentKey="iCounselingApp.jobHistory.home.createOrEditLabel">Create or edit a JobHistory</Translate>
             </h2>
           </Col>
         </Row>
@@ -93,7 +95,7 @@ export class JobHistoryUpdate extends React.Component<IJobHistoryUpdateProps, IJ
                     <Label for="job-history-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="job-history-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="job-history-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -127,18 +129,18 @@ export class JobHistoryUpdate extends React.Component<IJobHistoryUpdateProps, IJ
                     <Translate contentKey="iCounselingApp.jobHistory.job">Job</Translate>
                   </Label>
                   <AvInput id="job-history-job" type="select" className="form-control" name="jobId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {jobs
                       ? jobs.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/job-history" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -146,7 +148,7 @@ export class JobHistoryUpdate extends React.Component<IJobHistoryUpdateProps, IJ
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>

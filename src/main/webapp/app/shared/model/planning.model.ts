@@ -1,5 +1,5 @@
-import {Moment} from 'moment';
-import {ITask} from 'app/shared/model/task.model';
+import { Moment } from 'moment';
+import { ITask } from 'app/shared/model/task.model';
 
 export interface IPlanning {
   id?: number;

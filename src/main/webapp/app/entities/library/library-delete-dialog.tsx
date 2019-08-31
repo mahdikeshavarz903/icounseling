@@ -1,14 +1,15 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {RouteComponentProps} from 'react-router-dom';
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {deleteEntity, getEntity} from './library.reducer';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Translate, ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export interface ILibraryDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+import { ILibrary } from 'app/shared/model/library.model';
+import { IRootState } from 'app/shared/reducers';
+import { getEntity, deleteEntity } from './library.reducer';
+
+export interface ILibraryDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class LibraryDeleteDialog extends React.Component<ILibraryDeleteDialogProps> {
   componentDidMount() {
@@ -26,25 +27,25 @@ export class LibraryDeleteDialog extends React.Component<ILibraryDeleteDialogPro
   };
 
   render() {
-    const {libraryEntity} = this.props;
+    const { libraryEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>
           <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
         </ModalHeader>
         <ModalBody id="iCounselingApp.library.delete.question">
-          <Translate contentKey="iCounselingApp.library.delete.question" interpolate={{id: libraryEntity.id}}>
+          <Translate contentKey="iCounselingApp.library.delete.question" interpolate={{ id: libraryEntity.id }}>
             Are you sure you want to delete this Library?
           </Translate>
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
-            <FontAwesomeIcon icon="ban"/>
+            <FontAwesomeIcon icon="ban" />
             &nbsp;
             <Translate contentKey="entity.action.cancel">Cancel</Translate>
           </Button>
           <Button id="jhi-confirm-delete-library" color="danger" onClick={this.confirmDelete}>
-            <FontAwesomeIcon icon="trash"/>
+            <FontAwesomeIcon icon="trash" />
             &nbsp;
             <Translate contentKey="entity.action.delete">Delete</Translate>
           </Button>
@@ -54,11 +55,11 @@ export class LibraryDeleteDialog extends React.Component<ILibraryDeleteDialogPro
   }
 }
 
-const mapStateToProps = ({library}: IRootState) => ({
+const mapStateToProps = ({ library }: IRootState) => ({
   libraryEntity: library.entity
 });
 
-const mapDispatchToProps = {getEntity, deleteEntity};
+const mapDispatchToProps = { getEntity, deleteEntity };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

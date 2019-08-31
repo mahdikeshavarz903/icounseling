@@ -1,18 +1,18 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Row} from 'reactstrap';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import {TextFormat, Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntity} from './reminder.reducer';
+import { IRootState } from 'app/shared/reducers';
+import { getEntity } from './reminder.reducer';
+import { IReminder } from 'app/shared/model/reminder.model';
 // tslint:disable-next-line:no-unused-variable
-import {APP_DATE_FORMAT} from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IReminderDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface IReminderDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class ReminderDetail extends React.Component<IReminderDetailProps> {
   componentDidMount() {
@@ -20,13 +20,12 @@ export class ReminderDetail extends React.Component<IReminderDetailProps> {
   }
 
   render() {
-    const {reminderEntity} = this.props;
+    const { reminderEntity } = this.props;
     return (
       <Row>
         <Col md="8">
           <h2>
-            <Translate
-              contentKey="iCounselingApp.reminder.detail.title">Reminder</Translate> [<b>{reminderEntity.id}</b>]
+            <Translate contentKey="iCounselingApp.reminder.detail.title">Reminder</Translate> [<b>{reminderEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
@@ -35,18 +34,18 @@ export class ReminderDetail extends React.Component<IReminderDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={reminderEntity.dateTime} type="date" format={APP_DATE_FORMAT}/>
+              <TextFormat value={reminderEntity.dateTime} type="date" format={APP_DATE_FORMAT} />
             </dd>
           </dl>
           <Button tag={Link} to="/entity/reminder" replace color="info">
-            <FontAwesomeIcon icon="arrow-left"/>{' '}
+            <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/entity/reminder/${reminderEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt"/>{' '}
+            <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.edit">Edit</Translate>
             </span>
@@ -57,11 +56,11 @@ export class ReminderDetail extends React.Component<IReminderDetailProps> {
   }
 }
 
-const mapStateToProps = ({reminder}: IRootState) => ({
+const mapStateToProps = ({ reminder }: IRootState) => ({
   reminderEntity: reminder.entity
 });
 
-const mapDispatchToProps = {getEntity};
+const mapDispatchToProps = { getEntity };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

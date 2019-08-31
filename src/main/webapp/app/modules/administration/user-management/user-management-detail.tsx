@@ -1,17 +1,16 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Badge, Button, Row} from 'reactstrap';
-import {TextFormat, Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Badge } from 'reactstrap';
+import { Translate, TextFormat } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {APP_DATE_FORMAT} from 'app/config/constants';
-import {languages} from 'app/config/translation';
-import {getUser} from './user-management.reducer';
-import {IRootState} from 'app/shared/reducers';
+import { APP_DATE_FORMAT } from 'app/config/constants';
+import { languages } from 'app/config/translation';
+import { getUser } from './user-management.reducer';
+import { IRootState } from 'app/shared/reducers';
 
-export interface IUserManagementDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ login: string }> {
-}
+export interface IUserManagementDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ login: string }> {}
 
 export class UserManagementDetail extends React.Component<IUserManagementDetailProps> {
   componentDidMount() {
@@ -19,7 +18,7 @@ export class UserManagementDetail extends React.Component<IUserManagementDetailP
   }
 
   render() {
-    const {user} = this.props;
+    const { user } = this.props;
     return (
       <div>
         <h2>
@@ -66,7 +65,7 @@ export class UserManagementDetail extends React.Component<IUserManagementDetailP
               <Translate contentKey="userManagement.createdDate">Created Date</Translate>
             </dt>
             <dd>
-              <TextFormat value={user.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid/>
+              <TextFormat value={user.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
             </dd>
             <dt>
               <Translate contentKey="userManagement.lastModifiedBy">Last Modified By</Translate>
@@ -76,7 +75,7 @@ export class UserManagementDetail extends React.Component<IUserManagementDetailP
               <Translate contentKey="userManagement.lastModifiedDate">Last Modified Date</Translate>
             </dt>
             <dd>
-              <TextFormat value={user.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid/>
+              <TextFormat value={user.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
             </dd>
             <dt>
               <Translate contentKey="userManagement.profiles">Profiles</Translate>
@@ -85,17 +84,17 @@ export class UserManagementDetail extends React.Component<IUserManagementDetailP
               <ul className="list-unstyled">
                 {user.authorities
                   ? user.authorities.map((authority, i) => (
-                    <li key={`user-auth-${i}`}>
-                      <Badge color="info">{authority}</Badge>
-                    </li>
-                  ))
+                      <li key={`user-auth-${i}`}>
+                        <Badge color="info">{authority}</Badge>
+                      </li>
+                    ))
                   : null}
               </ul>
             </dd>
           </dl>
         </Row>
         <Button tag={Link} to="/admin/user-management" replace color="info">
-          <FontAwesomeIcon icon="arrow-left"/>{' '}
+          <FontAwesomeIcon icon="arrow-left" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.back">Back</Translate>
           </span>
@@ -109,7 +108,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   user: storeState.userManagement.user
 });
 
-const mapDispatchToProps = {getUser};
+const mapDispatchToProps = { getUser };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

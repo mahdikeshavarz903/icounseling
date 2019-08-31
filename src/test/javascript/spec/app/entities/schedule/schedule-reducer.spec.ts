@@ -11,11 +11,11 @@ import reducer, {
   deleteEntity,
   getEntities,
   getEntity,
-  reset,
-  updateEntity
+  updateEntity,
+  reset
 } from 'app/entities/schedule/schedule.reducer';
-import {FAILURE, REQUEST, SUCCESS} from 'app/shared/reducers/action-type.util';
-import {defaultValue, ISchedule} from 'app/shared/model/schedule.model';
+import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { ISchedule, defaultValue } from 'app/shared/model/schedule.model';
 
 // tslint:disable no-invalid-template-strings
 describe('Entities reducer tests', () => {
@@ -50,7 +50,7 @@ describe('Entities reducer tests', () => {
 
   function testMultipleTypes(types, payload, testFunction) {
     types.forEach(e => {
-      testFunction(reducer(undefined, {type: e, payload}));
+      testFunction(reducer(undefined, { type: e, payload }));
     });
   }
 
@@ -88,7 +88,7 @@ describe('Entities reducer tests', () => {
     it('should reset the state', () => {
       expect(
         reducer(
-          {...initialState, loading: true},
+          { ...initialState, loading: true },
           {
             type: ACTION_TYPES.RESET
           }
@@ -123,7 +123,7 @@ describe('Entities reducer tests', () => {
 
   describe('Successes', () => {
     it('should fetch all entities', () => {
-      const payload = {data: [{1: 'fake1'}, {2: 'fake2'}], headers: {'x-total-count': 123}};
+      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }], headers: { 'x-total-count': 123 } };
       expect(
         reducer(undefined, {
           type: SUCCESS(ACTION_TYPES.FETCH_SCHEDULE_LIST),
@@ -138,7 +138,7 @@ describe('Entities reducer tests', () => {
     });
 
     it('should fetch a single entity', () => {
-      const payload = {data: {1: 'fake1'}};
+      const payload = { data: { 1: 'fake1' } };
       expect(
         reducer(undefined, {
           type: SUCCESS(ACTION_TYPES.FETCH_SCHEDULE),
@@ -152,7 +152,7 @@ describe('Entities reducer tests', () => {
     });
 
     it('should create/update entity', () => {
-      const payload = {data: 'fake payload'};
+      const payload = { data: 'fake payload' };
       expect(
         reducer(undefined, {
           type: SUCCESS(ACTION_TYPES.CREATE_SCHEDULE),
@@ -182,7 +182,7 @@ describe('Entities reducer tests', () => {
   describe('Actions', () => {
     let store;
 
-    const resolvedObject = {value: 'whatever'};
+    const resolvedObject = { value: 'whatever' };
     beforeEach(() => {
       const mockStore = configureStore([thunk, promiseMiddleware]);
       store = mockStore({});
@@ -235,7 +235,7 @@ describe('Entities reducer tests', () => {
           payload: resolvedObject
         }
       ];
-      await store.dispatch(createEntity({id: 1})).then(() => expect(store.getActions()).toEqual(expectedActions));
+      await store.dispatch(createEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.UPDATE_SCHEDULE actions', async () => {
@@ -255,7 +255,7 @@ describe('Entities reducer tests', () => {
           payload: resolvedObject
         }
       ];
-      await store.dispatch(updateEntity({id: 1})).then(() => expect(store.getActions()).toEqual(expectedActions));
+      await store.dispatch(updateEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.DELETE_SCHEDULE actions', async () => {

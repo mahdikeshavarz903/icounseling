@@ -1,4 +1,4 @@
-import {IDocument} from 'app/shared/model/document.model';
+import { IDocument } from 'app/shared/model/document.model';
 
 export const enum CategoryType {
   ROMANCE = 'ROMANCE',

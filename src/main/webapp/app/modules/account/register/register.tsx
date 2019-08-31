@@ -1,15 +1,14 @@
 import React from 'react';
-import {Translate, translate} from 'react-jhipster';
-import {connect} from 'react-redux';
-import {AvField, AvForm} from 'availity-reactstrap-validation';
-import {Alert, Button, Col, Row} from 'reactstrap';
+import { Translate, translate } from 'react-jhipster';
+import { connect } from 'react-redux';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
+import { Row, Col, Alert, Button } from 'reactstrap';
 
 import PasswordStrengthBar from 'app/shared/layout/password/password-strength-bar';
-import {IRootState} from 'app/shared/reducers';
-import {handleRegister, reset} from './register.reducer';
+import { IRootState } from 'app/shared/reducers';
+import { handleRegister, reset } from './register.reducer';
 
-export interface IRegisterProps extends StateProps, DispatchProps {
-}
+export interface IRegisterProps extends StateProps, DispatchProps {}
 
 export interface IRegisterState {
   password: string;
@@ -30,7 +29,7 @@ export class RegisterPage extends React.Component<IRegisterProps, IRegisterState
   };
 
   updatePassword = event => {
-    this.setState({password: event.target.value});
+    this.setState({ password: event.target.value });
   };
 
   render() {
@@ -51,13 +50,10 @@ export class RegisterPage extends React.Component<IRegisterProps, IRegisterState
                 label={translate('global.form.username.label')}
                 placeholder={translate('global.form.username.placeholder')}
                 validate={{
-                  required: {value: true, errorMessage: translate('register.messages.validate.login.required')},
-                  pattern: {
-                    value: '^[_.@A-Za-z0-9-]*$',
-                    errorMessage: translate('register.messages.validate.login.pattern')
-                  },
-                  minLength: {value: 1, errorMessage: translate('register.messages.validate.login.minlength')},
-                  maxLength: {value: 50, errorMessage: translate('register.messages.validate.login.maxlength')}
+                  required: { value: true, errorMessage: translate('register.messages.validate.login.required') },
+                  pattern: { value: '^[_.@A-Za-z0-9-]*$', errorMessage: translate('register.messages.validate.login.pattern') },
+                  minLength: { value: 1, errorMessage: translate('register.messages.validate.login.minlength') },
+                  maxLength: { value: 50, errorMessage: translate('register.messages.validate.login.maxlength') }
                 }}
               />
               <AvField
@@ -66,9 +62,9 @@ export class RegisterPage extends React.Component<IRegisterProps, IRegisterState
                 placeholder={translate('global.form.email.placeholder')}
                 type="email"
                 validate={{
-                  required: {value: true, errorMessage: translate('global.messages.validate.email.required')},
-                  minLength: {value: 5, errorMessage: translate('global.messages.validate.email.minlength')},
-                  maxLength: {value: 254, errorMessage: translate('global.messages.validate.email.maxlength')}
+                  required: { value: true, errorMessage: translate('global.messages.validate.email.required') },
+                  minLength: { value: 5, errorMessage: translate('global.messages.validate.email.minlength') },
+                  maxLength: { value: 254, errorMessage: translate('global.messages.validate.email.maxlength') }
                 }}
               />
               <AvField
@@ -78,22 +74,22 @@ export class RegisterPage extends React.Component<IRegisterProps, IRegisterState
                 type="password"
                 onChange={this.updatePassword}
                 validate={{
-                  required: {value: true, errorMessage: translate('global.messages.validate.newpassword.required')},
-                  minLength: {value: 4, errorMessage: translate('global.messages.validate.newpassword.minlength')},
-                  maxLength: {value: 50, errorMessage: translate('global.messages.validate.newpassword.maxlength')}
+                  required: { value: true, errorMessage: translate('global.messages.validate.newpassword.required') },
+                  minLength: { value: 4, errorMessage: translate('global.messages.validate.newpassword.minlength') },
+                  maxLength: { value: 50, errorMessage: translate('global.messages.validate.newpassword.maxlength') }
                 }}
               />
-              <PasswordStrengthBar password={this.state.password}/>
+              <PasswordStrengthBar password={this.state.password} />
               <AvField
                 name="secondPassword"
                 label={translate('global.form.confirmpassword.label')}
                 placeholder={translate('global.form.confirmpassword.placeholder')}
                 type="password"
                 validate={{
-                  required: {value: true, errorMessage: translate('global.messages.validate.confirmpassword.required')},
-                  minLength: {value: 4, errorMessage: translate('global.messages.validate.confirmpassword.minlength')},
-                  maxLength: {value: 50, errorMessage: translate('global.messages.validate.confirmpassword.maxlength')},
-                  match: {value: 'firstPassword', errorMessage: translate('global.messages.error.dontmatch')}
+                  required: { value: true, errorMessage: translate('global.messages.validate.confirmpassword.required') },
+                  minLength: { value: 4, errorMessage: translate('global.messages.validate.confirmpassword.minlength') },
+                  maxLength: { value: 50, errorMessage: translate('global.messages.validate.confirmpassword.maxlength') },
+                  match: { value: 'firstPassword', errorMessage: translate('global.messages.error.dontmatch') }
                 }}
               />
               <Button id="register-submit" color="primary" type="submit">
@@ -111,8 +107,8 @@ export class RegisterPage extends React.Component<IRegisterProps, IRegisterState
               <span>
                 <Translate contentKey="global.messages.info.authenticated.suffix">
                   , you can try the default accounts:
-                  <br/>- Administrator (login="admin" and password="admin")
-                  <br/>- User (login="user" and password="user").
+                  <br />- Administrator (login="admin" and password="admin")
+                  <br />- User (login="user" and password="user").
                 </Translate>
               </span>
             </Alert>
@@ -123,11 +119,11 @@ export class RegisterPage extends React.Component<IRegisterProps, IRegisterState
   }
 }
 
-const mapStateToProps = ({locale}: IRootState) => ({
+const mapStateToProps = ({ locale }: IRootState) => ({
   currentLocale: locale.currentLocale
 });
 
-const mapDispatchToProps = {handleRegister, reset};
+const mapDispatchToProps = { handleRegister, reset };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 

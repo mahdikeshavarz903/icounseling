@@ -1,19 +1,22 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getEducations} from 'app/entities/education/education.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './reseume.reducer';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
+import { IEducation } from 'app/shared/model/education.model';
+import { getEntities as getEducations } from 'app/entities/education/education.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './reseume.reducer';
+import { IReseume } from 'app/shared/model/reseume.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IReseumeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface IReseumeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IReseumeUpdateState {
   isNew: boolean;
@@ -47,7 +50,7 @@ export class ReseumeUpdate extends React.Component<IReseumeUpdateProps, IReseume
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const {reseumeEntity} = this.props;
+      const { reseumeEntity } = this.props;
       const entity = {
         ...reseumeEntity,
         ...values
@@ -66,8 +69,8 @@ export class ReseumeUpdate extends React.Component<IReseumeUpdateProps, IReseume
   };
 
   render() {
-    const {reseumeEntity, educations, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { reseumeEntity, educations, loading, updating } = this.props;
+    const { isNew } = this.state;
 
     return (
       <div>
@@ -89,7 +92,7 @@ export class ReseumeUpdate extends React.Component<IReseumeUpdateProps, IReseume
                     <Label for="reseume-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="reseume-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="reseume-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -97,18 +100,18 @@ export class ReseumeUpdate extends React.Component<IReseumeUpdateProps, IReseume
                     <Translate contentKey="iCounselingApp.reseume.education">Education</Translate>
                   </Label>
                   <AvInput id="reseume-education" type="select" className="form-control" name="educationId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {educations
                       ? educations.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/reseume" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -116,7 +119,7 @@ export class ReseumeUpdate extends React.Component<IReseumeUpdateProps, IReseume
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>

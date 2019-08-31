@@ -1,20 +1,24 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {byteSize, openFile, setFileData, translate, Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getCounselors} from 'app/entities/counselor/counselor.reducer';
-import {getEntities as getVisitors} from 'app/entities/visitor/visitor.reducer';
-import {createEntity, getEntity, reset, setBlob, updateEntity} from './score.reducer';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, setFileData, openFile, byteSize, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
+import { ICounselor } from 'app/shared/model/counselor.model';
+import { getEntities as getCounselors } from 'app/entities/counselor/counselor.reducer';
+import { IVisitor } from 'app/shared/model/visitor.model';
+import { getEntities as getVisitors } from 'app/entities/visitor/visitor.reducer';
+import { getEntity, updateEntity, createEntity, setBlob, reset } from './score.reducer';
+import { IScore } from 'app/shared/model/score.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IScoreUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface IScoreUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IScoreUpdateState {
   isNew: boolean;
@@ -59,7 +63,7 @@ export class ScoreUpdate extends React.Component<IScoreUpdateProps, IScoreUpdate
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const {scoreEntity} = this.props;
+      const { scoreEntity } = this.props;
       const entity = {
         ...scoreEntity,
         ...values
@@ -78,10 +82,10 @@ export class ScoreUpdate extends React.Component<IScoreUpdateProps, IScoreUpdate
   };
 
   render() {
-    const {scoreEntity, counselors, visitors, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { scoreEntity, counselors, visitors, loading, updating } = this.props;
+    const { isNew } = this.state;
 
-    const {image, imageContentType} = scoreEntity;
+    const { image, imageContentType } = scoreEntity;
 
     return (
       <div>
@@ -103,7 +107,7 @@ export class ScoreUpdate extends React.Component<IScoreUpdateProps, IScoreUpdate
                     <Label for="score-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="score-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="score-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -116,8 +120,8 @@ export class ScoreUpdate extends React.Component<IScoreUpdateProps, IScoreUpdate
                     className="form-control"
                     name="total"
                     validate={{
-                      required: {value: true, errorMessage: translate('entity.validation.required')},
-                      number: {value: true, errorMessage: translate('entity.validation.number')}
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      number: { value: true, errorMessage: translate('entity.validation.number') }
                     }}
                   />
                 </AvGroup>
@@ -126,13 +130,13 @@ export class ScoreUpdate extends React.Component<IScoreUpdateProps, IScoreUpdate
                     <Label id="imageLabel" for="image">
                       <Translate contentKey="iCounselingApp.score.image">Image</Translate>
                     </Label>
-                    <br/>
+                    <br />
                     {image ? (
                       <div>
                         <a onClick={openFile(imageContentType, image)}>
                           <Translate contentKey="entity.action.open">Open</Translate>
                         </a>
-                        <br/>
+                        <br />
                         <Row>
                           <Col md="11">
                             <span>
@@ -141,19 +145,19 @@ export class ScoreUpdate extends React.Component<IScoreUpdateProps, IScoreUpdate
                           </Col>
                           <Col md="1">
                             <Button color="danger" onClick={this.clearBlob('image')}>
-                              <FontAwesomeIcon icon="times-circle"/>
+                              <FontAwesomeIcon icon="times-circle" />
                             </Button>
                           </Col>
                         </Row>
                       </div>
                     ) : null}
-                    <input id="file_image" type="file" onChange={this.onBlobChange(false, 'image')}/>
+                    <input id="file_image" type="file" onChange={this.onBlobChange(false, 'image')} />
                     <AvInput
                       type="hidden"
                       name="image"
                       value={image}
                       validate={{
-                        required: {value: true, errorMessage: translate('entity.validation.required')}
+                        required: { value: true, errorMessage: translate('entity.validation.required') }
                       }}
                     />
                   </AvGroup>
@@ -170,15 +174,15 @@ export class ScoreUpdate extends React.Component<IScoreUpdateProps, IScoreUpdate
                     value={(!isNew && scoreEntity.degree) || 'PROFESSIONAL'}
                   >
                     <option value="PROFESSIONAL">
-                      <Translate contentKey="iCounselingApp.ScoreDegree.PROFESSIONAL"/>
+                      <Translate contentKey="iCounselingApp.ScoreDegree.PROFESSIONAL" />
                     </option>
                     <option value="GENERAL">
-                      <Translate contentKey="iCounselingApp.ScoreDegree.GENERAL"/>
+                      <Translate contentKey="iCounselingApp.ScoreDegree.GENERAL" />
                     </option>
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/score" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -186,7 +190,7 @@ export class ScoreUpdate extends React.Component<IScoreUpdateProps, IScoreUpdate
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>

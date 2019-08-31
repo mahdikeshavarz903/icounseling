@@ -11,11 +11,11 @@ import reducer, {
   deleteEntity,
   getEntities,
   getEntity,
-  reset,
-  updateEntity
+  updateEntity,
+  reset
 } from 'app/entities/post/post.reducer';
-import {FAILURE, REQUEST, SUCCESS} from 'app/shared/reducers/action-type.util';
-import {defaultValue, IPost} from 'app/shared/model/post.model';
+import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { IPost, defaultValue } from 'app/shared/model/post.model';
 
 // tslint:disable no-invalid-template-strings
 describe('Entities reducer tests', () => {
@@ -50,7 +50,7 @@ describe('Entities reducer tests', () => {
 
   function testMultipleTypes(types, payload, testFunction) {
     types.forEach(e => {
-      testFunction(reducer(undefined, {type: e, payload}));
+      testFunction(reducer(undefined, { type: e, payload }));
     });
   }
 
@@ -88,7 +88,7 @@ describe('Entities reducer tests', () => {
     it('should reset the state', () => {
       expect(
         reducer(
-          {...initialState, loading: true},
+          { ...initialState, loading: true },
           {
             type: ACTION_TYPES.RESET
           }
@@ -123,7 +123,7 @@ describe('Entities reducer tests', () => {
 
   describe('Successes', () => {
     it('should fetch all entities', () => {
-      const payload = {data: [{1: 'fake1'}, {2: 'fake2'}], headers: {'x-total-count': 123}};
+      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }], headers: { 'x-total-count': 123 } };
       expect(
         reducer(undefined, {
           type: SUCCESS(ACTION_TYPES.FETCH_POST_LIST),
@@ -138,7 +138,7 @@ describe('Entities reducer tests', () => {
     });
 
     it('should fetch a single entity', () => {
-      const payload = {data: {1: 'fake1'}};
+      const payload = { data: { 1: 'fake1' } };
       expect(
         reducer(undefined, {
           type: SUCCESS(ACTION_TYPES.FETCH_POST),
@@ -152,7 +152,7 @@ describe('Entities reducer tests', () => {
     });
 
     it('should create/update entity', () => {
-      const payload = {data: 'fake payload'};
+      const payload = { data: 'fake payload' };
       expect(
         reducer(undefined, {
           type: SUCCESS(ACTION_TYPES.CREATE_POST),
@@ -182,7 +182,7 @@ describe('Entities reducer tests', () => {
   describe('Actions', () => {
     let store;
 
-    const resolvedObject = {value: 'whatever'};
+    const resolvedObject = { value: 'whatever' };
     beforeEach(() => {
       const mockStore = configureStore([thunk, promiseMiddleware]);
       store = mockStore({});
@@ -235,7 +235,7 @@ describe('Entities reducer tests', () => {
           payload: resolvedObject
         }
       ];
-      await store.dispatch(createEntity({id: 1})).then(() => expect(store.getActions()).toEqual(expectedActions));
+      await store.dispatch(createEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.UPDATE_POST actions', async () => {
@@ -255,7 +255,7 @@ describe('Entities reducer tests', () => {
           payload: resolvedObject
         }
       ];
-      await store.dispatch(updateEntity({id: 1})).then(() => expect(store.getActions()).toEqual(expectedActions));
+      await store.dispatch(updateEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.DELETE_POST actions', async () => {
@@ -291,7 +291,7 @@ describe('Entities reducer tests', () => {
 
   describe('blobFields', () => {
     it('should properly set a blob in state.', () => {
-      const payload = {name: 'fancyBlobName', data: 'fake data', contentType: 'fake dataType'};
+      const payload = { name: 'fancyBlobName', data: 'fake data', contentType: 'fake dataType' };
       expect(
         reducer(undefined, {
           type: ACTION_TYPES.SET_BLOB,

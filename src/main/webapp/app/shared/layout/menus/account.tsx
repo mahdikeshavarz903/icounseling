@@ -1,7 +1,10 @@
 import React from 'react';
 import MenuItem from 'app/shared/layout/menus/menu-item';
-import {Translate, translate} from 'react-jhipster';
-import {NavDropdown} from './menu-components';
+import { DropdownItem } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { NavLink as Link } from 'react-router-dom';
+import { Translate, translate } from 'react-jhipster';
+import { NavDropdown } from './menu-components';
 
 const accountMenuItemsAuthenticated = (
   <>
@@ -28,7 +31,7 @@ const accountMenuItems = (
   </>
 );
 
-export const AccountMenu = ({isAuthenticated = false}) => (
+export const AccountMenu = ({ isAuthenticated = false }) => (
   <NavDropdown icon="user" name={translate('global.menu.account.main')} id="account-menu">
     {isAuthenticated ? accountMenuItemsAuthenticated : accountMenuItems}
   </NavDropdown>

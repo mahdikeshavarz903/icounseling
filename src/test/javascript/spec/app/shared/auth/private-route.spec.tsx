@@ -1,9 +1,9 @@
 import React from 'react';
-import {Route} from 'react-router-dom';
-import {shallow} from 'enzyme';
-import {TranslatorContext} from 'react-jhipster';
+import { Route } from 'react-router-dom';
+import { shallow } from 'enzyme';
+import { TranslatorContext } from 'react-jhipster';
 
-import {hasAnyAuthority, PrivateRouteComponent} from 'app/shared/auth/private-route';
+import { PrivateRouteComponent, hasAnyAuthority } from 'app/shared/auth/private-route';
 
 const TestComp = () => <div>Test</div>;
 
@@ -14,13 +14,12 @@ describe('private-route component', () => {
 
   // All tests will go here
   it('Should throw error when no component is provided', () => {
-    expect(() => shallow(<PrivateRouteComponent component={null} isAuthenticated sessionHasBeenFetched
-                                                isAuthorized/>)).toThrow(Error);
+    expect(() => shallow(<PrivateRouteComponent component={null} isAuthenticated sessionHasBeenFetched isAuthorized />)).toThrow(Error);
   });
 
   it('Should render an error message when the user has no authorities', () => {
     const route = shallow(
-      <PrivateRouteComponent component={TestComp} isAuthenticated sessionHasBeenFetched isAuthorized={false} path="/"/>
+      <PrivateRouteComponent component={TestComp} isAuthenticated sessionHasBeenFetched isAuthorized={false} path="/" />
     );
     const renderedRoute = route.find(Route);
     const renderFn: Function = renderedRoute.props().render;
@@ -38,8 +37,7 @@ describe('private-route component', () => {
   });
 
   it('Should render a route for the component provided when authenticated', () => {
-    const route = shallow(<PrivateRouteComponent component={TestComp} isAuthenticated sessionHasBeenFetched isAuthorized
-                                                 path="/"/>);
+    const route = shallow(<PrivateRouteComponent component={TestComp} isAuthenticated sessionHasBeenFetched isAuthorized path="/" />);
     const renderedRoute = route.find(Route);
     expect(renderedRoute.length).toEqual(1);
     expect(renderedRoute.props().path).toEqual('/');
@@ -57,7 +55,7 @@ describe('private-route component', () => {
 
   it('Should render a redirect to login when not authenticated', () => {
     const route = shallow(
-      <PrivateRouteComponent component={TestComp} isAuthenticated={false} sessionHasBeenFetched isAuthorized path="/"/>
+      <PrivateRouteComponent component={TestComp} isAuthenticated={false} sessionHasBeenFetched isAuthorized path="/" />
     );
     const renderedRoute = route.find(Route);
     expect(renderedRoute.length).toEqual(1);

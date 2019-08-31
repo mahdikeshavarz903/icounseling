@@ -1,4 +1,4 @@
-import {IComment} from 'app/shared/model/comment.model';
+import { IComment } from 'app/shared/model/comment.model';
 
 export const enum DocumentFormat {
   PDF = 'PDF',

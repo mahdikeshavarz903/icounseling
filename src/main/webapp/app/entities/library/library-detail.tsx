@@ -1,18 +1,18 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Row} from 'reactstrap';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import {TextFormat, Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntity} from './library.reducer';
+import { IRootState } from 'app/shared/reducers';
+import { getEntity } from './library.reducer';
+import { ILibrary } from 'app/shared/model/library.model';
 // tslint:disable-next-line:no-unused-variable
-import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ILibraryDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface ILibraryDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class LibraryDetail extends React.Component<ILibraryDetailProps> {
   componentDidMount() {
@@ -20,7 +20,7 @@ export class LibraryDetail extends React.Component<ILibraryDetailProps> {
   }
 
   render() {
-    const {libraryEntity} = this.props;
+    const { libraryEntity } = this.props;
     return (
       <Row>
         <Col md="8">
@@ -40,7 +40,7 @@ export class LibraryDetail extends React.Component<ILibraryDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={libraryEntity.creationTime} type="date" format={APP_LOCAL_DATE_FORMAT}/>
+              <TextFormat value={libraryEntity.creationTime} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="iCounselingApp.library.visitor">Visitor</Translate>
@@ -48,14 +48,14 @@ export class LibraryDetail extends React.Component<ILibraryDetailProps> {
             <dd>{libraryEntity.visitorId ? libraryEntity.visitorId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/library" replace color="info">
-            <FontAwesomeIcon icon="arrow-left"/>{' '}
+            <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/entity/library/${libraryEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt"/>{' '}
+            <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.edit">Edit</Translate>
             </span>
@@ -66,11 +66,11 @@ export class LibraryDetail extends React.Component<ILibraryDetailProps> {
   }
 }
 
-const mapStateToProps = ({library}: IRootState) => ({
+const mapStateToProps = ({ library }: IRootState) => ({
   libraryEntity: library.entity
 });
 
-const mapDispatchToProps = {getEntity};
+const mapDispatchToProps = { getEntity };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

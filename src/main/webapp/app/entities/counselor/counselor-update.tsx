@@ -1,21 +1,26 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getEducations} from 'app/entities/education/education.reducer';
-import {getEntities as getScores} from 'app/entities/score/score.reducer';
-import {getUsers} from 'app/modules/administration/user-management/user-management.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './counselor.reducer';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
+import { IEducation } from 'app/shared/model/education.model';
+import { getEntities as getEducations } from 'app/entities/education/education.reducer';
+import { IScore } from 'app/shared/model/score.model';
+import { getEntities as getScores } from 'app/entities/score/score.reducer';
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './counselor.reducer';
+import { ICounselor } from 'app/shared/model/counselor.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ICounselorUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
-}
+export interface ICounselorUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ICounselorUpdateState {
   isNew: boolean;
@@ -55,7 +60,7 @@ export class CounselorUpdate extends React.Component<ICounselorUpdateProps, ICou
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const {counselorEntity} = this.props;
+      const { counselorEntity } = this.props;
       const entity = {
         ...counselorEntity,
         ...values
@@ -74,16 +79,15 @@ export class CounselorUpdate extends React.Component<ICounselorUpdateProps, ICou
   };
 
   render() {
-    const {counselorEntity, educations, scores, users, loading, updating} = this.props;
-    const {isNew} = this.state;
+    const { counselorEntity, educations, scores, users, loading, updating } = this.props;
+    const { isNew } = this.state;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
             <h2 id="iCounselingApp.counselor.home.createOrEditLabel">
-              <Translate contentKey="iCounselingApp.counselor.home.createOrEditLabel">Create or edit a
-                Counselor</Translate>
+              <Translate contentKey="iCounselingApp.counselor.home.createOrEditLabel">Create or edit a Counselor</Translate>
             </h2>
           </Col>
         </Row>
@@ -98,7 +102,7 @@ export class CounselorUpdate extends React.Component<ICounselorUpdateProps, ICou
                     <Label for="counselor-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="counselor-id" type="text" className="form-control" name="id" required readOnly/>
+                    <AvInput id="counselor-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -113,46 +117,46 @@ export class CounselorUpdate extends React.Component<ICounselorUpdateProps, ICou
                     value={(!isNew && counselorEntity.consultantType) || 'PSYCHOLOGY'}
                   >
                     <option value="PSYCHOLOGY">
-                      <Translate contentKey="iCounselingApp.ConsultantType.PSYCHOLOGY"/>
+                      <Translate contentKey="iCounselingApp.ConsultantType.PSYCHOLOGY" />
                     </option>
                     <option value="LEGAL">
-                      <Translate contentKey="iCounselingApp.ConsultantType.LEGAL"/>
+                      <Translate contentKey="iCounselingApp.ConsultantType.LEGAL" />
                     </option>
                     <option value="FINANCIAL">
-                      <Translate contentKey="iCounselingApp.ConsultantType.FINANCIAL"/>
+                      <Translate contentKey="iCounselingApp.ConsultantType.FINANCIAL" />
                     </option>
                     <option value="EDUCATIONAL">
-                      <Translate contentKey="iCounselingApp.ConsultantType.EDUCATIONAL"/>
+                      <Translate contentKey="iCounselingApp.ConsultantType.EDUCATIONAL" />
                     </option>
                     <option value="MEDICAL">
-                      <Translate contentKey="iCounselingApp.ConsultantType.MEDICAL"/>
+                      <Translate contentKey="iCounselingApp.ConsultantType.MEDICAL" />
                     </option>
                     <option value="INDUSTY">
-                      <Translate contentKey="iCounselingApp.ConsultantType.INDUSTY"/>
+                      <Translate contentKey="iCounselingApp.ConsultantType.INDUSTY" />
                     </option>
                     <option value="COMPUTER">
-                      <Translate contentKey="iCounselingApp.ConsultantType.COMPUTER"/>
+                      <Translate contentKey="iCounselingApp.ConsultantType.COMPUTER" />
                     </option>
                     <option value="MUSIC">
-                      <Translate contentKey="iCounselingApp.ConsultantType.MUSIC"/>
+                      <Translate contentKey="iCounselingApp.ConsultantType.MUSIC" />
                     </option>
                     <option value="ART">
-                      <Translate contentKey="iCounselingApp.ConsultantType.ART"/>
+                      <Translate contentKey="iCounselingApp.ConsultantType.ART" />
                     </option>
                     <option value="AGRICULTURE">
-                      <Translate contentKey="iCounselingApp.ConsultantType.AGRICULTURE"/>
+                      <Translate contentKey="iCounselingApp.ConsultantType.AGRICULTURE" />
                     </option>
                     <option value="ANIMAL_HUSBANDRY">
-                      <Translate contentKey="iCounselingApp.ConsultantType.ANIMAL_HUSBANDRY"/>
+                      <Translate contentKey="iCounselingApp.ConsultantType.ANIMAL_HUSBANDRY" />
                     </option>
                     <option value="SPORTS">
-                      <Translate contentKey="iCounselingApp.ConsultantType.SPORTS"/>
+                      <Translate contentKey="iCounselingApp.ConsultantType.SPORTS" />
                     </option>
                     <option value="RELIGIOUS">
-                      <Translate contentKey="iCounselingApp.ConsultantType.RELIGIOUS"/>
+                      <Translate contentKey="iCounselingApp.ConsultantType.RELIGIOUS" />
                     </option>
                     <option value="REGISTRATION_OF_DOCUMENTS">
-                      <Translate contentKey="iCounselingApp.ConsultantType.REGISTRATION_OF_DOCUMENTS"/>
+                      <Translate contentKey="iCounselingApp.ConsultantType.REGISTRATION_OF_DOCUMENTS" />
                     </option>
                   </AvInput>
                 </AvGroup>
@@ -161,13 +165,13 @@ export class CounselorUpdate extends React.Component<ICounselorUpdateProps, ICou
                     <Translate contentKey="iCounselingApp.counselor.education">Education</Translate>
                   </Label>
                   <AvInput id="counselor-education" type="select" className="form-control" name="educationId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {educations
                       ? educations.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
@@ -176,13 +180,13 @@ export class CounselorUpdate extends React.Component<ICounselorUpdateProps, ICou
                     <Translate contentKey="iCounselingApp.counselor.score">Score</Translate>
                   </Label>
                   <AvInput id="counselor-score" type="select" className="form-control" name="scoreId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {scores
                       ? scores.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
@@ -191,18 +195,18 @@ export class CounselorUpdate extends React.Component<ICounselorUpdateProps, ICou
                     <Translate contentKey="iCounselingApp.counselor.user">User</Translate>
                   </Label>
                   <AvInput id="counselor-user" type="select" className="form-control" name="userId">
-                    <option value="" key="0"/>
+                    <option value="" key="0" />
                     {users
                       ? users.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/counselor" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left"/>
+                  <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -210,7 +214,7 @@ export class CounselorUpdate extends React.Component<ICounselorUpdateProps, ICou
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save"/>
+                  <FontAwesomeIcon icon="save" />
                   &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
