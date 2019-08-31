@@ -1,8 +1,7 @@
 // Override Boostrap variables
 // Import Bootstrap source files from node_modules
-//@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap/scss/bootstrap';
 @import 'rtl.scss';
-
 body {
   background: #fafafa;
   margin: 0;
@@ -16,7 +15,6 @@ a {
 * {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-
   &:after,
   &::before {
     -moz-box-sizing: border-box;
@@ -26,21 +24,17 @@ a {
 
 .app-container {
   box-sizing: border-box;
-
   .view-container {
     width: 100%;
     height: calc(100% - 40px);
     overflow-y: auto;
     overflow-x: hidden;
     padding: 1rem;
-
     .card {
       padding: 1rem;
     }
-
     .view-routes {
       height: 100%;
-
       > div {
         height: 100%;
       }
@@ -79,12 +73,10 @@ Custom button styles
   border-color: transparent;
   padding: 0.5rem;
   line-height: 1rem;
-
   &:hover {
     background-color: transparent;
     border-color: transparent;
   }
-
   &:focus {
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -231,7 +223,6 @@ Generic styles
 .no-margin {
   margin: 0px;
 }
-
 @mixin voffset($size) {
   @if $size== '' {
     .voffset {

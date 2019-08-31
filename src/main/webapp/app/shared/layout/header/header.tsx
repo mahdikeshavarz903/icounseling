@@ -28,7 +28,6 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
   state: IHeaderState = {
     menuOpen: false
   };
-
   componentDidMount() {
     document.querySelector('html').setAttribute('dir', isRTL(Storage.session.get('locale')) ? 'rtl' : 'ltr');
   }
