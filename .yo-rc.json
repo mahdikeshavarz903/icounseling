@@ -38,8 +38,6 @@
     "languages": [
       "fa",
       "en"
-    ],
-    "herokuAppName": "i-counseling",
-    "herokuDeployType": "jar"
+    ]
   }
 }

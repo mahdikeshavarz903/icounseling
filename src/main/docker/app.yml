@@ -1,9 +1,10 @@
 version: '2'
 services:
   icounseling-app:
-    image: mahdikeshavarz/icounseling:simage
+    image: icounseling
     environment:
       - SPRING_PROFILES_ACTIVE=prod,swagger
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
       - SPRING_DATASOURCE_URL=jdbc:mysql://icounseling.cdmk8sshibfx.eu-central-1.rds.amazonaws.com:3306/icounseling?useUnicode=true&characterEncoding=utf8&useSSL=false
       - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
       - SPRING_DATASOURCE_USERNAME=icounseling

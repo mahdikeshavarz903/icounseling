@@ -34,10 +34,12 @@
         <argLine>-Djava.security.egd=file:/dev/./urandom -Xmx256m</argLine>
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <run.addResources>false</run.addResources>
-        <!-- These remain empty unless the corresponding profile is active -->
+        <!-- These re empty unless the corresponding profile is active -->
         <profile.no-liquibase />
         <profile.swagger />
         <profile.tls />
+
+        <start-class>com.icounseling.ICounselingApp</start-class>
 
         <!-- Dependency versions -->
         <jhipster-dependencies.version>3.0.3</jhipster-dependencies.version>
@@ -478,7 +480,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!--suppress UnresolvedMavenProperty -->
                     <mainClass>${start-class}</mainClass>
                     <executable>true</executable>
                     <fork>true</fork>
@@ -633,10 +634,11 @@
                         <changeLogFile>${project.basedir}/src/main/resources/config/liquibase/master.xml</changeLogFile>
                         <diffChangeLogFile>${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                         <driver>com.mysql.jdbc.Driver</driver>
-                        <url>jdbc:mysql://icounseling.cdmk8sshibfx.eu-central-1.rds.amazonaws.com:3306/icounseling</url>
+<!--                        <url>jdbc:mysql://icounseling.cdmk8sshibfx.eu-central-1.rds.amazonaws.com:3306/icounseling</url>-->
+                        <url>jdbc:mysql://aa1qhvevlrymz1d.cdmk8sshibfx.eu-central-1.rds.amazonaws.com:3306/icounseling</url>
                         <defaultSchemaName>icounseling</defaultSchemaName>
                         <username>icounseling</username>
-                        <password>mah@1377</password>
+                        <password>1245783690</password>
                         <referenceUrl>hibernate:spring:pt.farol.destfinder.domain?dialect=org.hibernate.dialect.MySQLInnoDBDialect&amp;hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy</referenceUrl>
                         <verbose>true</verbose>
                         <logging>debug</logging>
@@ -978,7 +980,6 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
-                            <!--suppress UnresolvedMavenProperty -->
                             <mainClass>${start-class}</mainClass>
                             <executable>true</executable>
                         </configuration>
@@ -1169,63 +1170,6 @@
                         </plugin>
                     </plugins>
                 </pluginManagement>
-            </build>
-        </profile>
-        <profile>
-            <id>heroku</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.liquibase</groupId>
-                        <artifactId>liquibase-maven-plugin</artifactId>
-                        <configuration combine.self="override">
-                            <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
-                            <diffChangeLogFile>
-                                src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml
-                            </diffChangeLogFile>
-                            <driver></driver>
-                            <url>${env.JDBC_DATABASE_URL}</url>
-                            <defaultSchemaName></defaultSchemaName>
-                            <username>${env.JDBC_DATABASE_USERNAME}</username>
-                            <password>${env.JDBC_DATABASE_PASSWORD}</password>
-                            <referenceUrl>
-                                hibernate:spring:com.icounseling.domain?dialect=org.hibernate.dialect.MySQL5InnoDBDialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-                            </referenceUrl>
-                            <verbose>true</verbose>
-                            <logging>debug</logging>
-                            <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-clean-plugin</artifactId>
-                        <version>${maven-clean-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>clean-artifacts</id>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>clean</goal>
-                                </goals>
-                                <configuration>
-                                    <excludeDefaultDirectories>true</excludeDefaultDirectories>
-                                    <filesets>
-                                        <fileset>
-                                            <directory>target</directory>
-                                            <excludes>
-                                                <exclude>*.jar</exclude>
-                                            </excludes>
-                                            <followSymlinks>false</followSymlinks>
-                                        </fileset>
-                                        <fileset>
-                                            <directory>node_modules</directory>
-                                            <followSymlinks>false</followSymlinks>
-                                        </fileset>
-                                    </filesets>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
             </build>
         </profile>
         <!-- jhipster-needle-maven-add-profile -->
