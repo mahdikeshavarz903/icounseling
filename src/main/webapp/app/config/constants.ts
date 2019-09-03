@@ -5,7 +5,7 @@ const config = {
 export default config;
 
 // export const SERVER_API_URL = process.env.SERVER_API_URL;
-export const SERVER_API_URL = 'http://intelligencecounseling-env.wbvjji9fhh.eu-central-1.elasticbeanstalk.com/';
+export const SERVER_API_URL = 'http://intelligencecounseling-env.z2vwmfpjh4.eu-central-1.elasticbeanstalk.com/';
 export const AUTHORITIES = {
   ADMIN: 'ROLE_ADMIN',
   USER: 'ROLE_USER'

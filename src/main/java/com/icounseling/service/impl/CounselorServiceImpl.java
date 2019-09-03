@@ -42,6 +42,8 @@ public class CounselorServiceImpl implements CounselorService {
 
     private final PlanningRepository planningRepository;
 
+    private final PlanningMapper planningMapper;
+
     private final TaskService taskService;
 
     private final TaskRepository taskRepository;
@@ -50,7 +52,7 @@ public class CounselorServiceImpl implements CounselorService {
 
     private final VisitorMapper visitorMapper;
 
-    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, TimeReservedRepository timeReservedRepository, TimeReservedMapper timeReservedMapper, PlanningMapper planningMapper, PlanningRepository planningRepository, TaskService taskService, TaskRepository taskRepository, TaskMapper taskMapper, VisitorMapper visitorMapper) {
+    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, TimeReservedRepository timeReservedRepository, TimeReservedMapper timeReservedMapper, PlanningMapper planningMapper, PlanningRepository planningRepository, PlanningMapper planningMapper1, TaskService taskService, TaskRepository taskRepository, TaskMapper taskMapper, VisitorMapper visitorMapper) {
         this.counselorRepository = counselorRepository;
         this.counselorMapper = counselorMapper;
         this.counselingCaseRepository = counselingCaseRepository;
@@ -59,6 +61,7 @@ public class CounselorServiceImpl implements CounselorService {
         this.timeReservedRepository = timeReservedRepository;
         this.timeReservedMapper = timeReservedMapper;
         this.planningRepository = planningRepository;
+        this.planningMapper = planningMapper1;
         this.taskService = taskService;
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
@@ -156,6 +159,12 @@ public class CounselorServiceImpl implements CounselorService {
         log.debug("Request to get all reserved time for counselor with ID : {}", id);
         Planning planning = planningRepository.findAllByCounselorId(id);
         return taskRepository.findAllByPlanning(planning, pageable).map(taskMapper::toDto);
+    }
+
+    @Override
+    public PlanningDTO createNewCounselorPlan(Long id,PlanningDTO planningDTO) {
+        Planning planning = planningRepository.save(planningMapper.toEntity(planningDTO));
+        return planningMapper.toDto(planning);
     }
 
     /**
