@@ -5,7 +5,7 @@
 
     <groupId>com.icounseling</groupId>
     <artifactId>i-counseling</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-BETA</version>
     <packaging>war</packaging>
     <name>I Counseling</name>
 
@@ -635,9 +635,9 @@
                         <diffChangeLogFile>${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                         <driver>com.mysql.jdbc.Driver</driver>
 <!--                        <url>jdbc:mysql://icounseling.cdmk8sshibfx.eu-central-1.rds.amazonaws.com:3306/icounseling</url>-->
-                        <url>jdbc:mysql://aa1qhvevlrymz1d.cdmk8sshibfx.eu-central-1.rds.amazonaws.com:3306/icounseling</url>
+                        <url>jdbc:mysql://aa9qfe3gmga7wf.cdmk8sshibfx.eu-central-1.rds.amazonaws.com:3306/icounseling</url>
                         <defaultSchemaName>icounseling</defaultSchemaName>
-                        <username>icounseling</username>
+                        <username>root</username>
                         <password>1245783690</password>
                         <referenceUrl>hibernate:spring:pt.farol.destfinder.domain?dialect=org.hibernate.dialect.MySQLInnoDBDialect&amp;hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy</referenceUrl>
                         <verbose>true</verbose>
