@@ -93,8 +93,8 @@ spring:
       enabled: false
   social:
     facebook:
-      app-id: 414603305809590
-      app-secret: 3af0532e3968b6d47254238d81509583
+      app-id: ***
+      app-secret: ***
   task:
     execution:
       thread-name-prefix: i-counseling-task-
