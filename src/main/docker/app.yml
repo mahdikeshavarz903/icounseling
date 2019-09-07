@@ -5,10 +5,10 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=prod,swagger
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
-      - SPRING_DATASOURCE_URL=jdbc:mysql://icounseling.cdmk8sshibfx.eu-central-1.rds.amazonaws.com:3306/icounseling?useUnicode=true&characterEncoding=utf8&useSSL=false
+      - SPRING_DATASOURCE_URL=***
       - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
-      - SPRING_DATASOURCE_USERNAME=icounseling
-      - SPRING_DATASOURCE_PASSWORD=mah@1377
+      - SPRING_DATASOURCE_USERNAME=***
+      - SPRING_DATASOURCE_PASSWORD=***
       - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
     ports:
       - 8080:8080
