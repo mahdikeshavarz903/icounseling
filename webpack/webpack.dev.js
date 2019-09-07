@@ -45,6 +45,7 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
         '/'
       ],
       target: `http${options.tls ? 's' : ''}://localhost:8080`,
+      // target: `http${options.tls ? 's' : ''}://intelligencecounseling-env.z2vwmfpjh4.eu-central-1.elasticbeanstalk.com`,
       secure: false,
       changeOrigin: options.tls
     }],
@@ -64,9 +65,11 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
     new BrowserSyncPlugin({
       https: options.tls,
       host: 'localhost',
+      // host: 'intelligencecounseling-env.z2vwmfpjh4.eu-central-1.elasticbeanstalk.com',
       port: 9000,
       proxy: {
         target: `http${options.tls ? 's' : ''}://localhost:9060`,
+        // target: `http${options.tls ? 's' : ''}://intelligencecounseling-env.z2vwmfpjh4.eu-central-1.elasticbeanstalk.com`,
         proxyOptions: {
           changeOrigin: false  //pass the Host header to the backend unchanged  https://github.com/Browsersync/browser-sync/issues/430
         }
