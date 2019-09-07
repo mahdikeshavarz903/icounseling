@@ -198,10 +198,15 @@ public class CounselorResource {
      */
     @PostMapping("/counselors/{id}/create-plan")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
-    public ResponseEntity<PlanningDTO> createCounselorPlan(@PathVariable Long id, @Valid @RequestBody PlanningDTO planningDTO) {
-        log.debug("REST request to create new plan for counselor");
-
-        return null;
+    public ResponseEntity<PlanningDTO> createCounselorPlan(@PathVariable Long id, @Valid @RequestBody PlanningDTO planningDTO) throws URISyntaxException {
+        log.debug("REST request to create new plan : {}", planningDTO);
+        if (planningDTO.getId() != null) {
+            throw new BadRequestAlertException("A new plan cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        PlanningDTO pDTO = counselorService.createNewCounselorPlan(id,planningDTO);
+        return ResponseEntity.created(new URI("/api/counselors/" + pDTO.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, pDTO.getId().toString()))
+            .body(pDTO);
     }
 
     /**

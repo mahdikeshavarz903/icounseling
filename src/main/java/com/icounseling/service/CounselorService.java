@@ -1,5 +1,6 @@
 package com.icounseling.service;
 
+import com.icounseling.domain.Planning;
 import com.icounseling.service.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -73,7 +74,7 @@ public interface CounselorService {
      */
     Page<TaskDTO> findAllCounselorPlans(Long id, Pageable pageable);
 
-//    Planning createNewCounselorPlan(Long id);
+    PlanningDTO createNewCounselorPlan(Long id,PlanningDTO planningDTO);
 
     /**
      * Delete the "id" counselor.
