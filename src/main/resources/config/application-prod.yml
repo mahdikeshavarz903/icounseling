@@ -33,10 +33,6 @@ spring:
       enabled: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    #    url: jdbc:mysql://icounseling.cdmk8sshibfx.eu-central-1.rds.amazonaws.com:3306/icounseling?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
-    url: jdbc:mysql://aa9qfe3gmga7wf.cdmk8sshibfx.eu-central-1.rds.amazonaws.com:3306/icounseling?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
-    username: root
-    password: 1245783690
     hikari:
       poolName: Hikari
       auto-commit: false
