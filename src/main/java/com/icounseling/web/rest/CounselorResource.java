@@ -190,52 +190,54 @@ public class CounselorResource {
     }
 
     /**
-     * {@code GET  /counselors/{id}/create-plan} : Create new plan.
+     * {@code POST  /counselors/create-plan} : Create new plan.
      *
-     * @param id          the counselor id
      * @param planningDTO create counselor plan with planningDTO
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the PlanningDTO object in body.
      */
-    @PostMapping("/counselors/{id}/create-plan")
+    @PostMapping("/counselors/create-plan")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
-    public ResponseEntity<PlanningDTO> createCounselorPlan(@PathVariable Long id, @Valid @RequestBody PlanningDTO planningDTO) throws URISyntaxException {
+    public ResponseEntity<PlanningDTO> createCounselorPlan(@Valid @RequestBody PlanningDTO planningDTO) throws URISyntaxException {
         log.debug("REST request to create new plan : {}", planningDTO);
         if (planningDTO.getId() != null) {
             throw new BadRequestAlertException("A new plan cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PlanningDTO pDTO = counselorService.createNewCounselorPlan(id,planningDTO);
-        return ResponseEntity.created(new URI("/api/counselors/" + pDTO.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, pDTO.getId().toString()))
+        PlanningDTO pDTO = counselorService.createNewCounselorPlan(planningDTO);
+        return ResponseEntity.created(new URI("/api/counselors/create-plan/" + pDTO.getId().intValue()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, "Planning", pDTO.getId().toString()))
             .body(pDTO);
     }
 
     /**
-     * {@code GET  /counselors/{id}/update-plan/{planId}} : Update counselor plan.
+     * {@code PUT  /counselors/create-plan} : Update counselor plan.
      *
-     * @param id          the counselor id
-     * @param planId      the plan id
      * @param planningDTO update counselor plan with planningDTO
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the PlanningDTO object in body.
      */
-    @PostMapping("/counselors/{id}/update-plan/{planId}")
+    @PutMapping("/counselors/create-plan")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
-    public ResponseEntity<PlanningDTO> updateCounselorPlan(@PathVariable Long id, @PathVariable Long planId, @Valid @RequestBody PlanningDTO planningDTO) {
-        log.debug("REST request to update plan with ID : {}", planId);
-
-        return null;
+    public ResponseEntity<PlanningDTO> updateCounselorPlan(@Valid @RequestBody PlanningDTO planningDTO) {
+        log.debug("REST request to update plan");
+        if (planningDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        PlanningDTO pDTO = counselorService.updateCounselorPlan(planningDTO);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, "Planning", pDTO.getId().toString()))
+            .body(pDTO);
     }
 
     /**
-     * {@code GET  /counselors/{id}/remove-plan/{planId}} : Remove counselor plan.
+     * {@code DELETE  /counselors/remove-plan/{planId}} : Remove counselor plan.
      *
-     * @param id     the counselor id
      * @param planId the plan id
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/counselors/{id}/remove-plan/{planId}")
+    @DeleteMapping("/counselors/remove-plan/{planId}")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
-    public ResponseEntity<Void> deleteCounselorPlan(@PathVariable Long id, @PathVariable Long planId) {
+    public ResponseEntity<Void> deleteCounselorPlan(@PathVariable Long planId) {
         log.debug("REST request to delete counselor plan with ID : {}", planId);
-        return null;
+        counselorService.deleteCounselorPlan(planId);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, "Planning", planId.toString())).build();
     }
 }

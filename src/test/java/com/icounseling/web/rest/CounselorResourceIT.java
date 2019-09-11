@@ -9,7 +9,9 @@ import com.icounseling.domain.enumeration.RepeatUntil;
 import com.icounseling.repository.*;
 import com.icounseling.service.CounselorService;
 import com.icounseling.service.dto.CounselorDTO;
+import com.icounseling.service.dto.PlanningDTO;
 import com.icounseling.service.mapper.CounselorMapper;
+import com.icounseling.service.mapper.PlanningMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,8 +29,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 import static com.icounseling.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,6 +49,8 @@ public class CounselorResourceIT {
     private static final ConsultantType UPDATED_CONSULTANT_TYPE = ConsultantType.LEGAL;
     private static final CounselingCaseStatus COUNSELING_CASE_STATUS_OPEN = CounselingCaseStatus.OPENED;
     private static final CounselingCaseStatus COUNSELING_CASE_STATUS_CLOSED = CounselingCaseStatus.CLOSED;
+    private static final Instant STARTDATE =  Instant.ofEpochMilli(0L);
+    private static final Instant ENDDATE =  Instant.ofEpochMilli(0L);
 
     @Autowired
     private CounselorRepository counselorRepository;
@@ -70,6 +76,9 @@ public class CounselorResourceIT {
 
     @Autowired
     private PlanningRepository planningRepository;
+
+    @Autowired
+    private PlanningMapper planningMapper;
 
     @Autowired
     private TaskRepository taskRepository;
@@ -151,10 +160,11 @@ public class CounselorResourceIT {
     }
 
     public static Planning createPlanningEntity(EntityManager em) {
+
         Planning planning = new Planning()
             .title("AAAAAAAAAA")
-            .startDateTime(Instant.ofEpochMilli(0L))
-            .endDateTime(Instant.ofEpochMilli(0L))
+            .startDateTime(STARTDATE)
+            .endDateTime(ENDDATE)
             .description("AAAAAAAAAA");
         return planning;
     }
@@ -371,6 +381,76 @@ public class CounselorResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
             .andExpect(jsonPath("$.[*].repeatTime").value(hasItem(rt.toString())))
             .andExpect(jsonPath("$.[*].repeatUntil").value(hasItem(ru.toString())));
+    }
+
+    @Test
+    @Transactional
+    public void createNewPlan() throws Exception {
+        int databaseSizeBeforeCreate = planningRepository.findAll().size();
+        counselorRepository.saveAndFlush(counselor);
+        PlanningDTO planningDTO = planningMapper.toDto(planning);
+
+        restCounselorMockMvc.perform(post("/api/counselors/{id}/create-plan", counselor.getId().intValue())
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(planningDTO)))
+            .andExpect(status().isCreated());
+
+        List<Planning> plannings = planningRepository.findAll();
+        Planning test = plannings.get(plannings.size()-1);
+        assertThat(plannings).hasSize(databaseSizeBeforeCreate+1);
+        assertThat(test.getDescription()).isEqualTo("AAAAAAAAAA");
+        assertThat(test.getStartDateTime()).isEqualTo(STARTDATE);
+        assertThat(test.getEndDateTime()).isEqualTo(ENDDATE);
+        assertThat(test.getTitle()).isEqualTo("AAAAAAAAAA");
+    }
+
+    @Test
+    @Transactional
+    public void updateCounselorPlan() throws Exception {
+        counselorRepository.saveAndFlush(counselor);
+        planningRepository.saveAndFlush(planning);
+
+        int databaseSizeBeforeCreate = planningRepository.findAll().size();
+
+        Planning plannings = planningRepository.findById(planning.getId()).get();
+
+        em.detach(planning);
+        plannings.setDescription("asdf");
+
+        PlanningDTO planningDTO = planningMapper.toDto(planning);
+
+        restCounselorMockMvc.perform(put("/api/counselors/{id}/create-plan", counselor.getId().intValue())
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(planningDTO)))
+            .andExpect(status().isOk());
+
+        // Validate the Counselor in the database
+        List<Planning> planningList = planningRepository.findAll();
+        Planning test = planningList.get(planningList.size()-1);
+        assertThat(planningList).hasSize(databaseSizeBeforeCreate);
+        assertThat(test.getDescription()).isEqualTo("asdf");
+        assertThat(test.getStartDateTime()).isEqualTo(STARTDATE);
+        assertThat(test.getEndDateTime()).isEqualTo(ENDDATE);
+        assertThat(test.getTitle()).isEqualTo("AAAAAAAAAA");
+    }
+
+    @Test
+    @Transactional
+    public void deleteCounselorPlan() throws Exception {
+        // Initialize the database
+        counselorRepository.saveAndFlush(counselor);
+        planningRepository.saveAndFlush(planning);
+
+        int databaseSizeBeforeDelete = counselorRepository.findAll().size();
+
+        // Delete the counselor
+        restCounselorMockMvc.perform(delete("/api/counselors/remove-plan/{planId}", counselor.getId().intValue())
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isNoContent());
+
+        // Validate the database contains one less item
+        List<Planning> planningList = planningRepository.findAll();
+        assertThat(planningList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
     @Test

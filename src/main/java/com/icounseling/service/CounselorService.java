@@ -74,7 +74,27 @@ public interface CounselorService {
      */
     Page<TaskDTO> findAllCounselorPlans(Long id, Pageable pageable);
 
-    PlanningDTO createNewCounselorPlan(Long id,PlanningDTO planningDTO);
+
+    /**
+     * Create new counselor plan
+     * @param planningDTO counselor plan
+     * @return the list of entities.
+     */
+    PlanningDTO createNewCounselorPlan(PlanningDTO planningDTO);
+
+    /**
+     * Create new counselor plan
+     * @param planningDTO counselor plan
+     * @return the list of entities.
+     */
+    PlanningDTO updateCounselorPlan(PlanningDTO planningDTO);
+
+    /**
+     * Delete the "id" counselor.
+     *
+     * @param planId the plan id.
+     */
+    void deleteCounselorPlan(Long planId);
 
     /**
      * Delete the "id" counselor.

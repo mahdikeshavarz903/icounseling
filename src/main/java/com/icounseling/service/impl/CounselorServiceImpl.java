@@ -154,6 +154,14 @@ public class CounselorServiceImpl implements CounselorService {
         return timeReservedDTO;
     }
 
+    /**
+     * Get the counselor plans with ID.
+     *
+     * @param id       counselor id.
+     * @param pageable the pagination information.
+     * @return the entity.
+     */
+
     @Override
     public Page<TaskDTO> findAllCounselorPlans(Long id, Pageable pageable) {
         log.debug("Request to get all reserved time for counselor with ID : {}", id);
@@ -161,10 +169,42 @@ public class CounselorServiceImpl implements CounselorService {
         return taskRepository.findAllByPlanning(planning, pageable).map(taskMapper::toDto);
     }
 
+    /**
+     * Create new counselor plan.
+     *
+     * @param planningDTO the counselor plan.
+     * @return the entity.
+     */
     @Override
-    public PlanningDTO createNewCounselorPlan(Long id,PlanningDTO planningDTO) {
+    public PlanningDTO createNewCounselorPlan(PlanningDTO planningDTO) {
+        log.debug("Request to create new counselor plan : {}", planningDTO);
         Planning planning = planningRepository.save(planningMapper.toEntity(planningDTO));
         return planningMapper.toDto(planning);
+    }
+
+    /**
+     * Update the counselor plan.
+     *
+     * @param planningDTO the counselor plan.
+     * @return the entity.
+     */
+    @Override
+    public PlanningDTO updateCounselorPlan(PlanningDTO planningDTO) {
+        log.debug("Request to update counselor plan : {}", planningDTO);
+        Planning planning = planningRepository.save(planningMapper.toEntity(planningDTO));
+        return planningMapper.toDto(planning);
+    }
+
+    /**
+     * Delete the counselor plan.
+     *
+     * @param planId the plan id.
+     * @return the entity.
+     */
+    @Override
+    public void deleteCounselorPlan(Long planId) {
+        log.debug("Request to delete counselor plan : {}", planId);
+        planningRepository.deleteById(planId);
     }
 
     /**
