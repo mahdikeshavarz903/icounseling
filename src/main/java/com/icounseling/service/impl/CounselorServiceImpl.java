@@ -2,6 +2,7 @@ package com.icounseling.service.impl;
 
 import com.icounseling.domain.Counselor;
 import com.icounseling.domain.Planning;
+import com.icounseling.domain.Post;
 import com.icounseling.domain.Visitor;
 import com.icounseling.repository.*;
 import com.icounseling.service.CounselorService;
@@ -50,9 +51,13 @@ public class CounselorServiceImpl implements CounselorService {
 
     private final TaskMapper taskMapper;
 
+    private final PostRepository postRepository;
+
+    private final PostMapper postMapper;
+
     private final VisitorMapper visitorMapper;
 
-    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, TimeReservedRepository timeReservedRepository, TimeReservedMapper timeReservedMapper, PlanningMapper planningMapper, PlanningRepository planningRepository, PlanningMapper planningMapper1, TaskService taskService, TaskRepository taskRepository, TaskMapper taskMapper, VisitorMapper visitorMapper) {
+    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, TimeReservedRepository timeReservedRepository, TimeReservedMapper timeReservedMapper, PlanningMapper planningMapper, PlanningRepository planningRepository, PlanningMapper planningMapper1, TaskService taskService, TaskRepository taskRepository, TaskMapper taskMapper, PostRepository postRepository, PostMapper postMapper, VisitorMapper visitorMapper) {
         this.counselorRepository = counselorRepository;
         this.counselorMapper = counselorMapper;
         this.counselingCaseRepository = counselingCaseRepository;
@@ -65,6 +70,8 @@ public class CounselorServiceImpl implements CounselorService {
         this.taskService = taskService;
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
+        this.postRepository = postRepository;
+        this.postMapper = postMapper;
         this.visitorMapper = visitorMapper;
     }
 
@@ -216,5 +223,29 @@ public class CounselorServiceImpl implements CounselorService {
     public void delete(Long id) {
         log.debug("Request to delete Counselor : {}", id);
         counselorRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<PostDTO> findCounselorPosts(Pageable pageable, Long id) {
+        log.debug("Request to find all counselor posts : {}", id);
+        return postRepository.findAllByCounselorId(pageable, id).map(postMapper::toDto);
+    }
+
+    @Override
+    public PostDTO createCounselorPost(PostDTO postDTO) {
+        log.debug("Request to create a new post for counselor : {}", postDTO);
+        return postMapper.toDto(postRepository.save(postMapper.toEntity(postDTO)));
+    }
+
+    @Override
+    public PostDTO updateCounselorPost(PostDTO postDTO) {
+        log.debug("Request to update the counselor post : {}", postDTO);
+        return postMapper.toDto(postRepository.save(postMapper.toEntity(postDTO)));
+    }
+
+    @Override
+    public void deleteCounselorPost(Long postId) {
+        log.debug("Request to delete the counselor post : {}", postId);
+        postRepository.deleteById(postId);
     }
 }

@@ -78,19 +78,19 @@ public interface CounselorService {
     /**
      * Create new counselor plan
      * @param planningDTO counselor plan
-     * @return the list of entities.
+     * @return Planning entity.
      */
     PlanningDTO createNewCounselorPlan(PlanningDTO planningDTO);
 
     /**
      * Create new counselor plan
      * @param planningDTO counselor plan
-     * @return the list of entities.
+     * @return Planning entity.
      */
     PlanningDTO updateCounselorPlan(PlanningDTO planningDTO);
 
     /**
-     * Delete the "id" counselor.
+     * Delete the counselor plan.
      *
      * @param planId the plan id.
      */
@@ -102,4 +102,41 @@ public interface CounselorService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+
+    /**
+     * Get counselor posts
+     *
+     * @param pageable the pagination information.
+     * @param id the id of the entity.
+     *
+     * @return the list of entities.
+     */
+    Page<PostDTO> findCounselorPosts(Pageable pageable,Long id);
+
+    /**
+     * Create a new post
+     *
+     * @param postDTO the counselor post
+     *
+     * @return Post entity.
+     */
+    PostDTO createCounselorPost(PostDTO postDTO);
+
+    /**
+     * Update the counselor post
+     *
+     * @param postDTO the counselor post
+     *
+     * @return Post entity.
+     */
+    PostDTO updateCounselorPost(PostDTO postDTO);
+
+    /**
+     * Delete the counselor post
+     *
+     * @param postId the counselor post id
+     *
+     */
+    void deleteCounselorPost(Long postId);
 }

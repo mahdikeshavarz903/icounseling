@@ -2,18 +2,18 @@ package com.icounseling.web.rest;
 
 import com.icounseling.ICounselingApp;
 import com.icounseling.domain.*;
-import com.icounseling.domain.enumeration.ConsultantType;
-import com.icounseling.domain.enumeration.CounselingCaseStatus;
-import com.icounseling.domain.enumeration.RepeatTime;
-import com.icounseling.domain.enumeration.RepeatUntil;
+import com.icounseling.domain.enumeration.*;
 import com.icounseling.repository.*;
 import com.icounseling.service.CounselorService;
 import com.icounseling.service.dto.CounselorDTO;
 import com.icounseling.service.dto.PlanningDTO;
+import com.icounseling.service.dto.PostDTO;
 import com.icounseling.service.mapper.CounselorMapper;
 import com.icounseling.service.mapper.PlanningMapper;
+import com.icounseling.service.mapper.PostMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.h2.table.Plan;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -39,6 +39,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 /**
  * Integration tests for the {@link CounselorResource} REST controller.
  */
@@ -49,8 +50,8 @@ public class CounselorResourceIT {
     private static final ConsultantType UPDATED_CONSULTANT_TYPE = ConsultantType.LEGAL;
     private static final CounselingCaseStatus COUNSELING_CASE_STATUS_OPEN = CounselingCaseStatus.OPENED;
     private static final CounselingCaseStatus COUNSELING_CASE_STATUS_CLOSED = CounselingCaseStatus.CLOSED;
-    private static final Instant STARTDATE =  Instant.ofEpochMilli(0L);
-    private static final Instant ENDDATE =  Instant.ofEpochMilli(0L);
+    private static final Instant STARTDATE = Instant.ofEpochMilli(0L);
+    private static final Instant ENDDATE = Instant.ofEpochMilli(0L);
 
     @Autowired
     private CounselorRepository counselorRepository;
@@ -84,6 +85,12 @@ public class CounselorResourceIT {
     private TaskRepository taskRepository;
 
     @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
+    private PostMapper postMapper;
+
+    @Autowired
     private TimeReservedRepository timeReservedRepository;
 
     @Autowired
@@ -112,6 +119,8 @@ public class CounselorResourceIT {
 
     private Task task;
 
+    private Post post;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -126,7 +135,7 @@ public class CounselorResourceIT {
 
     /**
      * Create an entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
@@ -134,6 +143,14 @@ public class CounselorResourceIT {
         Counselor counselor = new Counselor()
             .consultantType(DEFAULT_CONSULTANT_TYPE);
         return counselor;
+    }
+
+    public static Post createPostEntity(EntityManager em) {
+        Post post = new Post()
+            .image(TestUtil.createByteArray(1, "0"))
+            .imageContentType("image/jpg")
+            .documentFormat(DocumentFormat.PDF);
+        return post;
     }
 
     public static CounselingCase createCounselingCaseEntity(EntityManager em) {
@@ -175,9 +192,10 @@ public class CounselorResourceIT {
             .repeatUntil(RepeatUntil.NO_END_DATE);
         return task;
     }
+
     /**
      * Create an updated entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
@@ -195,6 +213,7 @@ public class CounselorResourceIT {
         timerReserved = createTimeReservedEntity(em);
         planning = createPlanningEntity(em);
         task = createTaskEntity(em);
+        post = createPostEntity(em);
     }
 
     @Test
@@ -390,14 +409,14 @@ public class CounselorResourceIT {
         counselorRepository.saveAndFlush(counselor);
         PlanningDTO planningDTO = planningMapper.toDto(planning);
 
-        restCounselorMockMvc.perform(post("/api/counselors/{id}/create-plan", counselor.getId().intValue())
+        restCounselorMockMvc.perform(post("/api/counselors/create-plan")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(planningDTO)))
             .andExpect(status().isCreated());
 
         List<Planning> plannings = planningRepository.findAll();
-        Planning test = plannings.get(plannings.size()-1);
-        assertThat(plannings).hasSize(databaseSizeBeforeCreate+1);
+        Planning test = plannings.get(plannings.size() - 1);
+        assertThat(plannings).hasSize(databaseSizeBeforeCreate + 1);
         assertThat(test.getDescription()).isEqualTo("AAAAAAAAAA");
         assertThat(test.getStartDateTime()).isEqualTo(STARTDATE);
         assertThat(test.getEndDateTime()).isEqualTo(ENDDATE);
@@ -419,14 +438,14 @@ public class CounselorResourceIT {
 
         PlanningDTO planningDTO = planningMapper.toDto(planning);
 
-        restCounselorMockMvc.perform(put("/api/counselors/{id}/create-plan", counselor.getId().intValue())
+        restCounselorMockMvc.perform(put("/api/counselors/create-plan")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(planningDTO)))
             .andExpect(status().isOk());
 
         // Validate the Counselor in the database
         List<Planning> planningList = planningRepository.findAll();
-        Planning test = planningList.get(planningList.size()-1);
+        Planning test = planningList.get(planningList.size() - 1);
         assertThat(planningList).hasSize(databaseSizeBeforeCreate);
         assertThat(test.getDescription()).isEqualTo("asdf");
         assertThat(test.getStartDateTime()).isEqualTo(STARTDATE);
@@ -451,6 +470,87 @@ public class CounselorResourceIT {
         // Validate the database contains one less item
         List<Planning> planningList = planningRepository.findAll();
         assertThat(planningList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPosts() throws Exception {
+        postRepository.saveAndFlush(post);
+        counselorRepository.saveAndFlush(counselor);
+
+        post.setCounselor(counselor);
+
+        restCounselorMockMvc.perform(get("/api/counselors/{id}/posts?sort=id,desc", counselor.getId().intValue()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(post.getId().intValue())));
+//            .andExpect(jsonPath("$.[*].image").value(hasItem(rt.toString())))
+//            .andExpect(jsonPath("$.[*].repeatUntil").value(hasItem(ru.toString())));
+    }
+
+    @Test
+    @Transactional
+    public void createNewPost() throws Exception {
+        int dbSize = postRepository.findAll().size();
+
+        counselorRepository.saveAndFlush(counselor);
+
+        PostDTO postDTO = postMapper.toDto(post);
+
+        restCounselorMockMvc.perform((post("/api/counselors/create-post"))
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(postDTO)))
+            .andExpect(status().isCreated());
+
+        List<Post> postDTOS = postRepository.findAll();
+        Post lastPost = postDTOS.get(postDTOS.size() - 1);
+        assertThat(postDTOS).hasSize(dbSize + 1);
+        assertThat(lastPost.getImageContentType()).isEqualTo("image/jpg");
+        assertThat(lastPost.getDocumentFormat()).isEqualTo(DocumentFormat.PDF);
+    }
+
+    @Test
+    @Transactional
+    public void updateCounselorPost() throws Exception {
+        counselorRepository.saveAndFlush(counselor);
+        postRepository.saveAndFlush(post);
+
+        int databaseSizeBeforeCreate = postRepository.findAll().size();
+
+        Post p = postRepository.findById(post.getId()).get();
+
+        em.detach(p);
+        p.setDocumentFormat(DocumentFormat.DOC);
+        p.imageContentType("image/png");
+
+        PostDTO postDTO = postMapper.toDto(post);
+
+        restCounselorMockMvc.perform(put("/api/counselors/create-post")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(postDTO)))
+            .andExpect(status().isOk());
+
+        // Validate the Counselor in the database
+        List<Post> postList = postRepository.findAll();
+        Post test = postList.get(postList.size() - 1);
+        assertThat(postList).hasSize(databaseSizeBeforeCreate);
+        assertThat(test.getImageContentType()).isEqualTo("image/png");
+        assertThat(test.getDocumentFormat()).isEqualTo(DocumentFormat.DOC);
+    }
+
+    @Test
+    @Transactional
+    public void deleteCounselorPost() throws Exception {
+        postRepository.saveAndFlush(post);
+
+        int dbSize = postRepository.findAll().size();
+
+        restCounselorMockMvc.perform((delete("/api/counselors/remove-post/{postId}", post.getId().intValue()))
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isNoContent());
+
+        List<Post> postList = postRepository.findAll();
+        assertThat(postList).hasSize(dbSize - 1);
     }
 
     @Test

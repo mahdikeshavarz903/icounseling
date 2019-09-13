@@ -204,7 +204,7 @@ public class CounselorResource {
         }
         PlanningDTO pDTO = counselorService.createNewCounselorPlan(planningDTO);
         return ResponseEntity.created(new URI("/api/counselors/create-plan/" + pDTO.getId().intValue()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, "Planning", pDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, "planning", pDTO.getId().toString()))
             .body(pDTO);
     }
 
@@ -223,7 +223,7 @@ public class CounselorResource {
         }
         PlanningDTO pDTO = counselorService.updateCounselorPlan(planningDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, "Planning", pDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, "planning", pDTO.getId().toString()))
             .body(pDTO);
     }
 
@@ -238,6 +238,58 @@ public class CounselorResource {
     public ResponseEntity<Void> deleteCounselorPlan(@PathVariable Long planId) {
         log.debug("REST request to delete counselor plan with ID : {}", planId);
         counselorService.deleteCounselorPlan(planId);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, "Planning", planId.toString())).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, "planning", planId.toString())).build();
+    }
+
+    /**
+     * {@code GET  /counselors/{id}/posts} : Get all counselor posts.
+     *
+     * @param pageable    the pagination information.
+     * @param id          the counselor id
+     * @param queryParams a {@link MultiValueMap} query parameters.
+     * @param uriBuilder  a {@link UriComponentsBuilder} URI builder.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the PostDTO object in body.
+     */
+    @GetMapping("/counselors/{id}/posts")
+    public ResponseEntity<List<PostDTO>> getAllPosts(Pageable pageable, @PathVariable Long id, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder){
+        log.debug("REST request to get all counselor posts : {}",id);
+        Page<PostDTO> postDTOS = counselorService.findCounselorPosts(pageable,id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), postDTOS);
+        return ResponseEntity.ok().headers(headers).body(postDTOS.getContent());
+    }
+
+
+    /**
+     * {@code POST  /counselors/create-post} : Create a new post.
+     *
+     * @param postDTO  create new post with postDTO object
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the PostDTO object in body.
+     */
+    @PostMapping("/counselors/create-post")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
+    public ResponseEntity<PostDTO> createNewCounselorPost(@Valid @RequestBody PostDTO postDTO) throws URISyntaxException {
+        log.debug("REST request to create a new post for counselor : {}", postDTO);
+        PostDTO post = counselorService.createCounselorPost(postDTO);
+        return ResponseEntity.created(new URI("/api/counselors/create-post/" + post.getId().intValue()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, "planning", post.getId().toString()))
+            .body(post);
+    }
+
+    @PutMapping("/counselors/create-post")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
+    public ResponseEntity<PostDTO> updateCounselorPost(@Valid @RequestBody PostDTO postDTO) throws URISyntaxException {
+        log.debug("REST request to update the counselor post : {}", postDTO);
+        PostDTO post = counselorService.updateCounselorPost(postDTO);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName,true,"post",post.getId().toString()))
+            .body(post);
+    }
+
+    @DeleteMapping("/counselors/remove-post/{postId}")
+    public ResponseEntity<PostDTO> deleteCounselorPost(@PathVariable Long postId){
+        log.debug("REST request to delete counselor post : {}", postId);
+        counselorService.deleteCounselorPost(postId);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName,true,"post",postId.toString())).build();
     }
 }
