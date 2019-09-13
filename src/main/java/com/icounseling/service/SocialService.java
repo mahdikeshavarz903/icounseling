@@ -1,8 +1,10 @@
 package com.icounseling.service;
 
 import com.icounseling.domain.Authority;
+import com.icounseling.domain.SocialUserConnection;
 import com.icounseling.domain.User;
 import com.icounseling.repository.AuthorityRepository;
+import com.icounseling.repository.CustomSocialUsersConnectionRepository;
 import com.icounseling.repository.UserRepository;
 import com.icounseling.security.AuthoritiesConstants;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -34,6 +36,7 @@ public class SocialService {
     private final AuthorityRepository authorityRepository;
 
     private final UserRepository userRepository;
+
 
     private final PasswordEncoder passwordEncoder;
 
@@ -143,7 +146,8 @@ public class SocialService {
     private String getLoginDependingOnProviderId(UserProfile userProfile, String providerId) {
         switch (providerId) {
             case "twitter":
-                return userProfile.getUsername().toLowerCase();
+            case "facebook":
+                return userProfile.getUsername();
             default:
                 return userProfile.getEmail();
         }
