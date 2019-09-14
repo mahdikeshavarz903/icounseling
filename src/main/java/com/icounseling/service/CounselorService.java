@@ -2,9 +2,11 @@ package com.icounseling.service;
 
 import com.icounseling.domain.Planning;
 import com.icounseling.service.dto.*;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -139,4 +141,14 @@ public interface CounselorService {
      *
      */
     void deleteCounselorPost(Long postId);
+
+    /**
+     * Get counselor information
+     *
+     * @param pageable the pagination information.
+     * @param id the id of the entity.
+     *
+     * @return the list of entities.
+     */
+    List<JSONObject> reviewCounselorInformation(Long id, Pageable pageable);
 }

@@ -10,9 +10,11 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.MultiValueMap;
@@ -22,6 +24,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -276,6 +279,12 @@ public class CounselorResource {
             .body(post);
     }
 
+    /**
+     * {@code PUT  /counselors/create-post} : Update counselor post.
+     *
+     * @param postDTO update counselor post with postDTO
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the postDTO object in body.
+     */
     @PutMapping("/counselors/create-post")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
     public ResponseEntity<PostDTO> updateCounselorPost(@Valid @RequestBody PostDTO postDTO) throws URISyntaxException {
@@ -286,10 +295,23 @@ public class CounselorResource {
             .body(post);
     }
 
+    /**
+     * {@code DELETE  /counselors/remove-post/{postId}} : Remove counselor post.
+     *
+     * @param postId the plan id
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
     @DeleteMapping("/counselors/remove-post/{postId}")
     public ResponseEntity<PostDTO> deleteCounselorPost(@PathVariable Long postId){
         log.debug("REST request to delete counselor post : {}", postId);
         counselorService.deleteCounselorPost(postId);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName,true,"post",postId.toString())).build();
+    }
+
+    @GetMapping("/counselors/{id}/review-counselor-information")
+    public ResponseEntity<Object> reviewCounselorInformation(Pageable pageable, @PathVariable Long id, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder){
+        log.debug("REST request to view all counselor information");
+        List<JSONObject> entities = counselorService.reviewCounselorInformation(id,pageable);
+        return new ResponseEntity<>(entities, HttpStatus.OK);
     }
 }
