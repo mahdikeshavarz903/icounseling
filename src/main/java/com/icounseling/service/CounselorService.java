@@ -1,6 +1,6 @@
 package com.icounseling.service;
 
-import com.icounseling.domain.Planning;
+import com.icounseling.domain.Counselor;
 import com.icounseling.service.dto.*;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.domain.Page;
@@ -145,10 +145,9 @@ public interface CounselorService {
     /**
      * Get counselor information
      *
-     * @param pageable the pagination information.
      * @param id the id of the entity.
      *
      * @return the list of entities.
      */
-    List<JSONObject> reviewCounselorInformation(Long id, Pageable pageable);
+    Optional<CustomCounselorDTO> reviewCounselorInformation(Long id);
 }

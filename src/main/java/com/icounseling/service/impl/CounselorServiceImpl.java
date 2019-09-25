@@ -8,15 +8,11 @@ import com.icounseling.service.dto.*;
 import com.icounseling.service.mapper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -42,6 +38,8 @@ public class CounselorServiceImpl implements CounselorService {
 
     private final TimeReservedMapper timeReservedMapper;
 
+    private final CustomCounselorMapper customCounselorDTO;
+
     private final PlanningRepository planningRepository;
 
     private final PlanningMapper planningMapper;
@@ -64,7 +62,7 @@ public class CounselorServiceImpl implements CounselorService {
 
     private final ScoreRepository scoreRepository;
 
-    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, TimeReservedRepository timeReservedRepository, TimeReservedMapper timeReservedMapper, PlanningMapper planningMapper, PlanningRepository planningRepository, PlanningMapper planningMapper1, TaskService taskService, TaskRepository taskRepository, TaskMapper taskMapper, PostRepository postRepository, PostMapper postMapper, VisitorMapper visitorMapper, UserRepository userRepository, EducationRepository educationRepository, ScoreRepository scoreRepository) {
+    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, TimeReservedRepository timeReservedRepository, TimeReservedMapper timeReservedMapper, PlanningMapper planningMapper, CustomCounselorMapper customCounselorDTO, PlanningRepository planningRepository, PlanningMapper planningMapper1, TaskService taskService, TaskRepository taskRepository, TaskMapper taskMapper, PostRepository postRepository, PostMapper postMapper, VisitorMapper visitorMapper, UserRepository userRepository, EducationRepository educationRepository, ScoreRepository scoreRepository) {
         this.counselorRepository = counselorRepository;
         this.counselorMapper = counselorMapper;
         this.counselingCaseRepository = counselingCaseRepository;
@@ -72,6 +70,7 @@ public class CounselorServiceImpl implements CounselorService {
         this.visitorRepository = visitorRepository;
         this.timeReservedRepository = timeReservedRepository;
         this.timeReservedMapper = timeReservedMapper;
+        this.customCounselorDTO = customCounselorDTO;
         this.planningRepository = planningRepository;
         this.planningMapper = planningMapper1;
         this.taskService = taskService;
@@ -260,58 +259,25 @@ public class CounselorServiceImpl implements CounselorService {
     }
 
     @Override
-    public List<JSONObject> reviewCounselorInformation(Long id, Pageable pageable) {
+    public Optional<CustomCounselorDTO> reviewCounselorInformation(Long id) {
         log.debug("Request to review counselor information : {}",id);
-        List<JSONObject> entities = new ArrayList<>();
-        JSONObject userEntity =  new JSONObject();
-        JSONObject educationEntity =  new JSONObject();
-        JSONObject scoreEntity =  new JSONObject();
-        JSONObject counselorEntity =  new JSONObject();
 
+        Optional<Counselor> counselor = counselorRepository.findById(id);
         try {
-            Optional<Counselor> counselor = counselorRepository.findById(id);
             if(counselor.isPresent()) {
-                counselorEntity.put("consultantType",counselor.get().getConsultantType());
-
-                Optional<User> user = userRepository.findOneWithAuthoritiesById(counselor.get().getUser().getId());
-                if (user.isPresent()) {
-                    userEntity.put("firstName", user.get().getFirstName());
-                    userEntity.put("lastName", user.get().getLastName());
-                    userEntity.put("email", user.get().getEmail());
-                    userEntity.put("imageUrl", user.get().getImageUrl());
-                    userEntity.put("about", user.get().getAbout());
-                    userEntity.put("addressToken", user.get().getAddressToken());
-                    userEntity.put("age", user.get().getAge());
-                    userEntity.put("birthdayDate", user.get().getBirthdayDate());
-                    userEntity.put("cover", user.get().getCover());
-                    userEntity.put("gender", user.get().getGender());
-                    userEntity.put("homePhoneNumber", user.get().getHomePhoneNumber());
-                    userEntity.put("nationalCode", user.get().getNationalCode());
-                    userEntity.put("nationality", user.get().getNationality());
-                    userEntity.put("zipCode", user.get().getZipCode());
-                    userEntity.put("langKey", user.get().getLangKey());
-                }
-
+                Optional<User> user = userRepository.findOneWithAuthoritiesById(counselor.get().getId());
                 Optional<Education> education = educationRepository.findById(counselor.get().getEducation().getId());
-                if(education.isPresent())
-                    educationEntity.put("type",education.get().getType());
-
                 Optional<Score> score = scoreRepository.findById(counselor.get().getScore().getId());
-                if(score.isPresent()){
-                    scoreEntity.put("total",score.get().getTotal());
-                    scoreEntity.put("image",score.get().getId());
-                    scoreEntity.put("degree",score.get().getDegree());
-                }
+
+                counselor.get().setEducation(education.get());
+                counselor.get().setScore(score.get());
+                counselor.get().setUser(user.get());
             }
-        }catch (JSONException e) {
+        }catch (Exception e) {
             e.printStackTrace();
         }
 
-        entities.add(userEntity);
-        entities.add(counselorEntity);
-        entities.add(educationEntity);
-        entities.add(scoreEntity);
-
-        return entities;
+        Optional<CustomCounselorDTO> counselorDTO = counselor.map(customCounselorDTO::toDto);
+        return counselorDTO;
     }
 }

@@ -12,7 +12,7 @@ entity Counselor{
 }
 
 enum EducationDegree{
-	ASSOCIATE_DEGREE, BACHELOR_DEGREE, 
+	ASSOCIATE_DEGREE, BACHELOR_DEGREE,
     DOCOTRAL_DEGREE, MASTER_DEGREE
 }
 
@@ -128,7 +128,7 @@ entity Rate{
 }
 
 entity Comment{
-	
+
 }
 
 entity Library{
@@ -143,8 +143,8 @@ entity Category{
 
 enum CategoryType{
 	ROMANCE,
-    ARTS_PHOTOGRAPHY, 
-    BIOGRAPHIES_MEMOIRS, 
+    ARTS_PHOTOGRAPHY,
+    BIOGRAPHIES_MEMOIRS,
     BUSINESS_INVESTING,
     CHILDREN_BOOKS,
     COOKBOOKS_FOOD,
@@ -196,4 +196,4 @@ relationship OneToOne{
 
 dto * with mapstruct
 service all with serviceImpl
-paginate * with pagination 
+paginate * with pagination
