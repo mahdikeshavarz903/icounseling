@@ -105,6 +105,8 @@ enum PaymentType{
 
 entity Post{
 	image Blob required,
+	likeNumbers Integer required,
+    numberOfViews Integer required,
     documentFormat DocumentFormat required
 }
 

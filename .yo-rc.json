@@ -35,9 +35,6 @@
     "otherModules": [],
     "enableTranslation": true,
     "nativeLanguage": "fa",
-    "languages": [
-      "fa",
-      "en"
-    ]
+    "languages": ["fa", "en"]
   }
 }
