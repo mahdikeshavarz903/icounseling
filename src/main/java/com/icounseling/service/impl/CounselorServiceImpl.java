@@ -1,9 +1,6 @@
 package com.icounseling.service.impl;
 
-import com.icounseling.domain.Counselor;
-import com.icounseling.domain.Planning;
-import com.icounseling.domain.Post;
-import com.icounseling.domain.Visitor;
+import com.icounseling.domain.*;
 import com.icounseling.repository.*;
 import com.icounseling.service.CounselorService;
 import com.icounseling.service.TaskService;
@@ -41,6 +38,8 @@ public class CounselorServiceImpl implements CounselorService {
 
     private final TimeReservedMapper timeReservedMapper;
 
+    private final CustomCounselorMapper customCounselorDTO;
+
     private final PlanningRepository planningRepository;
 
     private final PlanningMapper planningMapper;
@@ -57,7 +56,13 @@ public class CounselorServiceImpl implements CounselorService {
 
     private final VisitorMapper visitorMapper;
 
-    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, TimeReservedRepository timeReservedRepository, TimeReservedMapper timeReservedMapper, PlanningMapper planningMapper, PlanningRepository planningRepository, PlanningMapper planningMapper1, TaskService taskService, TaskRepository taskRepository, TaskMapper taskMapper, PostRepository postRepository, PostMapper postMapper, VisitorMapper visitorMapper) {
+    private final UserRepository userRepository;
+
+    private final EducationRepository educationRepository;
+
+    private final ScoreRepository scoreRepository;
+
+    public CounselorServiceImpl(CounselorRepository counselorRepository, CounselorMapper counselorMapper, CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, VisitorRepository visitorRepository, TimeReservedRepository timeReservedRepository, TimeReservedMapper timeReservedMapper, PlanningMapper planningMapper, CustomCounselorMapper customCounselorDTO, PlanningRepository planningRepository, PlanningMapper planningMapper1, TaskService taskService, TaskRepository taskRepository, TaskMapper taskMapper, PostRepository postRepository, PostMapper postMapper, VisitorMapper visitorMapper, UserRepository userRepository, EducationRepository educationRepository, ScoreRepository scoreRepository) {
         this.counselorRepository = counselorRepository;
         this.counselorMapper = counselorMapper;
         this.counselingCaseRepository = counselingCaseRepository;
@@ -65,6 +70,7 @@ public class CounselorServiceImpl implements CounselorService {
         this.visitorRepository = visitorRepository;
         this.timeReservedRepository = timeReservedRepository;
         this.timeReservedMapper = timeReservedMapper;
+        this.customCounselorDTO = customCounselorDTO;
         this.planningRepository = planningRepository;
         this.planningMapper = planningMapper1;
         this.taskService = taskService;
@@ -73,6 +79,9 @@ public class CounselorServiceImpl implements CounselorService {
         this.postRepository = postRepository;
         this.postMapper = postMapper;
         this.visitorMapper = visitorMapper;
+        this.userRepository = userRepository;
+        this.educationRepository = educationRepository;
+        this.scoreRepository = scoreRepository;
     }
 
     /**
@@ -247,5 +256,28 @@ public class CounselorServiceImpl implements CounselorService {
     public void deleteCounselorPost(Long postId) {
         log.debug("Request to delete the counselor post : {}", postId);
         postRepository.deleteById(postId);
+    }
+
+    @Override
+    public Optional<CustomCounselorDTO> reviewCounselorInformation(Long id) {
+        log.debug("Request to review counselor information : {}",id);
+
+        Optional<Counselor> counselor = counselorRepository.findById(id);
+        try {
+            if(counselor.isPresent()) {
+                Optional<User> user = userRepository.findOneWithAuthoritiesById(counselor.get().getId());
+                Optional<Education> education = educationRepository.findById(counselor.get().getEducation().getId());
+                Optional<Score> score = scoreRepository.findById(counselor.get().getScore().getId());
+
+                counselor.get().setEducation(education.get());
+                counselor.get().setScore(score.get());
+                counselor.get().setUser(user.get());
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Optional<CustomCounselorDTO> counselorDTO = counselor.map(customCounselorDTO::toDto);
+        return counselorDTO;
     }
 }

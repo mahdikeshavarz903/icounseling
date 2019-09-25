@@ -12,7 +12,7 @@ import java.util.Objects;
 /**
  * A DTO for the {@link com.icounseling.domain.Counselor} entity.
  */
-public class CounselorDTO implements Serializable {
+public class CustomCounselorDTO implements Serializable {
 
     private Long id;
 
@@ -20,11 +20,35 @@ public class CounselorDTO implements Serializable {
     private ConsultantType consultantType;
 
 
-    private Long educationId;
+    private Education education;
 
-    private Long scoreId;
+    private Score score;
 
-    private Long userId;
+    private User user;
+
+    public Education getEducation() {
+        return education;
+    }
+
+    public void setEducation(Education education) {
+        this.education = education;
+    }
+
+    public Score getScore() {
+        return score;
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getId() {
         return id;
@@ -40,30 +64,6 @@ public class CounselorDTO implements Serializable {
 
     public void setConsultantType(ConsultantType consultantType) {
         this.consultantType = consultantType;
-    }
-
-    public Long getEducationId() {
-        return educationId;
-    }
-
-    public void setEducationId(Long educationId) {
-        this.educationId = educationId;
-    }
-
-    public Long getScoreId() {
-        return scoreId;
-    }
-
-    public void setScoreId(Long scoreId) {
-        this.scoreId = scoreId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     @Override
@@ -92,9 +92,9 @@ public class CounselorDTO implements Serializable {
         return "CounselorDTO{" +
             "id=" + getId() +
             ", consultantType='" + getConsultantType() + "'" +
-            ", education=" + getEducationId() +
-            ", score=" + getScoreId() +
-            ", user=" + getUserId() +
+            ", education=" + getEducation() +
+            ", score=" + getScore() +
+            ", user=" + getUser() +
             "}";
     }
 }

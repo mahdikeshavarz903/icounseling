@@ -76,6 +76,12 @@ public class CounselorResourceIT {
     private CounselorService counselorService;
 
     @Autowired
+    private EducationRepository educationRepository;
+
+    @Autowired
+    private ScoreRepository scoreRepository;
+
+    @Autowired
     private PlanningRepository planningRepository;
 
     @Autowired
@@ -536,6 +542,32 @@ public class CounselorResourceIT {
         assertThat(postList).hasSize(databaseSizeBeforeCreate);
         assertThat(test.getImageContentType()).isEqualTo("image/png");
         assertThat(test.getDocumentFormat()).isEqualTo(DocumentFormat.DOC);
+    }
+
+    @Test
+    @Transactional
+    public void reviewCounselorInformation() throws Exception {
+        counselorRepository.saveAndFlush(counselor);
+
+        byte[] defaultImage = TestUtil.createByteArray(1, "0");
+
+        Score score = new Score()
+            .total(1F)
+            .image(defaultImage)
+            .imageContentType("image/jpg")
+            .degree(ScoreDegree.PROFESSIONAL);
+
+        Education education = new Education();
+        education.setType(EducationDegree.ASSOCIATE_DEGREE);
+
+        educationRepository.saveAndFlush(education);
+        scoreRepository.saveAndFlush(score);
+
+        counselor.setEducation(education);
+        counselor.setScore(score);
+
+        restCounselorMockMvc.perform(get("/api/counselors/{id}/review-counselor-information",counselor.getId().intValue()))
+            .andExpect(status().isOk());
     }
 
     @Test
