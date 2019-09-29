@@ -12,6 +12,8 @@ export interface IPost {
   id?: number;
   imageContentType?: string;
   image?: any;
+  likeNumbers?: number;
+  numberOfViews?: number;
   documentFormat?: DocumentFormat;
   scheduleId?: number;
   comments?: IComment[];

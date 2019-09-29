@@ -2,12 +2,18 @@ package com.icounseling.web.rest;
 
 import com.icounseling.ICounselingApp;
 import com.icounseling.domain.CounselingCase;
+import com.icounseling.domain.Counselor;
+import com.icounseling.domain.Visitor;
+import com.icounseling.domain.enumeration.ConsultantType;
 import com.icounseling.domain.enumeration.CounselingCaseStatus;
 import com.icounseling.repository.CounselingCaseRepository;
+import com.icounseling.repository.CounselorRepository;
+import com.icounseling.repository.VisitorRepository;
 import com.icounseling.service.CounselingCaseService;
 import com.icounseling.service.dto.CounselingCaseDTO;
 import com.icounseling.service.mapper.CounselingCaseMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -55,6 +61,12 @@ public class CounselingCaseResourceIT {
 
     @Autowired
     private ExceptionTranslator exceptionTranslator;
+
+    @Autowired
+    private VisitorRepository visitorRepository;
+
+    @Autowired
+    private CounselorRepository counselorRepository;
 
     @Autowired
     private EntityManager em;
@@ -111,6 +123,16 @@ public class CounselingCaseResourceIT {
     public void createCounselingCase() throws Exception {
         int databaseSizeBeforeCreate = counselingCaseRepository.findAll().size();
 
+        Visitor visitor = new Visitor();
+        visitorRepository.saveAndFlush(visitor);
+
+        Counselor counselor = new Counselor();
+        counselor.consultantType(ConsultantType.LEGAL);
+        counselorRepository.saveAndFlush(counselor);
+
+        counselingCase.setVisitor(visitor);
+        counselingCase.setCounselor(counselor);
+
         // Create the CounselingCase
         CounselingCaseDTO counselingCaseDTO = counselingCaseMapper.toDto(counselingCase);
         restCounselingCaseMockMvc.perform(post("/api/counseling-cases")
@@ -129,6 +151,16 @@ public class CounselingCaseResourceIT {
     @Transactional
     public void createCounselingCaseWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = counselingCaseRepository.findAll().size();
+
+        Visitor visitor = new Visitor();
+        visitorRepository.saveAndFlush(visitor);
+
+        Counselor counselor = new Counselor();
+        counselor.consultantType(ConsultantType.LEGAL);
+        counselorRepository.saveAndFlush(counselor);
+
+        counselingCase.setVisitor(visitor);
+        counselingCase.setCounselor(counselor);
 
         // Create the CounselingCase with an existing ID
         counselingCase.setId(1L);
@@ -178,7 +210,7 @@ public class CounselingCaseResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(counselingCase.getId().intValue())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getCounselingCase() throws Exception {
@@ -205,6 +237,16 @@ public class CounselingCaseResourceIT {
     @Transactional
     public void updateCounselingCase() throws Exception {
         // Initialize the database
+        Visitor visitor = new Visitor();
+        visitorRepository.saveAndFlush(visitor);
+
+        Counselor counselor = new Counselor();
+        counselor.consultantType(ConsultantType.LEGAL);
+        counselorRepository.saveAndFlush(counselor);
+
+        counselingCase.setVisitor(visitor);
+        counselingCase.setCounselor(counselor);
+
         counselingCaseRepository.saveAndFlush(counselingCase);
 
         int databaseSizeBeforeUpdate = counselingCaseRepository.findAll().size();

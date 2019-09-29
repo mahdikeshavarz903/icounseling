@@ -1,12 +1,21 @@
 package com.icounseling.web.rest;
 
 import com.icounseling.ICounselingApp;
+import com.icounseling.domain.Education;
+import com.icounseling.domain.Score;
+import com.icounseling.domain.User;
 import com.icounseling.domain.Visitor;
+import com.icounseling.domain.enumeration.EducationDegree;
+import com.icounseling.domain.enumeration.ScoreDegree;
+import com.icounseling.repository.EducationRepository;
+import com.icounseling.repository.ScoreRepository;
+import com.icounseling.repository.UserRepository;
 import com.icounseling.repository.VisitorRepository;
 import com.icounseling.service.VisitorService;
 import com.icounseling.service.dto.VisitorDTO;
 import com.icounseling.service.mapper.VisitorMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -52,6 +61,15 @@ public class VisitorResourceIT {
 
     @Autowired
     private ExceptionTranslator exceptionTranslator;
+
+    @Autowired
+    private EducationRepository educationRepository;
+
+    @Autowired
+    private ScoreRepository scoreRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private EntityManager em;
@@ -106,6 +124,32 @@ public class VisitorResourceIT {
     public void createVisitor() throws Exception {
         int databaseSizeBeforeCreate = visitorRepository.findAll().size();
 
+        Education education = new Education();
+        education.setType(EducationDegree.ASSOCIATE_DEGREE);
+        educationRepository.save(education);
+
+        Score score = new Score();
+        score.setDegree(ScoreDegree.PROFESSIONAL);
+        score.setTotal((float) 50);
+        score.setImage(TestUtil.createByteArray(1, "0"));
+        score.setImageContentType("image/jpg");
+        scoreRepository.save(score);
+
+        User user = new User();
+        user.setLogin("09307301161");
+        user.setPassword(RandomStringUtils.random(60));
+        user.setActivated(true);
+        user.setEmail(RandomStringUtils.randomAlphabetic(5) + "johndoe@localhost");
+        user.setFirstName("john");
+        user.setLastName("john");
+        user.setImageUrl("http://placehold.it/50x50");
+        user.setLangKey("en");
+        userRepository.save(user);
+
+        visitor.setUser(user);
+        visitor.setEducation(education);
+        visitor.setScore(score);
+
         // Create the Visitor
         VisitorDTO visitorDTO = visitorMapper.toDto(visitor);
         restVisitorMockMvc.perform(post("/api/visitors")
@@ -152,7 +196,7 @@ public class VisitorResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(visitor.getId().intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getVisitor() throws Exception {
@@ -177,7 +221,32 @@ public class VisitorResourceIT {
     @Test
     @Transactional
     public void updateVisitor() throws Exception {
-        // Initialize the database
+        Education education = new Education();
+        education.setType(EducationDegree.ASSOCIATE_DEGREE);
+        educationRepository.save(education);
+
+        Score score = new Score();
+        score.setDegree(ScoreDegree.PROFESSIONAL);
+        score.setTotal((float) 50);
+        score.setImage(TestUtil.createByteArray(1, "0"));
+        score.setImageContentType("image/jpg");
+        scoreRepository.save(score);
+
+        User user = new User();
+        user.setLogin("09307301161");
+        user.setPassword(RandomStringUtils.random(60));
+        user.setActivated(true);
+        user.setEmail(RandomStringUtils.randomAlphabetic(5) + "johndoe@localhost");
+        user.setFirstName("Ali");
+        user.setLastName("Alizade");
+        user.setImageUrl("http://placehold.it/50x50");
+        user.setLangKey("fa");
+        userRepository.save(user);
+
+        visitor.setUser(user);
+        visitor.setEducation(education);
+        visitor.setScore(score);
+
         visitorRepository.saveAndFlush(visitor);
 
         int databaseSizeBeforeUpdate = visitorRepository.findAll().size();

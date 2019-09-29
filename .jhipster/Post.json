@@ -10,6 +10,20 @@
             ]
         },
         {
+            "fieldName": "likeNumbers",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "numberOfViews",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
             "fieldName": "documentFormat",
             "fieldType": "DocumentFormat",
             "fieldValues": "PDF,DOCX,DOC,XLSX,PPT",

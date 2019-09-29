@@ -46,6 +46,18 @@ export class PostDetail extends React.Component<IPostDetailProps> {
               ) : null}
             </dd>
             <dt>
+              <span id="likeNumbers">
+                <Translate contentKey="iCounselingApp.post.likeNumbers">Like Numbers</Translate>
+              </span>
+            </dt>
+            <dd>{postEntity.likeNumbers}</dd>
+            <dt>
+              <span id="numberOfViews">
+                <Translate contentKey="iCounselingApp.post.numberOfViews">Number Of Views</Translate>
+              </span>
+            </dt>
+            <dd>{postEntity.numberOfViews}</dd>
+            <dt>
               <span id="documentFormat">
                 <Translate contentKey="iCounselingApp.post.documentFormat">Document Format</Translate>
               </span>

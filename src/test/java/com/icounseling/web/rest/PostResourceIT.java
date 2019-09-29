@@ -2,12 +2,12 @@ package com.icounseling.web.rest;
 
 import com.icounseling.ICounselingApp;
 import com.icounseling.domain.Post;
-import com.icounseling.domain.enumeration.DocumentFormat;
 import com.icounseling.repository.PostRepository;
 import com.icounseling.service.PostService;
 import com.icounseling.service.dto.PostDTO;
 import com.icounseling.service.mapper.PostMapper;
 import com.icounseling.web.rest.errors.ExceptionTranslator;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -30,6 +30,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import com.icounseling.domain.enumeration.DocumentFormat;
 /**
  * Integration tests for the {@link PostResource} REST controller.
  */
@@ -40,6 +42,14 @@ public class PostResourceIT {
     private static final byte[] UPDATED_IMAGE = TestUtil.createByteArray(1, "1");
     private static final String DEFAULT_IMAGE_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_IMAGE_CONTENT_TYPE = "image/png";
+
+    private static final Integer DEFAULT_LIKE_NUMBERS = 1;
+    private static final Integer UPDATED_LIKE_NUMBERS = 2;
+    private static final Integer SMALLER_LIKE_NUMBERS = 1 - 1;
+
+    private static final Integer DEFAULT_NUMBER_OF_VIEWS = 1;
+    private static final Integer UPDATED_NUMBER_OF_VIEWS = 2;
+    private static final Integer SMALLER_NUMBER_OF_VIEWS = 1 - 1;
 
     private static final DocumentFormat DEFAULT_DOCUMENT_FORMAT = DocumentFormat.PDF;
     private static final DocumentFormat UPDATED_DOCUMENT_FORMAT = DocumentFormat.DOCX;
@@ -94,6 +104,8 @@ public class PostResourceIT {
         Post post = new Post()
             .image(DEFAULT_IMAGE)
             .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE)
+            .likeNumbers(DEFAULT_LIKE_NUMBERS)
+            .numberOfViews(DEFAULT_NUMBER_OF_VIEWS)
             .documentFormat(DEFAULT_DOCUMENT_FORMAT);
         return post;
     }
@@ -107,6 +119,8 @@ public class PostResourceIT {
         Post post = new Post()
             .image(UPDATED_IMAGE)
             .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
+            .likeNumbers(UPDATED_LIKE_NUMBERS)
+            .numberOfViews(UPDATED_NUMBER_OF_VIEWS)
             .documentFormat(UPDATED_DOCUMENT_FORMAT);
         return post;
     }
@@ -134,6 +148,8 @@ public class PostResourceIT {
         Post testPost = postList.get(postList.size() - 1);
         assertThat(testPost.getImage()).isEqualTo(DEFAULT_IMAGE);
         assertThat(testPost.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
+        assertThat(testPost.getLikeNumbers()).isEqualTo(DEFAULT_LIKE_NUMBERS);
+        assertThat(testPost.getNumberOfViews()).isEqualTo(DEFAULT_NUMBER_OF_VIEWS);
         assertThat(testPost.getDocumentFormat()).isEqualTo(DEFAULT_DOCUMENT_FORMAT);
     }
 
@@ -157,6 +173,44 @@ public class PostResourceIT {
         assertThat(postList).hasSize(databaseSizeBeforeCreate);
     }
 
+
+    @Test
+    @Transactional
+    public void checkLikeNumbersIsRequired() throws Exception {
+        int databaseSizeBeforeTest = postRepository.findAll().size();
+        // set the field null
+        post.setLikeNumbers(null);
+
+        // Create the Post, which fails.
+        PostDTO postDTO = postMapper.toDto(post);
+
+        restPostMockMvc.perform(post("/api/posts")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(postDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Post> postList = postRepository.findAll();
+        assertThat(postList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkNumberOfViewsIsRequired() throws Exception {
+        int databaseSizeBeforeTest = postRepository.findAll().size();
+        // set the field null
+        post.setNumberOfViews(null);
+
+        // Create the Post, which fails.
+        PostDTO postDTO = postMapper.toDto(post);
+
+        restPostMockMvc.perform(post("/api/posts")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(postDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Post> postList = postRepository.findAll();
+        assertThat(postList).hasSize(databaseSizeBeforeTest);
+    }
 
     @Test
     @Transactional
@@ -190,6 +244,8 @@ public class PostResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(post.getId().intValue())))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
+            .andExpect(jsonPath("$.[*].likeNumbers").value(hasItem(DEFAULT_LIKE_NUMBERS)))
+            .andExpect(jsonPath("$.[*].numberOfViews").value(hasItem(DEFAULT_NUMBER_OF_VIEWS)))
             .andExpect(jsonPath("$.[*].documentFormat").value(hasItem(DEFAULT_DOCUMENT_FORMAT.toString())));
     }
     
@@ -206,6 +262,8 @@ public class PostResourceIT {
             .andExpect(jsonPath("$.id").value(post.getId().intValue()))
             .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
             .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)))
+            .andExpect(jsonPath("$.likeNumbers").value(DEFAULT_LIKE_NUMBERS))
+            .andExpect(jsonPath("$.numberOfViews").value(DEFAULT_NUMBER_OF_VIEWS))
             .andExpect(jsonPath("$.documentFormat").value(DEFAULT_DOCUMENT_FORMAT.toString()));
     }
 
@@ -232,6 +290,8 @@ public class PostResourceIT {
         updatedPost
             .image(UPDATED_IMAGE)
             .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
+            .likeNumbers(UPDATED_LIKE_NUMBERS)
+            .numberOfViews(UPDATED_NUMBER_OF_VIEWS)
             .documentFormat(UPDATED_DOCUMENT_FORMAT);
         PostDTO postDTO = postMapper.toDto(updatedPost);
 
@@ -246,6 +306,8 @@ public class PostResourceIT {
         Post testPost = postList.get(postList.size() - 1);
         assertThat(testPost.getImage()).isEqualTo(UPDATED_IMAGE);
         assertThat(testPost.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
+        assertThat(testPost.getLikeNumbers()).isEqualTo(UPDATED_LIKE_NUMBERS);
+        assertThat(testPost.getNumberOfViews()).isEqualTo(UPDATED_NUMBER_OF_VIEWS);
         assertThat(testPost.getDocumentFormat()).isEqualTo(UPDATED_DOCUMENT_FORMAT);
     }
 

@@ -1,24 +1,22 @@
 package com.icounseling.web.rest;
 
-import com.icounseling.domain.Counselor;
 import com.icounseling.security.AuthoritiesConstants;
 import com.icounseling.service.CounselorService;
 import com.icounseling.service.dto.*;
+import com.icounseling.service.dto.custom.CustomCounselingCaseDTO;
+import com.icounseling.service.dto.custom.CustomCounselorDTO;
+import com.icounseling.service.dto.custom.CustomTaskDTO;
+import com.icounseling.service.dto.custom.CustomVisitorDTO;
 import com.icounseling.web.rest.errors.BadRequestAlertException;
-import com.mysql.cj.xdevapi.JsonArray;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import org.hibernate.jpamodelgen.xml.jaxb.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.MultiValueMap;
@@ -28,7 +26,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -144,9 +141,9 @@ public class CounselorResource {
      */
     @GetMapping("/counselors/{id}/counseling-case")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
-    public ResponseEntity<List<CounselingCaseDTO>> getAllCasesForOneCounselor(Pageable pageable, @PathVariable Long id, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<List<CustomCounselingCaseDTO>> getAllCasesForOneCounselor(Pageable pageable, @PathVariable Long id, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
         log.debug("REST request to get a page of all cases for one Counselors");
-        Page<CounselingCaseDTO> page = counselorService.findAllCasesForOneCounselor(id, pageable);
+        Page<CustomCounselingCaseDTO> page = counselorService.findAllCasesForOneCounselor(id, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -154,13 +151,13 @@ public class CounselorResource {
     /**
      * {@code GET  /counselors/visitors/{id}} : Get all information for one visitor.
      *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the VisitorDTO object in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the CustomVisitorDTO object in body.
      */
     @GetMapping("/counselors/visitors/{id}")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
-    public ResponseEntity<Optional<VisitorDTO>> getAllVisitorInformation(@PathVariable Long id) {
+    public ResponseEntity<Optional<CustomVisitorDTO>> getAllVisitorInformation(@PathVariable Long id) {
         log.debug("REST request to get all information for one visitor");
-        Optional<VisitorDTO> visitor = counselorService.findAllVisitorInformation(id);
+        Optional<CustomVisitorDTO> visitor = counselorService.findAllVisitorInformation(id);
         return ResponseEntity.ok().body(visitor);
     }
 
@@ -185,13 +182,13 @@ public class CounselorResource {
      * @param id          the counselor id
      * @param queryParams a {@link MultiValueMap} query parameters.
      * @param uriBuilder  a {@link UriComponentsBuilder} URI builder.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the PlanningDTO object in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the CustomTaskDTO object in body.
      */
     @GetMapping("/counselors/{id}/all-plans")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.COUNSELOR + "\")")
-    public ResponseEntity<List<TaskDTO>> getAllCounselorPlanning(Pageable pageable, @PathVariable Long id, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<List<CustomTaskDTO>> getAllCounselorPlanning(Pageable pageable, @PathVariable Long id, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
         log.debug("REST request to get all counselor plans");
-        Page<TaskDTO> taskDTOS = counselorService.findAllCounselorPlans(id, pageable);
+        Page<CustomTaskDTO> taskDTOS = counselorService.findAllCounselorPlans(id, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), taskDTOS);
         return ResponseEntity.ok().headers(headers).body(taskDTOS.getContent());
     }
@@ -316,7 +313,7 @@ public class CounselorResource {
      * {@code GET  /counselors/{id}/review-counselor-information} : Get counselor information.
      *
      * @param id the counselor id
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the PostDTO object in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the CustomCounselorDTO object in body.
      */
     @GetMapping("/counselors/{id}/review-counselor-information")
     public ResponseEntity<Optional<CustomCounselorDTO>> reviewCounselorInformation(@PathVariable Long id, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder){
@@ -325,4 +322,6 @@ public class CounselorResource {
         return ResponseEntity.ok()
             .body(entities);
     }
+
+
 }

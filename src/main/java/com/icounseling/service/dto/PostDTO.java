@@ -18,6 +18,12 @@ public class PostDTO implements Serializable {
 
     private String imageContentType;
     @NotNull
+    private Integer likeNumbers;
+
+    @NotNull
+    private Integer numberOfViews;
+
+    @NotNull
     private DocumentFormat documentFormat;
 
 
@@ -47,6 +53,22 @@ public class PostDTO implements Serializable {
 
     public void setImageContentType(String imageContentType) {
         this.imageContentType = imageContentType;
+    }
+
+    public Integer getLikeNumbers() {
+        return likeNumbers;
+    }
+
+    public void setLikeNumbers(Integer likeNumbers) {
+        this.likeNumbers = likeNumbers;
+    }
+
+    public Integer getNumberOfViews() {
+        return numberOfViews;
+    }
+
+    public void setNumberOfViews(Integer numberOfViews) {
+        this.numberOfViews = numberOfViews;
     }
 
     public DocumentFormat getDocumentFormat() {
@@ -99,6 +121,8 @@ public class PostDTO implements Serializable {
         return "PostDTO{" +
             "id=" + getId() +
             ", image='" + getImage() + "'" +
+            ", likeNumbers=" + getLikeNumbers() +
+            ", numberOfViews=" + getNumberOfViews() +
             ", documentFormat='" + getDocumentFormat() + "'" +
             ", schedule=" + getScheduleId() +
             ", counselor=" + getCounselorId() +
