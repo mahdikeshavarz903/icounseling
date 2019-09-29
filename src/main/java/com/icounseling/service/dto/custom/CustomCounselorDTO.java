@@ -1,9 +1,10 @@
-package com.icounseling.service.dto;
+package com.icounseling.service.dto.custom;
 
 import com.icounseling.domain.Education;
 import com.icounseling.domain.Score;
 import com.icounseling.domain.User;
 import com.icounseling.domain.enumeration.ConsultantType;
+import com.icounseling.service.dto.CounselorDTO;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;

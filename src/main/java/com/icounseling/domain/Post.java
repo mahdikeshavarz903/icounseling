@@ -35,6 +35,14 @@ public class Post implements Serializable {
     private String imageContentType;
 
     @NotNull
+    @Column(name = "like_numbers", nullable = false)
+    private Integer likeNumbers;
+
+    @NotNull
+    @Column(name = "number_of_views", nullable = false)
+    private Integer numberOfViews;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "document_format", nullable = false)
     private DocumentFormat documentFormat;
@@ -84,6 +92,32 @@ public class Post implements Serializable {
 
     public void setImageContentType(String imageContentType) {
         this.imageContentType = imageContentType;
+    }
+
+    public Integer getLikeNumbers() {
+        return likeNumbers;
+    }
+
+    public Post likeNumbers(Integer likeNumbers) {
+        this.likeNumbers = likeNumbers;
+        return this;
+    }
+
+    public void setLikeNumbers(Integer likeNumbers) {
+        this.likeNumbers = likeNumbers;
+    }
+
+    public Integer getNumberOfViews() {
+        return numberOfViews;
+    }
+
+    public Post numberOfViews(Integer numberOfViews) {
+        this.numberOfViews = numberOfViews;
+        return this;
+    }
+
+    public void setNumberOfViews(Integer numberOfViews) {
+        this.numberOfViews = numberOfViews;
     }
 
     public DocumentFormat getDocumentFormat() {
@@ -173,6 +207,8 @@ public class Post implements Serializable {
             "id=" + getId() +
             ", image='" + getImage() + "'" +
             ", imageContentType='" + getImageContentType() + "'" +
+            ", likeNumbers=" + getLikeNumbers() +
+            ", numberOfViews=" + getNumberOfViews() +
             ", documentFormat='" + getDocumentFormat() + "'" +
             "}";
     }

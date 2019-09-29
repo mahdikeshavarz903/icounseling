@@ -65,8 +65,8 @@ export default (state: PostState = initialState, action): PostState => {
       return {
         ...state,
         loading: false,
-        totalItems: action.payload.headers['x-total-count'],
-        entities: action.payload.data
+        entities: action.payload.data,
+        totalItems: parseInt(action.payload.headers['x-total-count'], 10)
       };
     case SUCCESS(ACTION_TYPES.FETCH_POST):
       return {

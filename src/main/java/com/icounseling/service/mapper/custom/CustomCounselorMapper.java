@@ -1,8 +1,12 @@
-package com.icounseling.service.mapper;
+package com.icounseling.service.mapper.custom;
 
 import com.icounseling.domain.Counselor;
 import com.icounseling.service.dto.CounselorDTO;
-import com.icounseling.service.dto.CustomCounselorDTO;
+import com.icounseling.service.dto.custom.CustomCounselorDTO;
+import com.icounseling.service.mapper.EducationMapper;
+import com.icounseling.service.mapper.EntityMapper;
+import com.icounseling.service.mapper.ScoreMapper;
+import com.icounseling.service.mapper.UserMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

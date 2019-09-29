@@ -1,5 +1,11 @@
 package com.icounseling.service.impl;
 
+import com.icounseling.domain.Education;
+import com.icounseling.domain.Score;
+import com.icounseling.domain.User;
+import com.icounseling.repository.EducationRepository;
+import com.icounseling.repository.ScoreRepository;
+import com.icounseling.repository.UserRepository;
 import com.icounseling.service.VisitorService;
 import com.icounseling.domain.Visitor;
 import com.icounseling.repository.VisitorRepository;
@@ -32,9 +38,18 @@ public class VisitorServiceImpl implements VisitorService {
 
     private final VisitorMapper visitorMapper;
 
-    public VisitorServiceImpl(VisitorRepository visitorRepository, VisitorMapper visitorMapper) {
+    private final ScoreRepository scoreRepository;
+
+    private final EducationRepository educationRepository;
+
+    private final UserRepository userRepository;
+
+    public VisitorServiceImpl(VisitorRepository visitorRepository, VisitorMapper visitorMapper, ScoreRepository scoreRepository, EducationRepository educationRepository, UserRepository userRepository) {
         this.visitorRepository = visitorRepository;
         this.visitorMapper = visitorMapper;
+        this.scoreRepository = scoreRepository;
+        this.educationRepository = educationRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -46,7 +61,13 @@ public class VisitorServiceImpl implements VisitorService {
     @Override
     public VisitorDTO save(VisitorDTO visitorDTO) {
         log.debug("Request to save Visitor : {}", visitorDTO);
+        Optional<User> user = userRepository.findById(visitorDTO.getUserId());
+        Optional<Education> education= educationRepository.findById(visitorDTO.getEducationId());
+        Optional<Score> score=scoreRepository.findById(visitorDTO.getScoreId());
         Visitor visitor = visitorMapper.toEntity(visitorDTO);
+        visitor.setEducation(education.get());
+        visitor.setScore(score.get());
+        visitor.setUser(user.get());
         visitor = visitorRepository.save(visitor);
         return visitorMapper.toDto(visitor);
     }
@@ -71,7 +92,7 @@ public class VisitorServiceImpl implements VisitorService {
     *  Get all the visitors where CounselingCase is {@code null}.
      *  @return the list of entities.
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<VisitorDTO> findAllWhereCounselingCaseIsNull() {
         log.debug("Request to get all visitors where CounselingCase is null");
         return StreamSupport
@@ -86,7 +107,7 @@ public class VisitorServiceImpl implements VisitorService {
     *  Get all the visitors where Library is {@code null}.
      *  @return the list of entities.
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<VisitorDTO> findAllWhereLibraryIsNull() {
         log.debug("Request to get all visitors where Library is null");
         return StreamSupport

@@ -1,12 +1,13 @@
 package com.icounseling.service;
 
-import com.icounseling.domain.Counselor;
 import com.icounseling.service.dto.*;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import com.icounseling.service.dto.custom.CustomCounselingCaseDTO;
+import com.icounseling.service.dto.custom.CustomCounselorDTO;
+import com.icounseling.service.dto.custom.CustomTaskDTO;
+import com.icounseling.service.dto.custom.CustomVisitorDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -38,7 +39,7 @@ public interface CounselorService {
      * @param id       the counselor id
      * @return the list of entities.
      */
-    Page<CounselingCaseDTO> findAllCasesForOneCounselor(Long id, Pageable pageable);
+    Page<CustomCounselingCaseDTO> findAllCasesForOneCounselor(Long id, Pageable pageable);
 
     /**
      * Get the "id" counselor.
@@ -55,7 +56,7 @@ public interface CounselorService {
      * @param id the visitor id
      * @return the entity.
      */
-    Optional<VisitorDTO> findAllVisitorInformation(Long id);
+    Optional<CustomVisitorDTO> findAllVisitorInformation(Long id);
 
     /**
      * Get all reserved times for counselor.
@@ -74,7 +75,7 @@ public interface CounselorService {
      * @param id       the counselor id
      * @return the list of entities.
      */
-    Page<TaskDTO> findAllCounselorPlans(Long id, Pageable pageable);
+    Page<CustomTaskDTO> findAllCounselorPlans(Long id, Pageable pageable);
 
 
     /**

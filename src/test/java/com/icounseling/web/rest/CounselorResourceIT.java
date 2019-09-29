@@ -320,7 +320,7 @@ public class CounselorResourceIT {
         counselingCaseRepository.save(counselingCase3);
 
         // get all counseling cases
-        restCounselorMockMvc.perform((get("/api/counselors/1/counseling-case?sort=id,desc")))
+            restCounselorMockMvc.perform((get("/api/counselors/1/counseling-case?sort=id,desc")))
             //restCounselorMockMvc.perform((get("/api/counselors/{id}/counseling-case?sort=id,desc", counselor.getId().intValue())))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
@@ -481,6 +481,8 @@ public class CounselorResourceIT {
     @Test
     @Transactional
     public void getAllPosts() throws Exception {
+        post.setNumberOfViews(10);
+        post.setLikeNumbers(100);
         postRepository.saveAndFlush(post);
         counselorRepository.saveAndFlush(counselor);
 
@@ -501,6 +503,8 @@ public class CounselorResourceIT {
 
         counselorRepository.saveAndFlush(counselor);
 
+        post.setLikeNumbers(50);
+        post.setNumberOfViews(10);
         PostDTO postDTO = postMapper.toDto(post);
 
         restCounselorMockMvc.perform((post("/api/counselors/create-post"))
@@ -519,6 +523,9 @@ public class CounselorResourceIT {
     @Transactional
     public void updateCounselorPost() throws Exception {
         counselorRepository.saveAndFlush(counselor);
+
+        post.setNumberOfViews(50);
+        post.setLikeNumbers(10);
         postRepository.saveAndFlush(post);
 
         int databaseSizeBeforeCreate = postRepository.findAll().size();
@@ -573,6 +580,8 @@ public class CounselorResourceIT {
     @Test
     @Transactional
     public void deleteCounselorPost() throws Exception {
+        post.setLikeNumbers(4);
+        post.setNumberOfViews(600);
         postRepository.saveAndFlush(post);
 
         int dbSize = postRepository.findAll().size();

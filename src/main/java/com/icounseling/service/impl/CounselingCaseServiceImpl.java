@@ -1,5 +1,9 @@
 package com.icounseling.service.impl;
 
+import com.icounseling.domain.Counselor;
+import com.icounseling.domain.Visitor;
+import com.icounseling.repository.CounselorRepository;
+import com.icounseling.repository.VisitorRepository;
 import com.icounseling.service.CounselingCaseService;
 import com.icounseling.domain.CounselingCase;
 import com.icounseling.repository.CounselingCaseRepository;
@@ -28,9 +32,15 @@ public class CounselingCaseServiceImpl implements CounselingCaseService {
 
     private final CounselingCaseMapper counselingCaseMapper;
 
-    public CounselingCaseServiceImpl(CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper) {
+    private final CounselorRepository counselorRepository;
+
+    private final VisitorRepository visitorRepository;
+
+    public CounselingCaseServiceImpl(CounselingCaseRepository counselingCaseRepository, CounselingCaseMapper counselingCaseMapper, CounselorRepository counselorRepository, VisitorRepository visitorRepository) {
         this.counselingCaseRepository = counselingCaseRepository;
         this.counselingCaseMapper = counselingCaseMapper;
+        this.counselorRepository = counselorRepository;
+        this.visitorRepository = visitorRepository;
     }
 
     /**
@@ -42,7 +52,11 @@ public class CounselingCaseServiceImpl implements CounselingCaseService {
     @Override
     public CounselingCaseDTO save(CounselingCaseDTO counselingCaseDTO) {
         log.debug("Request to save CounselingCase : {}", counselingCaseDTO);
+        Optional<Visitor> visitor = visitorRepository.findById(counselingCaseDTO.getVisitorId());
+        Optional<Counselor> counselor = counselorRepository.findById(counselingCaseDTO.getCounselorId());
         CounselingCase counselingCase = counselingCaseMapper.toEntity(counselingCaseDTO);
+        counselingCase.setCounselor(counselor.get());
+        counselingCase.setVisitor(visitor.get());
         counselingCase = counselingCaseRepository.save(counselingCase);
         return counselingCaseMapper.toDto(counselingCase);
     }

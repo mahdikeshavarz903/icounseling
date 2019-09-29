@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <property name="autoIncrement" value="true"/>
 
@@ -18,6 +20,14 @@
                 <constraints nullable="false" />
             </column>
             <column name="image_content_type" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="like_numbers" type="integer">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="number_of_views" type="integer">
                 <constraints nullable="false" />
             </column>
 
@@ -51,12 +61,14 @@
     -->
     <changeSet id="20190709070955-1-data" author="jhipster" context="faker">
         <loadData
-            file="config/liquibase/fake-data/post.csv"
-            separator=";"
-            tableName="post">
+                  file="config/liquibase/fake-data/post.csv"
+                  separator=";"
+                  tableName="post">
             <column name="id" type="numeric"/>
             <column name="image" type="blob"/>
             <column name="image_content_type" type="string"/>
+            <column name="like_numbers" type="numeric"/>
+            <column name="number_of_views" type="numeric"/>
             <column name="document_format" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>

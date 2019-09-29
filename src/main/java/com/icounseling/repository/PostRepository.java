@@ -13,5 +13,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    Page<Post> findAllByCounselorId(Pageable pageable,Long id);
+    Page<Post> findAllByCounselorId(Pageable pageable, Long id);
 }

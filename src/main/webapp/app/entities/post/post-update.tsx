@@ -148,6 +148,36 @@ export class PostUpdate extends React.Component<IPostUpdateProps, IPostUpdateSta
                   </AvGroup>
                 </AvGroup>
                 <AvGroup>
+                  <Label id="likeNumbersLabel" for="post-likeNumbers">
+                    <Translate contentKey="iCounselingApp.post.likeNumbers">Like Numbers</Translate>
+                  </Label>
+                  <AvField
+                    id="post-likeNumbers"
+                    type="string"
+                    className="form-control"
+                    name="likeNumbers"
+                    validate={{
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      number: { value: true, errorMessage: translate('entity.validation.number') }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="numberOfViewsLabel" for="post-numberOfViews">
+                    <Translate contentKey="iCounselingApp.post.numberOfViews">Number Of Views</Translate>
+                  </Label>
+                  <AvField
+                    id="post-numberOfViews"
+                    type="string"
+                    className="form-control"
+                    name="numberOfViews"
+                    validate={{
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      number: { value: true, errorMessage: translate('entity.validation.number') }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
                   <Label id="documentFormatLabel" for="post-documentFormat">
                     <Translate contentKey="iCounselingApp.post.documentFormat">Document Format</Translate>
                   </Label>
@@ -158,21 +188,11 @@ export class PostUpdate extends React.Component<IPostUpdateProps, IPostUpdateSta
                     name="documentFormat"
                     value={(!isNew && postEntity.documentFormat) || 'PDF'}
                   >
-                    <option value="PDF">
-                      <Translate contentKey="iCounselingApp.DocumentFormat.PDF" />
-                    </option>
-                    <option value="DOCX">
-                      <Translate contentKey="iCounselingApp.DocumentFormat.DOCX" />
-                    </option>
-                    <option value="DOC">
-                      <Translate contentKey="iCounselingApp.DocumentFormat.DOC" />
-                    </option>
-                    <option value="XLSX">
-                      <Translate contentKey="iCounselingApp.DocumentFormat.XLSX" />
-                    </option>
-                    <option value="PPT">
-                      <Translate contentKey="iCounselingApp.DocumentFormat.PPT" />
-                    </option>
+                    <option value="PDF">{translate('iCounselingApp.DocumentFormat.PDF')}</option>
+                    <option value="DOCX">{translate('iCounselingApp.DocumentFormat.DOCX')}</option>
+                    <option value="DOC">{translate('iCounselingApp.DocumentFormat.DOC')}</option>
+                    <option value="XLSX">{translate('iCounselingApp.DocumentFormat.XLSX')}</option>
+                    <option value="PPT">{translate('iCounselingApp.DocumentFormat.PPT')}</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>

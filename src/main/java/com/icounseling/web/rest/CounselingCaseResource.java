@@ -75,7 +75,7 @@ public class CounselingCaseResource {
     public ResponseEntity<CounselingCaseDTO> updateCounselingCase(@Valid @RequestBody CounselingCaseDTO counselingCaseDTO) throws URISyntaxException {
         log.debug("REST request to update CounselingCase : {}", counselingCaseDTO);
         if (counselingCaseDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "id null");
         }
         CounselingCaseDTO result = counselingCaseService.save(counselingCaseDTO);
         return ResponseEntity.ok()

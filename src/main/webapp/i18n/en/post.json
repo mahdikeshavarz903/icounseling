@@ -4,7 +4,8 @@
       "home": {
         "title": "Posts",
         "createLabel": "Create a new Post",
-        "createOrEditLabel": "Create or edit a Post"
+        "createOrEditLabel": "Create or edit a Post",
+        "notFound": "No Posts found"
       },
       "created": "A new Post is created with identifier {{ param }}",
       "updated": "A Post is updated with identifier {{ param }}",
@@ -16,6 +17,8 @@
         "title": "Post"
       },
       "image": "Image",
+      "likeNumbers": "Like Numbers",
+      "numberOfViews": "Number Of Views",
       "documentFormat": "Document Format",
       "schedule": "Schedule",
       "comment": "Comment",
